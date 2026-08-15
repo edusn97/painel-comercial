@@ -315,7 +315,7 @@ if ((-not [string]::IsNullOrWhiteSpace($sjJwt)) -and (-not [string]::IsNullOrWhi
     $iniD = $start.ToString('yyyy-MM-dd'); $fimD = $end.ToString('yyyy-MM-dd')
     $baseQs = "sort_column=due_date&sort_direction=asc&search%5Binterval%5D%5B%5D=$iniD&search%5Binterval%5D%5B%5D=$fimD&search%5Bfinancial_account%5D=&search%5Btype%5D=statement"
     $exBase = "https://api.clinicaexperts.com.br/api/financial/parcels/list"
-    foreach ($vn in @('Daiane','Ana','Brenda','Ana Paula')) { $ceVend[$vn].faturamento = 0.0 }
+    $tmpVend = @{}; foreach ($vn in @('Daiane','Ana','Brenda','Ana Paula')) { $tmpVend[$vn] = 0.0 }
     $sjRec = 0.0; $jvRec = 0.0
     foreach ($cl in @(@{ u='sao_jose'; jwt=$sjJwt }, @{ u='joinville'; jwt=$jvJwt })) {
       $h = @{ Authorization = "Bearer $($cl.jwt)"; Accept = "application/json" }
@@ -334,13 +334,15 @@ if ((-not [string]::IsNullOrWhiteSpace($sjJwt)) -and (-not [string]::IsNullOrWhi
           $desc = "$($it.title.description)"
           if ($desc -match '(?i) para ') {
             $pat = (($desc -split '(?i)\s+para\s+')[-1]).Trim().ToLower()
-            if ($pat -and $patVend.ContainsKey($pat)) { $ceVend[$patVend[$pat]].faturamento += $val }
+            if ($pat -and $patVend.ContainsKey($pat)) { $tmpVend[$patVend[$pat]] += $val }
           }
         }
         $p++
       } while ($items.Count -gt 0 -and $p -le 50)
     }
+    # so aplica se tudo deu certo (transacional) - senao fica o faturamento oficial do arquivo
     $ce.sj_fat = $sjRec; $ce.jv_fat = $jvRec; $ce.faturamento = $sjRec + $jvRec
+    foreach ($vn in @('Daiane','Ana','Brenda','Ana Paula')) { $ceVend[$vn].faturamento = $tmpVend[$vn] }
     Write-Host ("Faturamento (extrato via sessao): R$ {0:N2}  (SJ {1:N2} + JV {2:N2})" -f $ce.faturamento,$ce.sj_fat,$ce.jv_fat) -ForegroundColor Green
     $ceVend.GetEnumerator() | ForEach-Object { Write-Host ("   fat {0}: R$ {1:N2}" -f $_.Key, $_.Value.faturamento) }
   } catch {
