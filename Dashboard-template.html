@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel Comercial Semanal — Cabelo & Saúde</title>
+<style>
+  :root{
+    --petroleo:#0e4d49; --petroleo2:#12615c; --verde:#1f9e8f; --claro:#e8f3f1;
+    --texto:#173b39; --cinza:#6b7d7b; --linha:#dfeae8; --amarelo:#e6b800;
+    --vermelho:#c0392b; --bg:#f4f8f7; --card:#ffffff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif;background:var(--bg);color:var(--texto);line-height:1.4}
+  .wrap{max-width:1180px;margin:0 auto;padding:24px}
+  header.top{background:linear-gradient(120deg,var(--petroleo),var(--verde));color:#fff;border-radius:16px;padding:24px 28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;box-shadow:0 6px 24px rgba(14,77,73,.18)}
+  header.top h1{font-size:24px;font-weight:700;letter-spacing:.2px}
+  header.top .sub{opacity:.9;font-size:13px;margin-top:4px}
+  .badge{background:rgba(255,255,255,.18);padding:8px 14px;border-radius:999px;font-size:13px;font-weight:600}
+  h2.sec{font-size:15px;text-transform:uppercase;letter-spacing:1px;color:var(--petroleo);margin:30px 0 14px;display:flex;align-items:center;gap:8px}
+  h2.sec::before{content:"";width:6px;height:18px;background:var(--verde);border-radius:3px;display:inline-block}
+  .grid{display:grid;gap:16px}
+  .kpis{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+  .card{background:var(--card);border:1px solid var(--linha);border-radius:14px;padding:18px 20px;box-shadow:0 2px 10px rgba(14,77,73,.05)}
+  .kpi .label{font-size:12px;color:var(--cinza);text-transform:uppercase;letter-spacing:.5px}
+  .kpi .value{font-size:30px;font-weight:800;color:var(--petroleo);margin-top:6px;line-height:1}
+  .kpi .foot{font-size:12px;color:var(--cinza);margin-top:8px}
+  .kpi .foot b{color:var(--verde)}
+  .bar-wrap{background:var(--claro);border-radius:8px;height:8px;margin-top:10px;overflow:hidden}
+  .bar{height:100%;background:linear-gradient(90deg,var(--verde),var(--petroleo))}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--linha)}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--cinza);font-weight:700}
+  td.num,th.num{text-align:center}
+  tr:last-child td{border-bottom:none}
+  .tot td{font-weight:800;color:var(--petroleo);background:var(--claro)}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .funil{display:flex;flex-direction:column;gap:8px}
+  .step{display:flex;align-items:center;gap:12px}
+  .step .name{width:150px;font-size:13px;font-weight:600}
+  .step .track{flex:1;background:var(--claro);border-radius:8px;height:30px;position:relative;overflow:hidden}
+  .step .fill{height:100%;background:linear-gradient(90deg,var(--petroleo),var(--verde));display:flex;align-items:center;justify-content:flex-end;padding-right:10px;color:#fff;font-weight:700;font-size:13px;min-width:34px}
+  .pill{display:inline-block;padding:3px 9px;border-radius:999px;font-size:12px;font-weight:700}
+  .pill.sj{background:#eae6ff;color:#5b3fd1}.pill.jv{background:#e2f7e6;color:#1f8f3a}
+  .rep{columns:2;column-gap:24px}
+  .rep .item{break-inside:avoid;padding:7px 0;border-bottom:1px dashed var(--linha);font-size:13px;display:flex;justify-content:space-between}
+  .rep .item small{color:var(--cinza)}
+  footer{margin-top:28px;text-align:center;color:var(--cinza);font-size:12px}
+  @media(max-width:720px){.two{grid-template-columns:1fr}.rep{columns:1}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div>
+      <h1>Painel Comercial Semanal</h1>
+      <div class="sub">Clínica Cabelo &amp; Saúde · São José + Joinville · Fechamento de semana</div>
+    </div>
+    <div style="text-align:right">
+      <div class="badge">Semana @@SEMANA@@</div>
+      <div class="sub" style="margin-top:8px">Atualizado em: @@ATUALIZADO@@</div>
+    </div>
+  </header>
+
+  <h2 class="sec">Visão geral da semana (SJ + JV)</h2>
+  <div class="grid kpis">
+    <div class="card kpi">
+      <div class="label">Faturamento (vendas)</div>
+      <div class="value">R$ @@FAT@@</div>
+      <div class="foot">Meta: R$ 30.023 · <b>@@PCTMETA@@%</b> da meta</div>
+      <div class="bar-wrap"><div class="bar" style="width:@@PCTMETA@@%"></div></div>
+    </div>
+    <div class="card kpi">
+      <div class="label">Agendados p/ a semana</div>
+      <div class="value">@@AGEND@@</div>
+      <div class="foot">Consultas marcadas para a semana · SJ + JV</div>
+    </div>
+    <div class="card kpi">
+      <div class="label">Novos agendamentos</div>
+      <div class="value">@@AGEND_CRIADOS@@</div>
+      <div class="foot">Criados na semana (novos) · SJ + JV</div>
+    </div>
+    <div class="card kpi">
+      <div class="label">Compareceram</div>
+      <div class="value">@@COMP@@</div>
+      <div class="foot">Comparecimento: <b>@@PCTCOMP@@%</b></div>
+      <div class="bar-wrap"><div class="bar" style="width:@@PCTCOMP@@%"></div></div>
+    </div>
+    <div class="card kpi">
+      <div class="label">Cancelaram</div>
+      <div class="value">@@CANC@@</div>
+      <div class="foot">@@PCTCANC@@% dos agendados</div>
+    </div>
+    <div class="card kpi">
+      <div class="label">Remarcados</div>
+      <div class="value">@@REMARC@@</div>
+      <div class="foot">@@PCTREMARC@@% dos agendados</div>
+    </div>
+    <div class="card kpi">
+      <div class="label">No-show</div>
+      <div class="value">@@NOSHOW@@</div>
+      <div class="foot">Taxa: <b>@@PCTNS@@%</b></div>
+    </div>
+  </div>
+
+  <h2 class="sec">Funil de agendamento da semana</h2>
+  <div class="card">
+    <div class="funil">
+      <div class="step"><div class="name">Agendaram</div><div class="track"><div class="fill" style="width:100%">@@AGEND@@</div></div></div>
+      <div class="step"><div class="name">Compareceram</div><div class="track"><div class="fill" style="width:@@PCTCOMP@@%">@@COMP@@</div></div></div>
+      <div class="step"><div class="name">Remarcaram</div><div class="track"><div class="fill" style="width:@@PCTREMARC@@%">@@REMARC@@</div></div></div>
+      <div class="step"><div class="name">Cancelaram</div><div class="track"><div class="fill" style="width:@@PCTCANC@@%;background:linear-gradient(90deg,#a03225,#c0392b)">@@CANC@@</div></div></div>
+      <div class="step"><div class="name">No-show</div><div class="track"><div class="fill" style="width:@@PCTNS@@%;background:#c0392b">@@NOSHOW@@</div></div></div>
+    </div>
+  </div>
+
+  <h2 class="sec">Por unidade</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th>Unidade</th><th class="num">Agendados</th><th class="num">Novos</th><th class="num">Compareceram</th><th class="num">Cancelaram</th><th class="num">Remarcaram</th><th class="num">No-show</th><th class="num">Faturamento</th></tr></thead>
+      <tbody>
+@@UNIDADE_ROWS@@
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="sec">Desempenho por vendedora</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th>Vendedora</th><th class="num">Atendimentos</th><th class="num">Qualificados</th><th class="num">Desqualificados</th><th class="num">Agendaram</th><th class="num">Compareceram</th><th class="num">Cancelados</th><th class="num">Remarcados</th><th class="num">No-show</th><th class="num">Faturamento</th></tr></thead>
+      <tbody>
+@@VEND_ROWS@@
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:var(--cinza);margin-top:10px"><b>Atendimentos</b> = leads únicos que a vendedora atendeu na semana; cada um é <b>Qualificado</b> (interagiu) ou <b>Desqualificado</b> (nunca interagiu). <b>Agendaram</b> = novos agendamentos (consulta/avaliação) criados pela vendedora na semana — a soma pode ser menor que o total de "Novos agendamentos", pois parte é agendada sem vendedora (ex.: pela clínica). <b>Compareceram / Remarcados / No-show</b> = consultas da semana (Clínica Experts). <b>Faturamento</b> = recebido no extrato do Clínica Experts. O total e por unidade já vêm do extrato oficial; o valor <b>por vendedora</b> está em implantação (via extrato, por sessão) e aparece como "—" até ser capturado.@@SEMOBS@@</p>
+  </div>
+
+  <div class="two">
+    <div>
+      <h2 class="sec">Repescagem — cancelaram na semana</h2>
+      <div class="card">
+        <div class="rep">
+@@REP_LIST@@
+        </div>
+      </div>
+    </div>
+    <div>
+      <h2 class="sec">Topo do funil (Paper Vines)</h2>
+      <div class="card">
+        <div class="grid" style="grid-template-columns:repeat(3,1fr);gap:14px">
+          <div><div style="font-size:12px;color:var(--cinza);text-transform:uppercase">Leads que entraram</div><div style="font-size:28px;font-weight:800;color:var(--petroleo)">@@LEADS@@</div><div style="font-size:12px;color:var(--cinza)">@@CAMPANHA@@ de campanhas · @@MANUAIS@@ manuais</div></div>
+          <div><div style="font-size:12px;color:var(--cinza);text-transform:uppercase">Qualificados</div><div style="font-size:28px;font-weight:800;color:var(--verde)">@@QUALIF@@</div><div style="font-size:12px;color:var(--cinza)">@@PCTQ@@% · interagiram</div></div>
+          <div><div style="font-size:12px;color:var(--cinza);text-transform:uppercase">Desqualificados</div><div style="font-size:28px;font-weight:800;color:var(--vermelho)">@@DESQ@@</div><div style="font-size:12px;color:var(--cinza)">@@PCTD@@% · nunca interagiram</div></div>
+        </div>
+        <p style="font-size:12px;color:var(--cinza);margin-top:12px;border-top:1px solid var(--linha);padding-top:10px">Por clínica: <b>SJ @@CLINSJ@@ · JV @@CLINJV@@</b> · @@PARC_TOPO@@ · Fonte: script automático no PC (Paper Vines / wts.chat).</p>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="sec">Motivos de encerramento dos atendimentos</h2>
+  <div class="card">
+@@MOTIVOS@@
+  </div>
+
+  <h2 class="sec">Parcerias — comercial externo</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th>Parceiro (barbearia / salão)</th><th class="num">Leads gerados (semana)</th></tr></thead>
+      <tbody>
+@@PARC_ROWS@@
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:var(--cinza);margin-top:10px">Cada parceiro é identificado pela etiqueta no Paper Vines — o script conta os leads por parceiro na semana automaticamente.</p>
+  </div>
+
+  <footer>
+    Gerado automaticamente · Clínica Experts (SJ + JV) + Paper Vines · Meta mensal R$ 130.000 · Reunião de fechamento: sexta 15h–17h
+  </footer>
+
+</div>
+</body>
+</html>

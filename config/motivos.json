@@ -1,0 +1,73 @@
+{
+  "periodo": "07/08 a 14/08",
+  "fonte": "Paper Vines > Relatorios > Resultados (Classificacao de atendimentos)",
+  "nao_classificados": 227,
+  "grupos": [
+    {
+      "nome": "Objetivo atingido",
+      "cor": "verde",
+      "total": 139,
+      "itens": [
+        { "m": "Confirmação de agendamento", "n": 73 },
+        { "m": "Reagendado", "n": 26 },
+        { "m": "Tratamento agendado", "n": 14 },
+        { "m": "Retorno agendado", "n": 11 },
+        { "m": "Avaliação agendanda", "n": 6 },
+        { "m": "Pesquisa de satisfação", "n": 5 },
+        { "m": "Consulta agendada", "n": 4 }
+      ]
+    },
+    {
+      "nome": "Objetivo perdido",
+      "cor": "vermelho",
+      "total": 450,
+      "itens": [
+        { "m": "Encerrado por inatividade", "n": 217 },
+        { "m": "Não tem interesse", "n": 132 },
+        { "m": "Mora em outra cidade", "n": 28 },
+        { "m": "Nunca interagiu", "n": 28 },
+        { "m": "Negociação futura", "n": 12 },
+        { "m": "Não pode iniciar agora", "n": 10 },
+        { "m": "Procurava outra coisa", "n": 5 },
+        { "m": "Achou caro", "n": 4 },
+        { "m": "Precisa pensar", "n": 4 },
+        { "m": "Não compareceu", "n": 3 },
+        { "m": "Não quis a promoção", "n": 3 },
+        { "m": "Cancelamento de agendamento", "n": 3 },
+        { "m": "Pesquisando preço", "n": 1 }
+      ]
+    },
+    {
+      "nome": "Dúvida",
+      "cor": "azul",
+      "total": 16,
+      "itens": [
+        { "m": "Exames", "n": 6 },
+        { "m": "Receitas", "n": 5 },
+        { "m": "Farmácias", "n": 2 },
+        { "m": "Horário", "n": 1 },
+        { "m": "Uso dos produtos", "n": 1 },
+        { "m": "Endereço", "n": 1 }
+      ]
+    },
+    {
+      "nome": "Outro",
+      "cor": "cinza",
+      "total": 35,
+      "itens": [
+        { "m": "Atendimento Clínico Realizado", "n": 9 },
+        { "m": "já é paciente.", "n": 6 },
+        { "m": "Prestador de serviço", "n": 4 },
+        { "m": "Inseguro (a)", "n": 3 },
+        { "m": "Teste", "n": 3 },
+        { "m": "Caso de transplante.", "n": 3 },
+        { "m": "Não qualificou", "n": 2 },
+        { "m": "Cliente está grávida", "n": 1 },
+        { "m": "Instagram", "n": 1 },
+        { "m": "Estava procurando tratamento para outra pessoa.", "n": 1 },
+        { "m": "Currículo", "n": 1 },
+        { "m": "SPAM", "n": 1 }
+      ]
+    }
+  ]
+}
