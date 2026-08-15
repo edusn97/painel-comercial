@@ -5,9 +5,21 @@ on:
     - cron: '30 12 * * *'
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
 jobs:
   gerar:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
     env:
       TZ: America/Sao_Paulo
     steps:
@@ -27,9 +39,17 @@ jobs:
         shell: pwsh
         run: ./Puxar-Funil-PaperVines.ps1 -nopause
 
-      - name: Publicar no Netlify (CLI oficial)
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
-        run: |
-          npm install -g netlify-cli@17
-          netlify deploy --prod --dir=site --site="${{ secrets.NETLIFY_SITE }}"
+      - name: Preparar a pasta para publicacao
+        run: touch site/.nojekyll
+
+      - name: Configurar o GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Enviar os arquivos do painel
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - name: Publicar no GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4
