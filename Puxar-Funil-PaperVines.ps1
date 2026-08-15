@@ -256,12 +256,13 @@ try {
       $lp2 = 1; if ($bj2.meta -and $bj2.meta.last_page) { $lp2 = [int]$bj2.meta.last_page }
       $p++
     } while ($p -le $lp2 -and (@($bj2.data)).Count -gt 0)
-    # NOVOS agendamentos criados na semana (pagina tudo e filtra por created_at)
-    $p = 1
+    # NOVOS agendamentos criados na semana (pagina TUDO ate last_page e filtra por created_at)
+    $p = 1; $lpN = 1
     do {
-      $nurl = "$ceBase/bookings?starts_at=$([uri]::EscapeDataString($ceAfter))&ends_at=$([uri]::EscapeDataString($bkBefore))&page=$p"
+      $nurl = "$ceBase/bookings?starts_at=$([uri]::EscapeDataString($ceAfter))&ends_at=$([uri]::EscapeDataString($bkBefore))&per_page=100&page=$p"
       $nj = Invoke-RestMethod -Uri $nurl -Headers $h -Method Get
       $nrows = @($nj.data)
+      if ($nj.meta -and $nj.meta.last_page) { $lpN = [int]$nj.meta.last_page }
       if ($nrows.Count -eq 0) { break }
       foreach ($b in $nrows) {
         # mapeia paciente -> vendedora pela observacao de QUALQUER agendamento (consulta ou pacote), p/ o faturamento
@@ -272,7 +273,7 @@ try {
         try { $cdt = [datetimeoffset]::Parse("$($b.created_at)"); if ($cdt -ge $wkStart -and $cdt -le $wkEnd) { $ceNovos.total++; $ceNovos[$u]++; $vv2 = VendOfCE ("$($b.annotation)"); if ($vv2 -and $ceVend.Contains($vv2)) { $ceVend[$vv2].agendaram++; $patVend[("$($b.patient.name)").ToLower().Trim()] = $vv2 } } } catch {}
       }
       $p++
-    } while ($nrows.Count -gt 0 -and $p -le 100)
+    } while ($p -le 1000 -and $nrows.Count -gt 0)
   }
   # Faturamento por vendedora: casa o paciente da venda com quem agendou (patVend)
   foreach ($vd in $vendas) {
