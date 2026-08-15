@@ -313,14 +313,36 @@ if ((-not [string]::IsNullOrWhiteSpace($sjJwt)) -and (-not [string]::IsNullOrWhi
   Write-Host ("Sessao CE (tokens): SJ tem {0} caracteres, JV tem {1} caracteres" -f $sjJwt.Length, $jvJwt.Length) -ForegroundColor DarkGray
   try {
     $iniD = $start.ToString('yyyy-MM-dd'); $fimD = $end.ToString('yyyy-MM-dd')
-    $qs = "per_page=1&sort_column=due_date&sort_direction=asc&search%5Binterval%5D%5B%5D=$iniD&search%5Binterval%5D%5B%5D=$fimD&search%5Bfinancial_account%5D=&search%5Btype%5D=statement&search%5Bstatus%5D=all&page=1"
-    $exUrl = "https://api.clinicaexperts.com.br/api/financial/parcels/list?$qs"
-    $rSj = Invoke-RestMethod -Uri $exUrl -Headers @{ Authorization = "Bearer $sjJwt"; Accept = "application/json" } -Method Get
-    $rJv = Invoke-RestMethod -Uri $exUrl -Headers @{ Authorization = "Bearer $jvJwt"; Accept = "application/json" } -Method Get
-    $ce.sj_fat = [double]$rSj.total.receipts_paid / 100.0
-    $ce.jv_fat = [double]$rJv.total.receipts_paid / 100.0
-    $ce.faturamento = $ce.sj_fat + $ce.jv_fat
+    $baseQs = "sort_column=due_date&sort_direction=asc&search%5Binterval%5D%5B%5D=$iniD&search%5Binterval%5D%5B%5D=$fimD&search%5Bfinancial_account%5D=&search%5Btype%5D=statement"
+    $exBase = "https://api.clinicaexperts.com.br/api/financial/parcels/list"
+    foreach ($vn in @('Daiane','Ana','Brenda','Ana Paula')) { $ceVend[$vn].faturamento = 0.0 }
+    $sjRec = 0.0; $jvRec = 0.0
+    foreach ($cl in @(@{ u='sao_jose'; jwt=$sjJwt }, @{ u='joinville'; jwt=$jvJwt })) {
+      $h = @{ Authorization = "Bearer $($cl.jwt)"; Accept = "application/json" }
+      # total recebido (receipts_paid)
+      $rt = Invoke-RestMethod -Uri "$($exBase)?per_page=1&$baseQs&search%5Bstatus%5D=all&page=1" -Headers $h -Method Get
+      $rec = [double]$rt.total.receipts_paid / 100.0
+      if ($cl.u -eq 'sao_jose') { $sjRec = $rec } else { $jvRec = $rec }
+      # itens recebidos -> atribui por vendedora (paciente na descricao "... para {Nome}", casado com a observacao)
+      $p = 1
+      do {
+        $ri = Invoke-RestMethod -Uri "$($exBase)?per_page=200&$baseQs&search%5Bstatus%5D=received&page=$p" -Headers $h -Method Get
+        $items = @($ri.data); if ($items.Count -eq 0) { break }
+        foreach ($it in $items) {
+          $val = [double]$it.final_amount / 100.0
+          if ($val -le 0) { continue }
+          $desc = "$($it.title.description)"
+          if ($desc -match '(?i) para ') {
+            $pat = (($desc -split '(?i)\s+para\s+')[-1]).Trim().ToLower()
+            if ($pat -and $patVend.ContainsKey($pat)) { $ceVend[$patVend[$pat]].faturamento += $val }
+          }
+        }
+        $p++
+      } while ($items.Count -gt 0 -and $p -le 50)
+    }
+    $ce.sj_fat = $sjRec; $ce.jv_fat = $jvRec; $ce.faturamento = $sjRec + $jvRec
     Write-Host ("Faturamento (extrato via sessao): R$ {0:N2}  (SJ {1:N2} + JV {2:N2})" -f $ce.faturamento,$ce.sj_fat,$ce.jv_fat) -ForegroundColor Green
+    $ceVend.GetEnumerator() | ForEach-Object { Write-Host ("   fat {0}: R$ {1:N2}" -f $_.Key, $_.Value.faturamento) }
   } catch {
     $code = ""; if ($_.Exception.Response) { $code = [int]$_.Exception.Response.StatusCode }
     Write-Host ("Falha no extrato via sessao (HTTP {0}) - token pode ter expirado: {1}" -f $code, $_.Exception.Message) -ForegroundColor Red
