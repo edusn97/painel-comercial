@@ -4,5 +4,14 @@
   "total": 9407.94,
   "sj": 889.98,
   "jv": 8517.96,
-  "por_vendedora": {}
+  "recebidos": [
+    { "nome": "Leonardo Henrique Leite", "val": 222.49 },
+    { "nome": "Leonardo Henrique Leite", "val": 222.49 },
+    { "nome": "Leonardo Henrique Leite", "val": 222.49 },
+    { "nome": "Leonardo Henrique Leite", "val": 222.51 },
+    { "nome": "", "val": 890 },
+    { "nome": "Silvoneide dos Santos", "val": 889.98 },
+    { "nome": "Alessandra Souza", "val": 5848 },
+    { "nome": "Alessandra Souza", "val": 889.98 }
+  ]
 }
