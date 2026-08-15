@@ -298,10 +298,15 @@ if (Test-Path $fatFile) {
     if ($null -ne $fj.total) { $ce.faturamento = [double]$fj.total }
     if ($null -ne $fj.sj)    { $ce.sj_fat = [double]$fj.sj }
     if ($null -ne $fj.jv)    { $ce.jv_fat = [double]$fj.jv }
-    foreach ($vn in @('Daiane','Ana','Brenda','Ana Paula')) {
-      $val = $null
-      if ($fj.por_vendedora -and ($null -ne $fj.por_vendedora.$vn)) { $val = [double]$fj.por_vendedora.$vn }
-      $ceVend[$vn].faturamento = $val   # $null = ainda nao capturado (mostra "-")
+    foreach ($vn in @('Daiane','Ana','Brenda','Ana Paula')) { $ceVend[$vn].faturamento = 0.0 }
+    if ($fj.recebidos -and ($null -ne $patVend)) {
+      # atribui cada recebimento a vendedora, casando o paciente com a observacao do agendamento
+      foreach ($rc in $fj.recebidos) {
+        $nm = ("$($rc.nome)").ToLower().Trim()
+        if ($nm -and $patVend.ContainsKey($nm)) { $ceVend[$patVend[$nm]].faturamento += [double]$rc.val }
+      }
+    } elseif (-not $fj.recebidos) {
+      foreach ($vn in @('Daiane','Ana','Brenda','Ana Paula')) { $ceVend[$vn].faturamento = $null }  # sem lista -> mostra "-"
     }
     Write-Host ("Faturamento OFICIAL (extrato): R$ {0:N2}  (SJ {1:N2} + JV {2:N2})" -f $ce.faturamento,$ce.sj_fat,$ce.jv_fat) -ForegroundColor Green
   } catch { Write-Host ("Falha lendo faturamento.json: {0}" -f $_.Exception.Message) -ForegroundColor Red }
