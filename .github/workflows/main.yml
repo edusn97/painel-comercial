@@ -18,18 +18,18 @@ jobs:
         env:
           CE_TOKENS: ${{ secrets.CLINICA_EXPERTS_TOKENS_JSON }}
           PV_TOKEN: ${{ secrets.PAPERVINES_TOKEN }}
-          NF_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
-          NF_SITE: ${{ secrets.NETLIFY_SITE }}
         run: |
           mkdir -p config
           printf '%s' "$CE_TOKENS" > config/clinica-experts-tokens.json
           printf '%s' "$PV_TOKEN" > config/papervines-token.txt
-          printf '%s' "$NF_TOKEN" > config/netlify-token.txt
-          printf '%s' "$NF_SITE" > config/netlify-site.txt
 
-      - name: Gerar o painel e publicar no Netlify
+      - name: Gerar o painel
         shell: pwsh
-        env:
-          CE_SJ_JWT: ${{ secrets.CE_SJ_JWT }}
-          CE_JV_JWT: ${{ secrets.CE_JV_JWT }}
         run: ./Puxar-Funil-PaperVines.ps1 -nopause
+
+      - name: Publicar no Netlify (CLI oficial)
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
+        run: |
+          npm install -g netlify-cli@17
+          netlify deploy --prod --dir=site --site="${{ secrets.NETLIFY_SITE }}"
