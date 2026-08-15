@@ -308,8 +308,9 @@ if (Test-Path $fatFile) {
 }
 
 # ===== Faturamento OFICIAL via SESSAO (extrato do Clinica Experts) - usa os tokens de sessao (secrets na nuvem) =====
-$sjJwt = "$env:CE_SJ_JWT"; $jvJwt = "$env:CE_JV_JWT"
+$sjJwt = "$env:CE_SJ_JWT".Trim(); $jvJwt = "$env:CE_JV_JWT".Trim()
 if ((-not [string]::IsNullOrWhiteSpace($sjJwt)) -and (-not [string]::IsNullOrWhiteSpace($jvJwt))) {
+  Write-Host ("Sessao CE (tokens): SJ tem {0} caracteres, JV tem {1} caracteres" -f $sjJwt.Length, $jvJwt.Length) -ForegroundColor DarkGray
   try {
     $iniD = $start.ToString('yyyy-MM-dd'); $fimD = $end.ToString('yyyy-MM-dd')
     $qs = "per_page=1&sort_column=due_date&sort_direction=asc&search%5Binterval%5D%5B%5D=$iniD&search%5Binterval%5D%5B%5D=$fimD&search%5Bfinancial_account%5D=&search%5Btype%5D=statement&search%5Bstatus%5D=all&page=1"
