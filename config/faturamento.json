@@ -1,17 +1,13 @@
 {
-  "fonte": "Clinica Experts > Financeiro > Extrato de movimentacao (receipts_paid)",
+  "fonte": "Clinica Experts > Extrato (receipts_paid) + vendedor da comanda (order.seller)",
   "periodo": "07/08 a 13/08",
   "total": 9407.94,
   "sj": 889.98,
   "jv": 8517.96,
-  "recebidos": [
-    { "nome": "Leonardo Henrique Leite", "val": 222.49 },
-    { "nome": "Leonardo Henrique Leite", "val": 222.49 },
-    { "nome": "Leonardo Henrique Leite", "val": 222.49 },
-    { "nome": "Leonardo Henrique Leite", "val": 222.51 },
-    { "nome": "", "val": 890 },
-    { "nome": "Silvoneide dos Santos", "val": 889.98 },
-    { "nome": "Alessandra Souza", "val": 5848 },
-    { "nome": "Alessandra Souza", "val": 889.98 }
-  ]
+  "por_vendedora": {
+    "Daiane": 1779.96,
+    "Ana": 890,
+    "Brenda": 889.98,
+    "Ana Paula": 0
+  }
 }

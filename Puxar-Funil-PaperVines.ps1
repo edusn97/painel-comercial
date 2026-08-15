@@ -298,63 +298,15 @@ if (Test-Path $fatFile) {
     if ($null -ne $fj.total) { $ce.faturamento = [double]$fj.total }
     if ($null -ne $fj.sj)    { $ce.sj_fat = [double]$fj.sj }
     if ($null -ne $fj.jv)    { $ce.jv_fat = [double]$fj.jv }
-    foreach ($vn in @('Daiane','Ana','Brenda','Ana Paula')) { $ceVend[$vn].faturamento = 0.0 }
-    if ($fj.recebidos -and ($null -ne $patVend)) {
-      # atribui cada recebimento a vendedora, casando o paciente com a observacao do agendamento
-      foreach ($rc in $fj.recebidos) {
-        $nm = ("$($rc.nome)").ToLower().Trim()
-        if ($nm -and $patVend.ContainsKey($nm)) { $ceVend[$patVend[$nm]].faturamento += [double]$rc.val }
-      }
-    } elseif (-not $fj.recebidos) {
-      foreach ($vn in @('Daiane','Ana','Brenda','Ana Paula')) { $ceVend[$vn].faturamento = $null }  # sem lista -> mostra "-"
+    foreach ($vn in @('Daiane','Ana','Brenda','Ana Paula')) {
+      $val = $null
+      if ($fj.por_vendedora -and ($null -ne $fj.por_vendedora.$vn)) { $val = [double]$fj.por_vendedora.$vn }
+      $ceVend[$vn].faturamento = $val   # vem do vendedor da comanda (capturado); $null = ainda nao capturado ("-")
     }
     Write-Host ("Faturamento OFICIAL (extrato): R$ {0:N2}  (SJ {1:N2} + JV {2:N2})" -f $ce.faturamento,$ce.sj_fat,$ce.jv_fat) -ForegroundColor Green
   } catch { Write-Host ("Falha lendo faturamento.json: {0}" -f $_.Exception.Message) -ForegroundColor Red }
 }
 
-# ===== Faturamento OFICIAL via SESSAO (extrato do Clinica Experts) - usa os tokens de sessao (secrets na nuvem) =====
-$sjJwt = "$env:CE_SJ_JWT".Trim(); $jvJwt = "$env:CE_JV_JWT".Trim()
-if ((-not [string]::IsNullOrWhiteSpace($sjJwt)) -and (-not [string]::IsNullOrWhiteSpace($jvJwt))) {
-  Write-Host ("Sessao CE (tokens): SJ tem {0} caracteres, JV tem {1} caracteres" -f $sjJwt.Length, $jvJwt.Length) -ForegroundColor DarkGray
-  try {
-    $iniD = $start.ToString('yyyy-MM-dd'); $fimD = $end.ToString('yyyy-MM-dd')
-    $baseQs = "sort_column=due_date&sort_direction=asc&search%5Binterval%5D%5B%5D=$iniD&search%5Binterval%5D%5B%5D=$fimD&search%5Bfinancial_account%5D=&search%5Btype%5D=statement"
-    $exBase = "https://api.clinicaexperts.com.br/api/financial/parcels/list"
-    $tmpVend = @{}; foreach ($vn in @('Daiane','Ana','Brenda','Ana Paula')) { $tmpVend[$vn] = 0.0 }
-    $sjRec = 0.0; $jvRec = 0.0
-    foreach ($cl in @(@{ u='sao_jose'; jwt=$sjJwt }, @{ u='joinville'; jwt=$jvJwt })) {
-      $h = @{ Authorization = "Bearer $($cl.jwt)"; Accept = "application/json" }
-      # total recebido (receipts_paid)
-      $rt = Invoke-RestMethod -Uri "$($exBase)?per_page=1&$baseQs&search%5Bstatus%5D=all&page=1" -Headers $h -Method Get
-      $rec = [double]$rt.total.receipts_paid / 100.0
-      if ($cl.u -eq 'sao_jose') { $sjRec = $rec } else { $jvRec = $rec }
-      # itens recebidos -> atribui por vendedora (paciente na descricao "... para {Nome}", casado com a observacao)
-      $p = 1
-      do {
-        $ri = Invoke-RestMethod -Uri "$($exBase)?per_page=200&$baseQs&search%5Bstatus%5D=received&page=$p" -Headers $h -Method Get
-        $items = @($ri.data); if ($items.Count -eq 0) { break }
-        foreach ($it in $items) {
-          $val = [double]$it.final_amount / 100.0
-          if ($val -le 0) { continue }
-          $desc = "$($it.title.description)"
-          if ($desc -match '(?i) para ') {
-            $pat = (($desc -split '(?i)\s+para\s+')[-1]).Trim().ToLower()
-            if ($pat -and $patVend.ContainsKey($pat)) { $tmpVend[$patVend[$pat]] += $val }
-          }
-        }
-        $p++
-      } while ($items.Count -gt 0 -and $p -le 50)
-    }
-    # so aplica se tudo deu certo (transacional) - senao fica o faturamento oficial do arquivo
-    $ce.sj_fat = $sjRec; $ce.jv_fat = $jvRec; $ce.faturamento = $sjRec + $jvRec
-    foreach ($vn in @('Daiane','Ana','Brenda','Ana Paula')) { $ceVend[$vn].faturamento = $tmpVend[$vn] }
-    Write-Host ("Faturamento (extrato via sessao): R$ {0:N2}  (SJ {1:N2} + JV {2:N2})" -f $ce.faturamento,$ce.sj_fat,$ce.jv_fat) -ForegroundColor Green
-    $ceVend.GetEnumerator() | ForEach-Object { Write-Host ("   fat {0}: R$ {1:N2}" -f $_.Key, $_.Value.faturamento) }
-  } catch {
-    $code = ""; if ($_.Exception.Response) { $code = [int]$_.Exception.Response.StatusCode }
-    Write-Host ("Falha no extrato via sessao (HTTP {0}) - token pode ter expirado: {1}" -f $code, $_.Exception.Message) -ForegroundColor Red
-  }
-}
 Write-Host ""
 
 $result = [ordered]@{
