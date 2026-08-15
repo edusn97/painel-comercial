@@ -29,4 +29,7 @@ jobs:
 
       - name: Gerar o painel e publicar no Netlify
         shell: pwsh
+        env:
+          CE_SJ_JWT: ${{ secrets.CE_SJ_JWT }}
+          CE_JV_JWT: ${{ secrets.CE_JV_JWT }}
         run: ./Puxar-Funil-PaperVines.ps1 -nopause
