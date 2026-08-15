@@ -194,6 +194,7 @@ try {
   $bkBefore = $start.AddDays(180).ToString("yyyy-MM-dd") + "T23:59:59-03:00"
   $wkStart = [datetimeoffset]($start.ToString("yyyy-MM-dd") + "T00:00:00-03:00")
   $wkEnd   = [datetimeoffset]($end.ToString("yyyy-MM-dd")   + "T23:59:59-03:00")
+  $dbgNovos = [ordered]@{}
   foreach ($u in @('sao_jose','joinville')) {
     $tok = $ceCfg.clinics.$u.token
     $h = @{ Authorization = "Bearer $tok"; Accept = "application/json" }
@@ -256,24 +257,48 @@ try {
       $lp2 = 1; if ($bj2.meta -and $bj2.meta.last_page) { $lp2 = [int]$bj2.meta.last_page }
       $p++
     } while ($p -le $lp2 -and (@($bj2.data)).Count -gt 0)
-    # NOVOS agendamentos criados na semana (pagina TUDO ate last_page e filtra por created_at)
-    $p = 1; $lpN = 1
-    do {
-      $nurl = "$ceBase/bookings?starts_at=$([uri]::EscapeDataString($ceAfter))&ends_at=$([uri]::EscapeDataString($bkBefore))&per_page=100&page=$p"
-      $nj = Invoke-RestMethod -Uri $nurl -Headers $h -Method Get
-      $nrows = @($nj.data)
-      if ($nj.meta -and $nj.meta.last_page) { $lpN = [int]$nj.meta.last_page }
-      if ($nrows.Count -eq 0) { break }
-      foreach ($b in $nrows) {
-        # mapeia paciente -> vendedora pela observacao de QUALQUER agendamento (consulta ou pacote), p/ o faturamento
-        $vvAll = VendOfCE ("$($b.annotation)"); if ($vvAll -and $ceVend.Contains($vvAll)) { $patVend[("$($b.patient.name)").ToLower().Trim()] = $vvAll }
-        $isC = $false
-        foreach ($pr in @($b.procedures)) { $pnm = "$($pr.name)"; if (($pnm -match 'Consulta Inicial') -or ($pnm -match 'Consulta Online') -or ($pnm -match 'Avalia')) { $isC = $true } }
-        if (-not $isC) { continue }
-        try { $cdt = [datetimeoffset]::Parse("$($b.created_at)"); if ($cdt -ge $wkStart -and $cdt -le $wkEnd) { $ceNovos.total++; $ceNovos[$u]++; $vv2 = VendOfCE ("$($b.annotation)"); if ($vv2 -and $ceVend.Contains($vv2)) { $ceVend[$vv2].agendaram++; $patVend[("$($b.patient.name)").ToLower().Trim()] = $vv2 } } } catch {}
-      }
-      $p++
-    } while ($p -le 1000 -and $nrows.Count -gt 0)
+    # NOVOS agendamentos criados na semana: varre em BLOCOS de 30 dias (evita limite de janela) e filtra por created_at
+    $seenIds = @{}
+    $uScan = 0; $uConsulta = 0; $uParsed = 0; $uNovos = 0; $sampleCa = @()
+    for ($ci = 0; $ci -lt 7; $ci++) {
+      $cs   = $start.AddDays($ci * 30)
+      $cend = $cs.AddDays(29)
+      $csS  = $cs.ToString("yyyy-MM-dd")   + "T00:00:00-03:00"
+      $ceS2 = $cend.ToString("yyyy-MM-dd") + "T23:59:59-03:00"
+      $p = 1
+      do {
+        $nurl = "$ceBase/bookings?starts_at=$([uri]::EscapeDataString($csS))&ends_at=$([uri]::EscapeDataString($ceS2))&per_page=100&page=$p"
+        $nj = $null
+        try { $nj = Invoke-RestMethod -Uri $nurl -Headers $h -Method Get } catch { break }
+        $nrows = @($nj.data)
+        if ($nrows.Count -eq 0) { break }
+        foreach ($b in $nrows) {
+          $bid = "$($b.id)"
+          if ($bid -and $seenIds.ContainsKey($bid)) { continue }
+          if ($bid) { $seenIds[$bid] = $true }
+          $uScan++
+          # mapeia paciente -> vendedora pela observacao de QUALQUER agendamento (consulta ou pacote), p/ o faturamento
+          $vvAll = VendOfCE ("$($b.annotation)"); if ($vvAll -and $ceVend.Contains($vvAll)) { $patVend[("$($b.patient.name)").ToLower().Trim()] = $vvAll }
+          $isC = $false
+          foreach ($pr in @($b.procedures)) { $pnm = "$($pr.name)"; if (($pnm -match 'Consulta Inicial') -or ($pnm -match 'Consulta Online') -or ($pnm -match 'Avalia')) { $isC = $true } }
+          if (-not $isC) { continue }
+          $uConsulta++
+          $caRaw = "$($b.created_at)"
+          if ($sampleCa.Count -lt 6) { $sampleCa += $caRaw }
+          $cdt = [datetimeoffset]::MinValue
+          $ok = [datetimeoffset]::TryParse($caRaw, [System.Globalization.CultureInfo]::InvariantCulture, [System.Globalization.DateTimeStyles]::AssumeUniversal, [ref]$cdt)
+          if (-not $ok) { continue }
+          $uParsed++
+          if ($cdt -ge $wkStart -and $cdt -le $wkEnd) {
+            $uNovos++; $ceNovos.total++; $ceNovos[$u]++
+            $vv2 = VendOfCE ("$($b.annotation)")
+            if ($vv2 -and $ceVend.Contains($vv2)) { $ceVend[$vv2].agendaram++; $patVend[("$($b.patient.name)").ToLower().Trim()] = $vv2 }
+          }
+        }
+        $p++
+      } while ($p -le 1000 -and $nrows.Count -gt 0)
+    }
+    $dbgNovos[$u] = [ordered]@{ scan = $uScan; consulta = $uConsulta; parsed = $uParsed; novos = $uNovos; samples = $sampleCa }
   }
   # Faturamento por vendedora: casa o paciente da venda com quem agendou (patVend)
   foreach ($vd in $vendas) {
@@ -464,6 +489,7 @@ try {
   # Copia para site\index.html (pasta que a Cloudflare publica online)
   $siteDir = Join-Path $base "site"
   if (-not (Test-Path $siteDir)) { New-Item -ItemType Directory -Path $siteDir | Out-Null }
+  try { if ($dbgNovos) { [System.IO.File]::WriteAllText((Join-Path $siteDir "debug-novos.json"), ($dbgNovos | ConvertTo-Json -Depth 6)) } } catch {}
   [System.IO.File]::WriteAllText((Join-Path $siteDir "index.html"), $tpl, (New-Object System.Text.UTF8Encoding($false)))
   # Forca o Netlify a servir como pagina HTML (evita mostrar o codigo como texto)
   [System.IO.File]::WriteAllText((Join-Path $siteDir "_headers"), "/*`r`n  Content-Type: text/html; charset=UTF-8`r`n")
