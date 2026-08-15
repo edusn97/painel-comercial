@@ -306,6 +306,25 @@ if (Test-Path $fatFile) {
     Write-Host ("Faturamento OFICIAL (extrato): R$ {0:N2}  (SJ {1:N2} + JV {2:N2})" -f $ce.faturamento,$ce.sj_fat,$ce.jv_fat) -ForegroundColor Green
   } catch { Write-Host ("Falha lendo faturamento.json: {0}" -f $_.Exception.Message) -ForegroundColor Red }
 }
+
+# ===== Faturamento OFICIAL via SESSAO (extrato do Clinica Experts) - usa os tokens de sessao (secrets na nuvem) =====
+$sjJwt = "$env:CE_SJ_JWT"; $jvJwt = "$env:CE_JV_JWT"
+if ((-not [string]::IsNullOrWhiteSpace($sjJwt)) -and (-not [string]::IsNullOrWhiteSpace($jvJwt))) {
+  try {
+    $iniD = $start.ToString('yyyy-MM-dd'); $fimD = $end.ToString('yyyy-MM-dd')
+    $qs = "per_page=1&sort_column=due_date&sort_direction=asc&search%5Binterval%5D%5B%5D=$iniD&search%5Binterval%5D%5B%5D=$fimD&search%5Bfinancial_account%5D=&search%5Btype%5D=statement&search%5Bstatus%5D=all&page=1"
+    $exUrl = "https://api.clinicaexperts.com.br/api/financial/parcels/list?$qs"
+    $rSj = Invoke-RestMethod -Uri $exUrl -Headers @{ Authorization = "Bearer $sjJwt"; Accept = "application/json" } -Method Get
+    $rJv = Invoke-RestMethod -Uri $exUrl -Headers @{ Authorization = "Bearer $jvJwt"; Accept = "application/json" } -Method Get
+    $ce.sj_fat = [double]$rSj.total.receipts_paid / 100.0
+    $ce.jv_fat = [double]$rJv.total.receipts_paid / 100.0
+    $ce.faturamento = $ce.sj_fat + $ce.jv_fat
+    Write-Host ("Faturamento (extrato via sessao): R$ {0:N2}  (SJ {1:N2} + JV {2:N2})" -f $ce.faturamento,$ce.sj_fat,$ce.jv_fat) -ForegroundColor Green
+  } catch {
+    $code = ""; if ($_.Exception.Response) { $code = [int]$_.Exception.Response.StatusCode }
+    Write-Host ("Falha no extrato via sessao (HTTP {0}) - token pode ter expirado: {1}" -f $code, $_.Exception.Message) -ForegroundColor Red
+  }
+}
 Write-Host ""
 
 $result = [ordered]@{
