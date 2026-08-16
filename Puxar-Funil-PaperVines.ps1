@@ -490,6 +490,47 @@ try {
   $siteDir = Join-Path $base "site"
   if (-not (Test-Path $siteDir)) { New-Item -ItemType Directory -Path $siteDir | Out-Null }
   try { if ($dbgNovos) { [System.IO.File]::WriteAllText((Join-Path $siteDir "debug-novos.json"), ($dbgNovos | ConvertTo-Json -Depth 6)) } } catch {}
+  # ===== DEBUG BIOMEDICAS (temporario - descobrir modelo de dados) =====
+  try {
+    $ceCfgB  = Get-Content (Join-Path $base "config/clinica-experts-tokens.json") -Raw | ConvertFrom-Json
+    $ceBaseB = "https://api.clinicaexperts.com.br/api/v1"
+    $endB    = $now.Date
+    $startB  = $endB.AddDays(-30)
+    $aB = $startB.ToString("yyyy-MM-dd") + "T00:00:00-03:00"
+    $bB = $endB.ToString("yyyy-MM-dd")   + "T23:59:59-03:00"
+    $dbgBio = [ordered]@{}
+    foreach ($u in @('sao_jose','joinville')) {
+      $tokB = $ceCfgB.clinics.$u.token
+      $hB = @{ Authorization = "Bearer $tokB"; Accept = "application/json" }
+      $rowsB = @(); $pB = 1
+      do {
+        $urlB = "$ceBaseB/bookings?starts_at=$([uri]::EscapeDataString($aB))&ends_at=$([uri]::EscapeDataString($bB))&per_page=100&page=$pB"
+        $jB = Invoke-RestMethod -Uri $urlB -Headers $hB -Method Get
+        $dB = @($jB.data); if ($dB.Count -eq 0) { break }
+        $rowsB += $dB; $pB++
+      } while ($pB -le 50 -and $dB.Count -gt 0)
+      $procC=@{}; $profC=@{}; $statC=@{}; $sampleKeys=@(); $profField='NAO_ACHEI'; $profShape=@(); $hasOrder=$false
+      if ($rowsB.Count -gt 0) {
+        $s0 = $rowsB[0]; $sampleKeys = @($s0.PSObject.Properties.Name)
+        if ($sampleKeys -contains 'professional') { $profField='professional'; if ($s0.professional) { $profShape=@($s0.professional.PSObject.Properties.Name) } }
+        elseif ($sampleKeys -contains 'professionals') { $profField='professionals' }
+        elseif ($sampleKeys -contains 'professional_name') { $profField='professional_name' }
+        if ($sampleKeys -contains 'order_id' -or $sampleKeys -contains 'order') { $hasOrder=$true }
+      }
+      foreach ($bk in $rowsB) {
+        foreach ($pr in @($bk.procedures)) { $nn="$($pr.name)"; if ($nn) { if ($procC.ContainsKey($nn)) { $procC[$nn]++ } else { $procC[$nn]=1 } } }
+        $prof=$null
+        if ($bk.professional -and $bk.professional.name) { $prof="$($bk.professional.name)" }
+        elseif ($bk.professionals -and @($bk.professionals).Count -gt 0) { $prof="$(@($bk.professionals)[0].name)" }
+        elseif ($bk.professional_name) { $prof="$($bk.professional_name)" }
+        if ($prof) { if ($profC.ContainsKey($prof)) { $profC[$prof]++ } else { $profC[$prof]=1 } }
+        $st="$($bk.status)"; if ($st) { if ($statC.ContainsKey($st)) { $statC[$st]++ } else { $statC[$st]=1 } }
+      }
+      $dbgBio[$u] = [ordered]@{ total=$rowsB.Count; bookingKeys=$sampleKeys; profField=$profField; profShape=$profShape; hasOrderLink=$hasOrder; profissionais=$profC; status=$statC; procedimentos=$procC }
+    }
+    [System.IO.File]::WriteAllText((Join-Path $siteDir "debug-biomedicas.json"), ($dbgBio | ConvertTo-Json -Depth 6))
+    Write-Host "DEBUG biomedicas: escrito em site/debug-biomedicas.json" -ForegroundColor Magenta
+  } catch { Write-Host ("DEBUG biomedicas erro: {0}" -f $_.Exception.Message) -ForegroundColor Red }
   [System.IO.File]::WriteAllText((Join-Path $siteDir "index.html"), $tpl, (New-Object System.Text.UTF8Encoding($false)))
   # Forca o Netlify a servir como pagina HTML (evita mostrar o codigo como texto)
   [System.IO.File]::WriteAllText((Join-Path $siteDir "_headers"), "/*`r`n  Content-Type: text/html; charset=UTF-8`r`n")
