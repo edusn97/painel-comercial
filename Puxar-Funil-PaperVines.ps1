@@ -531,7 +531,7 @@ try {
     [System.IO.File]::WriteAllText((Join-Path $siteDir "debug-biomedicas.json"), ($dbgBio | ConvertTo-Json -Depth 6))
     Write-Host "DEBUG biomedicas: escrito em site/debug-biomedicas.json" -ForegroundColor Magenta
   } catch { Write-Host ("DEBUG biomedicas erro: {0}" -f $_.Exception.Message) -ForegroundColor Red }
-  # ===== DEBUG VENDAS (temporario - descobrir como identificar venda de tratamento) =====
+  # ===== DEBUG VENDAS v2 (categorias + palavras-chave + forma do paciente) =====
   try {
     $ceCfgV  = Get-Content (Join-Path $base "config/clinica-experts-tokens.json") -Raw | ConvertFrom-Json
     $ceBaseV = "https://api.clinicaexperts.com.br/api/v1"
@@ -539,6 +539,7 @@ try {
     $startV  = $endV.AddDays(-30)
     $aV = $startV.ToString("yyyy-MM-dd") + "T00:00:00-03:00"
     $bV = $endV.ToString("yyyy-MM-dd")   + "T23:59:59-03:00"
+    $kw = @('tratamento','pacote','sessao','sessão','consulta','avalia','produto','microagulha','intradermo','fotobiomodula','lavieen','combo','eletroterapia','permuta','bonus','bônus')
     $dbgVen = [ordered]@{}
     foreach ($u in @('sao_jose','joinville')) {
       $tokV = $ceCfgV.clinics.$u.token
@@ -550,24 +551,23 @@ try {
         $dV = @($jV.data); if ($dV.Count -eq 0) { break }
         $billsV += $dV; $pV++
       } while ($pV -le 50 -and $dV.Count -gt 0)
-      $typeC=@{}; $billKeys=@(); $arrays=[ordered]@{}; $itemNames=@{}; $personShape=@(); $vendaSampleKeys=@()
-      if ($billsV.Count -gt 0) {
-        $s0 = $billsV[0]; $billKeys = @($s0.PSObject.Properties.Name)
-        foreach ($pn in $billKeys) { $val=$s0.$pn; if ($val -is [System.Array]) { $f=@($val)[0]; if ($f) { $arrays[$pn]=@($f.PSObject.Properties.Name) } else { $arrays[$pn]='vazio' } } }
-        $sv = $billsV | Where-Object { "$($_.type)" -eq 'Venda' } | Select-Object -First 1
-        if ($sv) { $vendaSampleKeys=@($sv.PSObject.Properties.Name); if ($sv.person) { $personShape=@($sv.person.PSObject.Properties.Name) } }
-      }
+      $catC=@{}; $kwC=@{}; $nVenda=0
       foreach ($bb in $billsV) {
-        $t="$($bb.type)"; if ($t) { if ($typeC.ContainsKey($t)) { $typeC[$t]++ } else { $typeC[$t]=1 } }
-        foreach ($cand in @('items','products','procedures','order_items','services','installments')) {
-          $arr=$bb.$cand
-          if ($arr) { foreach ($it in @($arr)) { $nm="$($it.name)"; if (-not $nm) { $nm="$($it.description)" }; if ($nm) { if ($itemNames.ContainsKey($nm)) { $itemNames[$nm]++ } else { $itemNames[$nm]=1 } } } }
-        }
+        if ("$($bb.type)" -ne 'Venda') { continue }
+        $nVenda++
+        $cat=$null
+        if ($bb.category) { if ($bb.category -is [string]) { $cat="$($bb.category)" } elseif ($bb.category.name) { $cat="$($bb.category.name)" } else { $cat=($bb.category | ConvertTo-Json -Compress) } }
+        if (-not $cat) { $cat='(sem categoria)' }
+        if ($catC.ContainsKey($cat)) { $catC[$cat]++ } else { $catC[$cat]=1 }
+        $desc=("$($bb.description)").ToLower()
+        foreach ($k in $kw) { if ($desc -like "*$k*") { if ($kwC.ContainsKey($k)) { $kwC[$k]++ } else { $kwC[$k]=1 } } }
       }
-      $dbgVen[$u] = [ordered]@{ total=$billsV.Count; billKeys=$billKeys; camposArray=$arrays; tipos=$typeC; vendaKeys=$vendaSampleKeys; personShape=$personShape; itemNames=$itemNames }
+      $patShape=@()
+      try { $rb=Invoke-RestMethod -Uri "$ceBaseV/bookings?starts_at=$([uri]::EscapeDataString($aV))&ends_at=$([uri]::EscapeDataString($bV))&per_page=1&page=1" -Headers $hV -Method Get; $b0=@($rb.data)[0]; if ($b0 -and $b0.patient) { $patShape=@($b0.patient.PSObject.Properties.Name) } } catch {}
+      $dbgVen[$u] = [ordered]@{ totalVendas=$nVenda; categorias=$catC; descKeywords=$kwC; patientShape=$patShape }
     }
     [System.IO.File]::WriteAllText((Join-Path $siteDir "debug-vendas.json"), ($dbgVen | ConvertTo-Json -Depth 6))
-    Write-Host "DEBUG vendas: escrito em site/debug-vendas.json" -ForegroundColor Magenta
+    Write-Host "DEBUG vendas v2 escrito" -ForegroundColor Magenta
   } catch { Write-Host ("DEBUG vendas erro: {0}" -f $_.Exception.Message) -ForegroundColor Red }
   [System.IO.File]::WriteAllText((Join-Path $siteDir "index.html"), $tpl, (New-Object System.Text.UTF8Encoding($false)))
   # Forca o Netlify a servir como pagina HTML (evita mostrar o codigo como texto)
