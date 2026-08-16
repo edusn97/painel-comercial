@@ -441,7 +441,7 @@ try {
   # ---- Biomedicas: atendidas (auto) + pacotes fechados + faturamento (captura semanal) + conversao ----
   $bioRows = ""; $bAt=0; $bFeSum=0; $bFaSum=0.0; $bAnyFe=$false; $bAnyFa=$false
   foreach ($bn in @('Kamile','Janaina','Bruna')) {
-    $disp = $bn; if ($bn -eq 'Janaina') { $disp = 'Jana&iacute;na' }
+    $disp = $bn; if ($bn -eq 'Janaina') { $disp = 'Jana&iacute;na' } elseif ($bn -eq 'Kamile') { $disp = 'Camily' }
     $at = [int]$bio[$bn].atendidas
     $fe = $bio[$bn].fechados
     $fa = $bio[$bn].faturamento
@@ -456,6 +456,18 @@ try {
   $tBFaDisp = '&mdash;'; if ($bAnyFa) { $tBFaDisp = 'R$ ' + ("{0:N0}" -f $bFaSum) }
   $tConvDisp = '&mdash;'; if ($bAnyFe -and $bAt -gt 0) { $tConvDisp = ([math]::Round($bFeSum / $bAt * 100,0)).ToString($ic) + '%' }
   $bioRows += '        <tr class="tot"><td>Equipe</td><td class="num">' + $bAt + '</td><td class="num">' + $tFeDisp + '</td><td class="num">' + $tConvDisp + '</td><td class="num">' + $tBFaDisp + '</td></tr>'
+
+  # ---- Conferencia do faturamento: Total = Vendedoras + Biomedicas + Outros ----
+  if ($anyFa -and $bAnyFa) {
+    $rv = [double]$tFa
+    $rb = [double]$bFaSum
+    $ro = [double]$ce.faturamento - $rv - $rb
+    $roLabel = 'Outros/sem vendedor'
+    $reconc = 'Confer&ecirc;ncia do faturamento: <b>Total R$ ' + ("{0:N0}" -f $ce.faturamento) + '</b> = Vendedoras R$ ' + ("{0:N0}" -f $rv) + ' + Biom&eacute;dicas R$ ' + ("{0:N0}" -f $rb) + ' + ' + $roLabel + ' R$ ' + ("{0:N0}" -f $ro) + '.'
+    if ([math]::Abs($ro) -ge 50) { $reconc += ' <b style="color:var(--amarelo)">Confira o "Outros"</b> &mdash; venda sem vendedor ou de algu&eacute;m fora da lista.' }
+  } else {
+    $reconc = 'Confer&ecirc;ncia (Total = Vendedoras + Biom&eacute;dicas) aparece ap&oacute;s a captura de sexta.'
+  }
 
   $repList = ""
   foreach ($c in $cancelados) {
@@ -514,6 +526,7 @@ try {
   $tpl = $tpl.Replace('@@UNIDADE_ROWS@@', $uniRows)
   $tpl = $tpl.Replace('@@VEND_ROWS@@', $vendRows)
   $tpl = $tpl.Replace('@@BIO_ROWS@@', $bioRows)
+  $tpl = $tpl.Replace('@@RECONC@@', $reconc)
   $tpl = $tpl.Replace('@@REP_LIST@@', $repList)
   $tpl = $tpl.Replace('@@LEADS@@', "$total")
   $tpl = $tpl.Replace('@@CAMPANHA@@', "$campanha")
