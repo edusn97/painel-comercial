@@ -171,6 +171,15 @@ function VendOfCE([string]$a) {
   if ($a -match 'ana') { return 'Ana' }
   return $null
 }
+# Biomedicas (profissional que atende consulta/avaliacao e fecha tratamento)
+function BioOf([string]$n) {
+  if ([string]::IsNullOrWhiteSpace($n)) { return $null }
+  $a = $n.ToLower()
+  if ($a -match 'camily') { return 'Kamile' }
+  if ($a -match 'janaina') { return 'Janaina' }
+  if ($a -match 'bruna') { return 'Bruna' }
+  return $null
+}
 Write-Host "Puxando Clinica Experts (2 clinicas)..."
 $ce = [ordered]@{ agendaram=0; compareceram=0; cancelaram=0; remarcaram=0; noshow=0; faturamento=0.0; sj_fat=0.0; jv_fat=0.0 }
 $ceUnit = @{
@@ -179,6 +188,8 @@ $ceUnit = @{
 }
 $ceVend = [ordered]@{}
 foreach ($vn in @('Daiane','Ana','Brenda','Ana Paula')) { $ceVend[$vn] = [ordered]@{ agendaram=0; compareceram=0; cancelaram=0; remarcaram=0; noshow=0; faturamento=0.0 } }
+$bio = [ordered]@{}
+foreach ($bn in @('Kamile','Janaina','Bruna')) { $bio[$bn] = [ordered]@{ atendidas=0; fechados=$null; faturamento=$null } }
 $cancelados = @()
 $ceSemObs = @()
 try {
@@ -215,6 +226,8 @@ try {
         elseif ($b.status -eq 'canceled') { $ce.cancelaram++; $ceUnit[$u].cancelaram++ }
         elseif ($b.status -eq 'rescheduled') { $ce.remarcaram++; $ceUnit[$u].remarcaram++ }
         elseif ($b.status -eq 'noshow') { $ce.noshow++; $ceUnit[$u].noshow++ }
+        # Biomedica: consultas/avaliacoes ATENDIDAS (compareceu) na semana
+        if ($b.status -eq 'done') { $bnm = BioOf ("$($b.professional.name)"); if ($bnm -and $bio.Contains($bnm)) { $bio[$bnm].atendidas++ } }
         $vv = VendOfCE ("$($b.annotation)")
         if ($vv -and $ceVend.Contains($vv)) {
           $patVend[("$($b.patient.name)").ToLower().Trim()] = $vv
@@ -329,6 +342,16 @@ if (Test-Path $fatFile) {
       if ($fj.por_vendedora -and ($null -ne $fj.por_vendedora.$vn)) { $val = [double]$fj.por_vendedora.$vn }
       $ceVend[$vn].faturamento = $val   # vem do vendedor da comanda (capturado); $null = ainda nao capturado ("-")
     }
+    # Biomedicas: pacotes fechados + faturamento em tratamentos (capturados na captura semanal, via vendedor=biomedica)
+    if ($fj.biomedicas) {
+      foreach ($bn in @('Kamile','Janaina','Bruna')) {
+        $bo = $fj.biomedicas.$bn
+        if ($bo) {
+          if ($null -ne $bo.pacotes)     { $bio[$bn].fechados     = [int]$bo.pacotes }
+          if ($null -ne $bo.faturamento) { $bio[$bn].faturamento  = [double]$bo.faturamento }
+        }
+      }
+    }
     Write-Host ("Faturamento OFICIAL (extrato): R$ {0:N2}  (SJ {1:N2} + JV {2:N2})" -f $ce.faturamento,$ce.sj_fat,$ce.jv_fat) -ForegroundColor Green
   } catch { Write-Host ("Falha lendo faturamento.json: {0}" -f $_.Exception.Message) -ForegroundColor Red }
 }
@@ -415,6 +438,25 @@ try {
   $tFaDisp = '&mdash;'; if ($anyFa) { $tFaDisp = 'R$ ' + ("{0:N0}" -f $tFa) }
   $vendRows += '        <tr class="tot"><td>Equipe</td><td class="num">' + $tAt + '</td><td class="num">' + $tQ + '</td><td class="num">' + $tD + '</td><td class="num">' + $tAg + '</td><td class="num">' + $tCo + '</td><td class="num">' + $tCa + '</td><td class="num">' + $tRe + '</td><td class="num">' + $tNs + '</td><td class="num">' + $tFaDisp + '</td></tr>'
 
+  # ---- Biomedicas: atendidas (auto) + pacotes fechados + faturamento (captura semanal) + conversao ----
+  $bioRows = ""; $bAt=0; $bFeSum=0; $bFaSum=0.0; $bAnyFe=$false; $bAnyFa=$false
+  foreach ($bn in @('Kamile','Janaina','Bruna')) {
+    $disp = $bn; if ($bn -eq 'Janaina') { $disp = 'Jana&iacute;na' }
+    $at = [int]$bio[$bn].atendidas
+    $fe = $bio[$bn].fechados
+    $fa = $bio[$bn].faturamento
+    $feDisp = '&mdash;'; if ($null -ne $fe) { $feDisp = "$([int]$fe)"; $bFeSum += [int]$fe; $bAnyFe=$true }
+    $faDisp = '&mdash;'; if ($null -ne $fa) { $faDisp = 'R$ ' + ("{0:N0}" -f [double]$fa); $bFaSum += [double]$fa; $bAnyFa=$true }
+    $convDisp = '&mdash;'
+    if (($null -ne $fe) -and $at -gt 0) { $convDisp = ([math]::Round([int]$fe / $at * 100,0)).ToString($ic) + '%' }
+    $bAt += $at
+    $bioRows += '        <tr><td>' + $disp + '</td><td class="num">' + $at + '</td><td class="num">' + $feDisp + '</td><td class="num">' + $convDisp + '</td><td class="num">' + $faDisp + '</td></tr>' + "`r`n"
+  }
+  $tFeDisp = '&mdash;'; if ($bAnyFe) { $tFeDisp = "$bFeSum" }
+  $tBFaDisp = '&mdash;'; if ($bAnyFa) { $tBFaDisp = 'R$ ' + ("{0:N0}" -f $bFaSum) }
+  $tConvDisp = '&mdash;'; if ($bAnyFe -and $bAt -gt 0) { $tConvDisp = ([math]::Round($bFeSum / $bAt * 100,0)).ToString($ic) + '%' }
+  $bioRows += '        <tr class="tot"><td>Equipe</td><td class="num">' + $bAt + '</td><td class="num">' + $tFeDisp + '</td><td class="num">' + $tConvDisp + '</td><td class="num">' + $tBFaDisp + '</td></tr>'
+
   $repList = ""
   foreach ($c in $cancelados) {
     $pp = $c -split ' \| '
@@ -471,6 +513,7 @@ try {
   $tpl = $tpl.Replace('@@PCTNS@@', $pctNs)
   $tpl = $tpl.Replace('@@UNIDADE_ROWS@@', $uniRows)
   $tpl = $tpl.Replace('@@VEND_ROWS@@', $vendRows)
+  $tpl = $tpl.Replace('@@BIO_ROWS@@', $bioRows)
   $tpl = $tpl.Replace('@@REP_LIST@@', $repList)
   $tpl = $tpl.Replace('@@LEADS@@', "$total")
   $tpl = $tpl.Replace('@@CAMPANHA@@', "$campanha")
@@ -490,85 +533,6 @@ try {
   $siteDir = Join-Path $base "site"
   if (-not (Test-Path $siteDir)) { New-Item -ItemType Directory -Path $siteDir | Out-Null }
   try { if ($dbgNovos) { [System.IO.File]::WriteAllText((Join-Path $siteDir "debug-novos.json"), ($dbgNovos | ConvertTo-Json -Depth 6)) } } catch {}
-  # ===== DEBUG BIOMEDICAS (temporario - descobrir modelo de dados) =====
-  try {
-    $ceCfgB  = Get-Content (Join-Path $base "config/clinica-experts-tokens.json") -Raw | ConvertFrom-Json
-    $ceBaseB = "https://api.clinicaexperts.com.br/api/v1"
-    $endB    = $now.Date
-    $startB  = $endB.AddDays(-30)
-    $aB = $startB.ToString("yyyy-MM-dd") + "T00:00:00-03:00"
-    $bB = $endB.ToString("yyyy-MM-dd")   + "T23:59:59-03:00"
-    $dbgBio = [ordered]@{}
-    foreach ($u in @('sao_jose','joinville')) {
-      $tokB = $ceCfgB.clinics.$u.token
-      $hB = @{ Authorization = "Bearer $tokB"; Accept = "application/json" }
-      $rowsB = @(); $pB = 1
-      do {
-        $urlB = "$ceBaseB/bookings?starts_at=$([uri]::EscapeDataString($aB))&ends_at=$([uri]::EscapeDataString($bB))&per_page=100&page=$pB"
-        $jB = Invoke-RestMethod -Uri $urlB -Headers $hB -Method Get
-        $dB = @($jB.data); if ($dB.Count -eq 0) { break }
-        $rowsB += $dB; $pB++
-      } while ($pB -le 50 -and $dB.Count -gt 0)
-      $procC=@{}; $profC=@{}; $statC=@{}; $sampleKeys=@(); $profField='NAO_ACHEI'; $profShape=@(); $hasOrder=$false
-      if ($rowsB.Count -gt 0) {
-        $s0 = $rowsB[0]; $sampleKeys = @($s0.PSObject.Properties.Name)
-        if ($sampleKeys -contains 'professional') { $profField='professional'; if ($s0.professional) { $profShape=@($s0.professional.PSObject.Properties.Name) } }
-        elseif ($sampleKeys -contains 'professionals') { $profField='professionals' }
-        elseif ($sampleKeys -contains 'professional_name') { $profField='professional_name' }
-        if ($sampleKeys -contains 'order_id' -or $sampleKeys -contains 'order') { $hasOrder=$true }
-      }
-      foreach ($bk in $rowsB) {
-        foreach ($pr in @($bk.procedures)) { $nn="$($pr.name)"; if ($nn) { if ($procC.ContainsKey($nn)) { $procC[$nn]++ } else { $procC[$nn]=1 } } }
-        $prof=$null
-        if ($bk.professional -and $bk.professional.name) { $prof="$($bk.professional.name)" }
-        elseif ($bk.professionals -and @($bk.professionals).Count -gt 0) { $prof="$(@($bk.professionals)[0].name)" }
-        elseif ($bk.professional_name) { $prof="$($bk.professional_name)" }
-        if ($prof) { if ($profC.ContainsKey($prof)) { $profC[$prof]++ } else { $profC[$prof]=1 } }
-        $st="$($bk.status)"; if ($st) { if ($statC.ContainsKey($st)) { $statC[$st]++ } else { $statC[$st]=1 } }
-      }
-      $dbgBio[$u] = [ordered]@{ total=$rowsB.Count; bookingKeys=$sampleKeys; profField=$profField; profShape=$profShape; hasOrderLink=$hasOrder; profissionais=$profC; status=$statC; procedimentos=$procC }
-    }
-    [System.IO.File]::WriteAllText((Join-Path $siteDir "debug-biomedicas.json"), ($dbgBio | ConvertTo-Json -Depth 6))
-    Write-Host "DEBUG biomedicas: escrito em site/debug-biomedicas.json" -ForegroundColor Magenta
-  } catch { Write-Host ("DEBUG biomedicas erro: {0}" -f $_.Exception.Message) -ForegroundColor Red }
-  # ===== DEBUG VENDAS v2 (categorias + palavras-chave + forma do paciente) =====
-  try {
-    $ceCfgV  = Get-Content (Join-Path $base "config/clinica-experts-tokens.json") -Raw | ConvertFrom-Json
-    $ceBaseV = "https://api.clinicaexperts.com.br/api/v1"
-    $endV    = $now.Date
-    $startV  = $endV.AddDays(-30)
-    $aV = $startV.ToString("yyyy-MM-dd") + "T00:00:00-03:00"
-    $bV = $endV.ToString("yyyy-MM-dd")   + "T23:59:59-03:00"
-    $kw = @('tratamento','pacote','sessao','sessão','consulta','avalia','produto','microagulha','intradermo','fotobiomodula','lavieen','combo','eletroterapia','permuta','bonus','bônus')
-    $dbgVen = [ordered]@{}
-    foreach ($u in @('sao_jose','joinville')) {
-      $tokV = $ceCfgV.clinics.$u.token
-      $hV = @{ Authorization = "Bearer $tokV"; Accept = "application/json" }
-      $billsV = @(); $pV = 1
-      do {
-        $urlV = "$ceBaseV/bills?starts_at=$([uri]::EscapeDataString($aV))&ends_at=$([uri]::EscapeDataString($bV))&per_page=100&page=$pV"
-        $jV = Invoke-RestMethod -Uri $urlV -Headers $hV -Method Get
-        $dV = @($jV.data); if ($dV.Count -eq 0) { break }
-        $billsV += $dV; $pV++
-      } while ($pV -le 50 -and $dV.Count -gt 0)
-      $catC=@{}; $kwC=@{}; $nVenda=0
-      foreach ($bb in $billsV) {
-        if ("$($bb.type)" -ne 'Venda') { continue }
-        $nVenda++
-        $cat=$null
-        if ($bb.category) { if ($bb.category -is [string]) { $cat="$($bb.category)" } elseif ($bb.category.name) { $cat="$($bb.category.name)" } else { $cat=($bb.category | ConvertTo-Json -Compress) } }
-        if (-not $cat) { $cat='(sem categoria)' }
-        if ($catC.ContainsKey($cat)) { $catC[$cat]++ } else { $catC[$cat]=1 }
-        $desc=("$($bb.description)").ToLower()
-        foreach ($k in $kw) { if ($desc -like "*$k*") { if ($kwC.ContainsKey($k)) { $kwC[$k]++ } else { $kwC[$k]=1 } } }
-      }
-      $patShape=@()
-      try { $rb=Invoke-RestMethod -Uri "$ceBaseV/bookings?starts_at=$([uri]::EscapeDataString($aV))&ends_at=$([uri]::EscapeDataString($bV))&per_page=1&page=1" -Headers $hV -Method Get; $b0=@($rb.data)[0]; if ($b0 -and $b0.patient) { $patShape=@($b0.patient.PSObject.Properties.Name) } } catch {}
-      $dbgVen[$u] = [ordered]@{ totalVendas=$nVenda; categorias=$catC; descKeywords=$kwC; patientShape=$patShape }
-    }
-    [System.IO.File]::WriteAllText((Join-Path $siteDir "debug-vendas.json"), ($dbgVen | ConvertTo-Json -Depth 6))
-    Write-Host "DEBUG vendas v2 escrito" -ForegroundColor Magenta
-  } catch { Write-Host ("DEBUG vendas erro: {0}" -f $_.Exception.Message) -ForegroundColor Red }
   [System.IO.File]::WriteAllText((Join-Path $siteDir "index.html"), $tpl, (New-Object System.Text.UTF8Encoding($false)))
   # Forca o Netlify a servir como pagina HTML (evita mostrar o codigo como texto)
   [System.IO.File]::WriteAllText((Join-Path $siteDir "_headers"), "/*`r`n  Content-Type: text/html; charset=UTF-8`r`n")
