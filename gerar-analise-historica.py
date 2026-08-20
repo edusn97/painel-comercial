@@ -467,7 +467,17 @@ padding:14px 18px;margin-top:16px;font-size:13px;color:#7a2018}
 footer{margin-top:28px;text-align:center;color:var(--cinza);font-size:12px}"""
 
 
-def montar_html(linhas, res, gerado_em):
+# Classes que a analise usa e que o template do painel semanal nao tem.
+# Vao junto quando as secoes sao injetadas no index.html.
+CSS_EXTRA = """<style>
+.alerta{background:#fdecea;border:1px solid #f3b8b0;border-left:5px solid #c0392b;border-radius:12px;
+padding:14px 18px;margin-top:16px;font-size:13px;color:#7a2018}
+.nota{font-size:12px;color:#6b7d7b;margin-top:10px}
+.rec{background:#fdecea}
+</style>"""
+
+
+def montar_html(linhas, res, gerado_em, somente_secoes=False):
     ini, fim = linhas[0]["ini"], linhas[-1]["fim"]
 
     # --- tabela semanal ---
@@ -556,8 +566,9 @@ def montar_html(linhas, res, gerado_em):
 <header class="top"><div><h1>Análise Comercial &mdash; %d semanas</h1>
 <div class="sub">Clínica Cabelo &amp; Saúde &middot; São José + Joinville &middot; Gerado automaticamente</div></div>
 <div style="text-align:right"><div class="badge">%s a %s</div>
-<div class="sub" style="margin-top:8px">Atualizado em: %s</div></div></header>
-<div class="alerta">%s</div>""" % (CSS, len(linhas), ddmm(ini), ddmm(fim), gerado_em, alerta)]
+<div class="sub" style="margin-top:8px">Atualizado em: %s</div></div></header>""" % (CSS, len(linhas), ddmm(ini), ddmm(fim), gerado_em)]
+
+    partes.append('<div class="alerta">%s</div>' % alerta)
 
     partes.append("""<h2 class="sec">Receita por classe de produto</h2><div class="card">
 <div style="display:flex;gap:22px;align-items:center;margin-bottom:6px;font-size:12px;font-weight:700">
@@ -618,12 +629,42 @@ não tem campo de vendedor na conta a receber. A venda promocional foi atribuíd
 vendedora que agendou a avaliação dele. É inferência, não dado nativo.</p></div>""" % (
         "".join('<th class="num">%s</th>' % c for c in col_rec), "".join(tr_rec)))
 
+    if somente_secoes:
+        # partes[0] e o cabecalho da pagina propria; fora dele sobram o alerta
+        # e as secoes, que e o que entra no painel semanal.
+        return CSS_EXTRA + "\n" + "\n".join(partes[1:])
+
     partes.append("""<footer>Gerado automaticamente &middot; Clínica Experts (São José + Joinville) &middot;
-Série de %d semanas (sexta a quinta), %s a %s &middot; Meta semanal %s &middot;
-Página fixa: não é sobrescrita pelo painel semanal</footer></div></body></html>""" % (
+Série de %d semanas (sexta a quinta), %s a %s &middot; Meta semanal %s</footer></div></body></html>""" % (
         len(linhas), ini.strftime("%d/%m/%Y"), fim.strftime("%d/%m/%Y"), brl(META_SEMANAL)))
 
     return "\n".join(partes)
+
+
+def injetar_no_painel(caminho_index, secoes):
+    """
+    Enxerta a analise no painel semanal, para tudo ficar num link so.
+    O painel e regenerado a cada execucao pelo script antigo, entao esta
+    injecao precisa acontecer depois dele — e roda de novo toda vez.
+    """
+    if not os.path.exists(caminho_index):
+        return "index.html nao existe — nada a injetar"
+    with open(caminho_index, encoding="utf-8") as fh:
+        pagina = fh.read()
+
+    marca = "<!--ANALISE-HISTORICA-->"
+    if marca in pagina:
+        return "index.html ja continha a analise (execucao repetida) — nada a fazer"
+
+    bloco = "\n%s\n%s\n" % (marca, secoes)
+
+    for ancora in ("  <footer>", "<footer>", "</body>"):
+        if ancora in pagina:
+            pagina = pagina.replace(ancora, bloco + ancora, 1)
+            with open(caminho_index, "w", encoding="utf-8") as fh:
+                fh.write(pagina)
+            return "analise injetada no index.html antes de '%s'" % ancora.strip()
+    return "AVISO: nao achei onde injetar no index.html — a analise ficou so na pagina propria"
 
 
 # --------------------------------------------------------------------------
@@ -762,6 +803,9 @@ def main():
     with open(destino, "w", encoding="utf-8") as fh:
         fh.write(pagina)
     print("Gerado: %s (%d bytes)" % (destino, len(pagina)))
+
+    secoes = montar_html(linhas, res, hoje.strftime("%d/%m/%Y"), somente_secoes=True)
+    print(injetar_no_painel(os.path.join(destino_dir, "index.html"), secoes))
     return 0
 
 
