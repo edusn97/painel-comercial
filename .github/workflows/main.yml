@@ -39,6 +39,27 @@ jobs:
         shell: pwsh
         run: ./Puxar-Funil-PaperVines.ps1 -nopause
 
+      - name: Gerar a analise historica (11 semanas)
+        continue-on-error: true
+        run: |
+          mkdir -p site
+          {
+            echo "=== DIAGNOSTICO ==="
+            date
+            python3 --version
+            echo "--- arquivos na raiz ---"
+            ls -la
+            echo "--- config ---"
+            ls -la config || echo "config AUSENTE"
+            echo
+            echo "=== EXECUCAO ==="
+            python3 gerar-analise-historica.py
+            echo
+            echo "=== SITE DEPOIS ==="
+            ls -la site
+          } > site/_analise-log.txt 2>&1
+          cat site/_analise-log.txt
+
       - name: Preparar a pasta para publicacao
         run: touch site/.nojekyll
 
