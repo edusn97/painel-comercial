@@ -1,0 +1,44 @@
+COMO SUBIR (3 passos, ~2 minutos)
+=================================
+
+1) Abra o repositorio:
+   https://github.com/edusn97/painel-comercial
+
+2) Clique em  Add file  ->  Upload files
+   Abra ESTA pasta (_subir-no-github), selecione TUDO que esta dentro
+   dela  (Ctrl+A)  e arraste para a area de upload do GitHub.
+   Precisa aparecer na lista:  .github , config , Dashboard-template.html ,
+   Puxar-Funil-PaperVines.ps1 , gerar-analise-historica.py
+   Depois clique em  Commit changes.
+
+   IMPORTANTE: arraste o CONTEUDO da pasta, nao a pasta inteira.
+   Se subir a pasta _subir-no-github junto, o script fica no lugar
+   errado e a analise nao gera (foi o que aconteceu antes).
+
+3) Aba  Actions  ->  Painel Comercial  ->  Run workflow  ->  Run workflow
+
+
+CONFERIR DEPOIS (1 minuto)
+==========================
+
+Painel da semana:
+   https://edusn97.github.io/painel-comercial/
+
+Analise de 11 semanas:
+   https://edusn97.github.io/painel-comercial/analise-historica.html
+   Tem que mostrar "Analise Comercial - 11 semanas".
+   Avaliacoes criadas caindo de ~32 para ~11,5 por semana.
+
+Se a analise der 404, abra o log e me mande o que aparecer:
+   https://edusn97.github.io/painel-comercial/_analise-log.txt
+
+
+SEGURANCA
+=========
+Esta pasta NAO tem token nenhum (verificado). Os tokens ficam nos
+Secrets do GitHub. Nunca suba a pasta config da raiz do projeto:
+aquela tem as chaves de verdade.
+
+O painel expoe nomes completos de pacientes. Abra o link numa janela
+anonima: se abrir sem login, o site e publico e qualquer um com o
+link ve os nomes. Repositorio privado NAO deixa a pagina privada.
