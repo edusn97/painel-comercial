@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel Comercial Semanal — Cabelo & Saúde</title>
+<style>
+  :root{
+    --petroleo:#0e4d49; --petroleo2:#12615c; --verde:#1f9e8f; --claro:#e8f3f1;
+    --texto:#173b39; --cinza:#6b7d7b; --linha:#dfeae8; --amarelo:#e6b800;
+    --vermelho:#c0392b; --bg:#f4f8f7; --card:#ffffff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif;background:var(--bg);color:var(--texto);line-height:1.4}
+  .wrap{max-width:1180px;margin:0 auto;padding:24px}
+  header.top{background:linear-gradient(120deg,var(--petroleo),var(--verde));color:#fff;border-radius:16px;padding:24px 28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;box-shadow:0 6px 24px rgba(14,77,73,.18)}
+  header.top h1{font-size:24px;font-weight:700;letter-spacing:.2px}
+  header.top .sub{opacity:.9;font-size:13px;margin-top:4px}
+  .badge{background:rgba(255,255,255,.18);padding:8px 14px;border-radius:999px;font-size:13px;font-weight:600}
+  h2.sec{font-size:15px;text-transform:uppercase;letter-spacing:1px;color:var(--petroleo);margin:30px 0 14px;display:flex;align-items:center;gap:8px}
+  h2.sec::before{content:"";width:6px;height:18px;background:var(--verde);border-radius:3px;display:inline-block}
+  .grid{display:grid;gap:16px}
+  .kpis{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+  .card{background:var(--card);border:1px solid var(--linha);border-radius:14px;padding:18px 20px;box-shadow:0 2px 10px rgba(14,77,73,.05)}
+  .kpi .label{font-size:12px;color:var(--cinza);text-transform:uppercase;letter-spacing:.5px}
+  .kpi .value{font-size:30px;font-weight:800;color:var(--petroleo);margin-top:6px;line-height:1}
+  .kpi .foot{font-size:12px;color:var(--cinza);margin-top:8px}
+  .kpi .foot b{color:var(--verde)}
+  .bar-wrap{background:var(--claro);border-radius:8px;height:8px;margin-top:10px;overflow:hidden}
+  .bar{height:100%;background:linear-gradient(90deg,var(--verde),var(--petroleo))}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--linha)}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--cinza);font-weight:700}
+  td.num,th.num{text-align:center}
+  tr:last-child td{border-bottom:none}
+  .tot td{font-weight:800;color:var(--petroleo);background:var(--claro)}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .funil{display:flex;flex-direction:column;gap:8px}
+  .step{display:flex;align-items:center;gap:12px}
+  .step .name{width:150px;font-size:13px;font-weight:600}
+  .step .track{flex:1;background:var(--claro);border-radius:8px;height:30px;position:relative;overflow:hidden}
+  .step .fill{height:100%;background:linear-gradient(90deg,var(--petroleo),var(--verde));display:flex;align-items:center;justify-content:flex-end;padding-right:10px;color:#fff;font-weight:700;font-size:13px;min-width:34px}
+  .pill{display:inline-block;padding:3px 9px;border-radius:999px;font-size:12px;font-weight:700}
+  .pill.sj{background:#eae6ff;color:#5b3fd1}.pill.jv{background:#e2f7e6;color:#1f8f3a}
+  .rep{columns:2;column-gap:24px}
+  .rep .item{break-inside:avoid;padding:7px 0;border-bottom:1px dashed var(--linha);font-size:13px;display:flex;justify-content:space-between}
+  .rep .item small{color:var(--cinza)}
+  .aviso{background:#fff8e1;border:1px solid #f0d98a;border-left:5px solid var(--amarelo);border-radius:12px;padding:14px 18px;margin-top:16px;font-size:13px;color:#6b5900}
+  .aviso b{color:#4a3d00}
+  .manual{background:#f7f9f9;border:1px dashed #c3d3d1;border-radius:12px;padding:14px 16px;font-size:13px;color:var(--cinza);text-align:center}
+  footer{margin-top:28px;text-align:center;color:var(--cinza);font-size:12px}
+  @media(max-width:720px){.two{grid-template-columns:1fr}.rep{columns:1}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div>
+      <h1>Painel Comercial Semanal</h1>
+      <div class="sub">Clínica Cabelo &amp; Saúde · São José + Joinville · Fechamento de semana</div>
+    </div>
+    <div style="text-align:right">
+      <div class="badge">Semana 14/08 - 20/08 (parcial)</div>
+      <div class="sub" style="margin-top:8px">Atualizado em: 20/08/2026 &middot; 11h05</div>
+    </div>
+  </header>
+
+  <div class="aviso">
+    <b>Leia antes de interpretar:</b> a janela é <b>sex 14/08 a qui 20/08</b> e cobre <b>5 dias úteis</b>. Foram <b>13 consultas de avaliação nova</b> com data no período: <b>5 compareceram</b>, <b>6 cancelaram</b> e <b>1 remarcou</b>. O sinal forte da semana é o <b>cancelamento de 46,2% dos agendamentos — mais gente cancelou do que compareceu</b>, com <b>3 dos 6 cancelamentos concentrados em 17/08 em São José</b> e <b>5 dos 6 em São José</b>. Faturamento até aqui: <b>R$ 10.473,92 em 9 vendas efetivas</b> — 34,9% da meta semanal, com <b>2 dias úteis ainda por rodar</b> antes da reunião de sexta.
+  </div>
+
+  <h2 class="sec">Visão geral da semana (SJ + JV)</h2>
+  <div class="grid kpis">
+    <div class="card kpi">
+      <div class="label">Faturamento (vendas)</div>
+      <div class="value">R$ 10.474</div>
+      <div class="foot">Meta: R$ 30.023 · <b>34.9%</b> da meta</div>
+      <div class="bar-wrap"><div class="bar" style="width:35%"></div></div>
+    </div>
+    <div class="card kpi">
+      <div class="label">Agendados p/ a semana</div>
+      <div class="value">13</div>
+      <div class="foot">Consultas marcadas para o período · SJ + JV</div>
+    </div>
+    <div class="card kpi">
+      <div class="label">Novos agendamentos</div>
+      <div class="value">10</div>
+      <div class="foot">Criados no período (para qualquer data) · SJ + JV</div>
+    </div>
+    <div class="card kpi">
+      <div class="label">Compareceram</div>
+      <div class="value">5</div>
+      <div class="foot">Comparecimento: <b>38.5%</b> dos agendados</div>
+      <div class="bar-wrap"><div class="bar" style="width:38%"></div></div>
+    </div>
+    <div class="card kpi">
+      <div class="label">Cancelaram</div>
+      <div class="value">6</div>
+      <div class="foot">46.2% dos agendados</div>
+    </div>
+    <div class="card kpi">
+      <div class="label">Remarcados</div>
+      <div class="value">1</div>
+      <div class="foot">7.7% dos agendados</div>
+    </div>
+    <div class="card kpi">
+      <div class="label">No-show</div>
+      <div class="value">0</div>
+      <div class="foot">Taxa: <b>0.0%</b></div>
+    </div>
+  </div>
+
+  <h2 class="sec">Funil de agendamento da semana</h2>
+  <div class="card">
+    <div class="funil">
+      <div class="step"><div class="name">Agendaram</div><div class="track"><div class="fill" style="width:100%">13</div></div></div>
+      <div class="step"><div class="name">Compareceram</div><div class="track"><div class="fill" style="width:38.5%">5</div></div></div>
+      <div class="step"><div class="name">Remarcaram</div><div class="track"><div class="fill" style="width:7.7%">1</div></div></div>
+      <div class="step"><div class="name">Cancelaram</div><div class="track"><div class="fill" style="width:46.2%;background:linear-gradient(90deg,#a03225,#c0392b)">6</div></div></div>
+      <div class="step"><div class="name">No-show</div><div class="track"><div class="fill" style="width:0%;background:#c0392b">0</div></div></div>
+    </div>
+  </div>
+
+  <h2 class="sec">Por unidade</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th>Unidade</th><th class="num">Agendados</th><th class="num">Novos</th><th class="num">Compareceram</th><th class="num">Cancelaram</th><th class="num">Remarcaram</th><th class="num">No-show</th><th class="num">Faturamento</th></tr></thead>
+      <tbody>
+        <tr><td><span class="pill sj">S&atilde;o Jos&eacute;</span></td><td class="num">9</td><td class="num">5</td><td class="num">3</td><td class="num">5</td><td class="num">1</td><td class="num">0</td><td class="num">R$ 5.181</td></tr>
+        <tr><td><span class="pill jv">Joinville</span></td><td class="num">4</td><td class="num">5</td><td class="num">2</td><td class="num">1</td><td class="num">0</td><td class="num">0</td><td class="num">R$ 5.293</td></tr>
+        <tr class="tot"><td>TOTAL</td><td class="num">13</td><td class="num">10</td><td class="num">5</td><td class="num">6</td><td class="num">1</td><td class="num">0</td><td class="num">R$ 10.474</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:var(--cinza);margin-top:10px">Faturamento = soma de <code>final_amount</code> das contas do tipo <b>Venda</b> no período. <b>São José: 40 contas do tipo Venda</b>, das quais <b>35 com valor R$ 0</b> (registros de atendimento sem cobrança) e <b>5 vendas efetivas</b> — R$ 889,98 em 15/08 (3 sessões Microagulhamento promocional, Gabriel Chaves Cardoso), R$ 810,00 em 18/08 (Renan de Medeiros Porto), R$ 890,00 em 19/08 (Israel de Araújo Pimentel), R$ 1.701,00 em 19/08 (Terapia Combinada 3 sessões + 1 acompanhamento, Sônia Maria Scheidt) e R$ 889,98 em 19/08 (venda personalizada, Lucas Machado de Freitas). <b>Joinville: 11 contas do tipo Venda</b>, <b>7 com valor R$ 0</b> e <b>4 vendas efetivas</b> — R$ 889,98 em 17/08 (Rodrigo França), R$ 889,98 em 18/08 (Alceu dias de Oliveira), R$ 2.703,00 em 20/08 (Terapia Combinada 6 sessões + 3 acompanhamentos, Lucinéia Santos Prestes Braz) e R$ 810,00 em 20/08 (atendimento da mesma paciente). <b>Total real da semana: R$ 10.473,92 em 9 vendas efetivas</b> — as 51 contas do tipo "Venda" NÃO representam 51 vendas.</p>
+  </div>
+
+  <h2 class="sec">Desempenho por vendedora</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th>Vendedora</th><th class="num">Atendimentos</th><th class="num">Qualificados</th><th class="num">Desqualificados</th><th class="num">Agendaram</th><th class="num">Novos criados</th><th class="num">Compareceram</th><th class="num">Convers&atilde;o</th><th class="num">Cancelados</th><th class="num">Remarcados</th><th class="num">No-show</th></tr></thead>
+      <tbody>
+        <tr><td>Daiane <span class="pill sj">SJ</span> <span class="pill jv">JV</span></td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">9</td><td class="num">7</td><td class="num">4</td><td class="num"><div class="bar-wrap" style="margin:0"><div class="bar" style="width:44%"></div></div><small>44%</small></td><td class="num">4</td><td class="num">1</td><td class="num">0</td></tr>
+        <tr><td>Ana Paula <span class="pill sj">SJ</span></td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">2</td><td class="num">0</td><td class="num">1</td><td class="num"><div class="bar-wrap" style="margin:0"><div class="bar" style="width:50%"></div></div><small>50%</small></td><td class="num">1</td><td class="num">0</td><td class="num">0</td></tr>
+        <tr><td>Brenda <span class="pill sj">SJ</span> <span class="pill jv">JV</span></td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">2</td><td class="num">3</td><td class="num">0</td><td class="num"><div class="bar-wrap" style="margin:0"><div class="bar" style="width:0%"></div></div><small>0%</small></td><td class="num">1</td><td class="num">0</td><td class="num">0</td></tr>
+        <tr class="tot"><td>Equipe</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">13</td><td class="num">10</td><td class="num">5</td><td class="num">38.5%</td><td class="num">6</td><td class="num">1</td><td class="num">0</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:var(--cinza);margin-top:10px"><b>Agendaram / Compareceram / Cancelados / Remarcados / No-show</b> = consultas com data no período, atribuídas pela observação "Vendedora X" no Clínica Experts. <b>Novos criados</b> = agendamentos de consulta criados no período, para qualquer data futura (Daiane: 4 em SJ + 3 em JV · Brenda: 1 em SJ + 2 em JV — há cruzamento entre unidades). <b>Atendimentos / Qualificados / Desqualificados</b> vêm do Paper Vines, que não libera API — <b>preenchimento manual</b>. <b>1 consulta foi excluída do funil desta semana:</b> Simoni Ivonete de Oliveira (SJ) — paciente que já pagou a consulta no mês passado e refez a avaliação porque não deu tempo de concluir; agendamento feito pela Dra. Janaína (biomédica), não é avaliação nova nem tem vendedora. <b>Conversão</b> = compareceram ÷ agendaram. Daiane concentra <b>9 dos 13 agendamentos</b> e <b>7 dos 10 novos criados</b> — a semana inteira depende de uma vendedora só.</p>
+  </div>
+
+  <div class="two">
+    <div>
+      <h2 class="sec">Repescagem — cancelaram na semana</h2>
+      <div class="card">
+        <div class="rep">
+          <div class="item"><span>Elson Ricardo Marques <span class="pill jv">JV</span></span><small>14/08 · Brenda</small></div>
+          <div class="item"><span>Gabrieli Theiss <span class="pill sj">SJ</span></span><small>17/08 · Ana Paula</small></div>
+          <div class="item"><span>Teresinha Pompermaier <span class="pill sj">SJ</span></span><small>17/08 · Daiane</small></div>
+          <div class="item"><span>Gercy Martins da Silva <span class="pill sj">SJ</span></span><small>17/08 · Daiane</small></div>
+          <div class="item"><span>Rogerio Mario de Souza <span class="pill sj">SJ</span></span><small>18/08 · Daiane</small></div>
+          <div class="item"><span>Ademir dos Santos <span class="pill sj">SJ</span></span><small>20/08 · Daiane</small></div>
+        </div>
+        <p style="font-size:12px;color:var(--cinza);margin-top:12px;border-top:1px solid var(--linha);padding-top:10px">6 cancelamentos no período — <b>3 deles concentrados em 17/08 em São José</b>, o que sugere causa comum (agenda, confirmação ou profissional) e não coincidência. <b>5 dos 6 são de São José</b> e <b>4 dos 6 são da Daiane</b>. Telefones disponíveis no Clínica Experts.</p>
+      </div>
+    </div>
+    <div>
+      <h2 class="sec">Topo do funil (Paper Vines)</h2>
+      <div class="card">
+        <div class="grid" style="grid-template-columns:repeat(3,1fr);gap:14px">
+          <div><div style="font-size:12px;color:var(--cinza);text-transform:uppercase">Leads que entraram</div><div style="font-size:28px;font-weight:800;color:var(--petroleo)">&mdash;</div><div style="font-size:12px;color:var(--cinza)">preencher manualmente</div></div>
+          <div><div style="font-size:12px;color:var(--cinza);text-transform:uppercase">Qualificados</div><div style="font-size:28px;font-weight:800;color:var(--verde)">&mdash;</div><div style="font-size:12px;color:var(--cinza)">preencher manualmente</div></div>
+          <div><div style="font-size:12px;color:var(--cinza);text-transform:uppercase">Desqualificados</div><div style="font-size:28px;font-weight:800;color:var(--vermelho)">&mdash;</div><div style="font-size:12px;color:var(--cinza)">preencher manualmente</div></div>
+        </div>
+        <p style="font-size:12px;color:var(--cinza);margin-top:12px;border-top:1px solid var(--linha);padding-top:10px"><b>Bloco de preenchimento manual.</b> O Paper Vines / wts.chat não libera API, então leads, CTT e CDA não são puxados automaticamente. Fonte: Paper Vines &gt; Relatórios, período 14/08 a 20/08.</p>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="sec">Motivos de encerramento dos atendimentos</h2>
+  <div class="card">
+    <div class="manual">
+      <b style="color:var(--texto)">Preenchimento manual — aguardando dados do Paper Vines</b><br>
+      Fonte: Paper Vines &gt; Relatórios &gt; Resultados (Classificação de atendimentos), período 14/08 a 20/08.
+    </div>
+  </div>
+
+  <h2 class="sec">Parcerias — comercial externo</h2>
+  <div class="card">
+    <div class="manual">
+      <b style="color:var(--texto)">Preenchimento manual — aguardando dados do Paper Vines</b><br>
+      Cada parceiro é identificado pela etiqueta no Paper Vines; a contagem de leads por parceiro na semana não vem por API.
+    </div>
+  </div>
+
+  <h2 class="sec">Série histórica — 11 semanas (05/06 a 20/08)</h2>
+
+  <div class="aviso" style="background:#fdecea;border-color:#f3b8b0;border-left-color:var(--vermelho);color:#7a2018">
+    <b>O que a série mostra:</b> o pacote promocional <b>inclui avaliação</b>, então ele é uma entrada de funil igual à consulta — a mesma oportunidade de upsell para a biomédica. Medindo assim, a conversão está saudável: <b>taxa de upsell de 40% em junho, 25% em julho e 33% em agosto</b>, e ticket alto médio estável (R$ 4.445 &rarr; R$ 3.790 &rarr; R$ 3.906). <b>As biomédicas não converteram pior.</b> O que colapsou foi o <b>volume de avaliações realizadas: 19,3/semana em julho para 7,0/semana em agosto (&minus;64%)</b>. O alto ticket caiu porque não há mais para quem vender. <b>O gargalo é geração de avaliação — que é o output das vendedoras.</b>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <div style="display:flex;gap:22px;align-items:center;margin-bottom:6px;font-size:12px;font-weight:700">
+      <span><span style="display:inline-block;width:22px;height:3px;background:#0e4d49;vertical-align:middle;margin-right:6px"></span>Alto ticket (biomédicas)</span>
+      <span><span style="display:inline-block;width:22px;height:3px;background:#1f9e8f;vertical-align:middle;margin-right:6px"></span>Promocional (vendedoras)</span>
+      <span style="color:var(--cinza);font-weight:600">Faixa vermelha = colapso a partir de 07/08</span>
+    </div>
+    <svg viewBox="0 0 900 275" style="width:100%;height:auto">
+      <rect x="757" y="20" width="143" height="220" fill="#c0392b" opacity="0.07"></rect>
+      <g stroke="#dfeae8" stroke-width="1">
+        <line x1="60" y1="240" x2="900" y2="240"></line><line x1="60" y1="185" x2="900" y2="185"></line>
+        <line x1="60" y1="130" x2="900" y2="130"></line><line x1="60" y1="75" x2="900" y2="75"></line>
+        <line x1="60" y1="20" x2="900" y2="20"></line>
+      </g>
+      <g fill="#6b7d7b" font-size="10" text-anchor="end">
+        <text x="55" y="243">0</text><text x="55" y="188">8k</text><text x="55" y="133">16k</text>
+        <text x="55" y="78">24k</text><text x="55" y="23">32k</text>
+      </g>
+      <polyline fill="none" stroke="#0e4d49" stroke-width="2.5" stroke-linejoin="round"
+        points="60,158.8 142,82.3 224,58.5 306,140.8 388,193.5 470,118.9 552,123.1 634,29.4 716,122.5 798,199.8 880,209.7"></polyline>
+      <polyline fill="none" stroke="#1f9e8f" stroke-width="2.5" stroke-linejoin="round"
+        points="60,234.4 142,210.6 224,225.8 306,185.6 388,226.2 470,170.4 552,130.1 634,186.6 716,159.0 798,199.4 880,198.3"></polyline>
+      <g fill="#0e4d49">
+        <circle cx="60" cy="158.8" r="3"></circle><circle cx="142" cy="82.3" r="3"></circle><circle cx="224" cy="58.5" r="3"></circle>
+        <circle cx="306" cy="140.8" r="3"></circle><circle cx="388" cy="193.5" r="3"></circle><circle cx="470" cy="118.9" r="3"></circle>
+        <circle cx="552" cy="123.1" r="3"></circle><circle cx="634" cy="29.4" r="3"></circle><circle cx="716" cy="122.5" r="3"></circle>
+        <circle cx="798" cy="199.8" r="3"></circle><circle cx="880" cy="209.7" r="3"></circle>
+      </g>
+      <g fill="#1f9e8f">
+        <circle cx="60" cy="234.4" r="3"></circle><circle cx="142" cy="210.6" r="3"></circle><circle cx="224" cy="225.8" r="3"></circle>
+        <circle cx="306" cy="185.6" r="3"></circle><circle cx="388" cy="226.2" r="3"></circle><circle cx="470" cy="170.4" r="3"></circle>
+        <circle cx="552" cy="130.1" r="3"></circle><circle cx="634" cy="186.6" r="3"></circle><circle cx="716" cy="159.0" r="3"></circle>
+        <circle cx="798" cy="199.4" r="3"></circle><circle cx="880" cy="198.3" r="3"></circle>
+      </g>
+      <g fill="#6b7d7b" font-size="10" text-anchor="middle">
+        <text x="60" y="258">05/06</text><text x="142" y="258">12/06</text><text x="224" y="258">19/06</text>
+        <text x="306" y="258">26/06</text><text x="388" y="258">03/07</text><text x="470" y="258">10/07</text>
+        <text x="552" y="258">17/07</text><text x="634" y="258">24/07</text><text x="716" y="258">31/07</text>
+        <text x="798" y="258" fill="#c0392b" font-weight="700">07/08</text><text x="880" y="258" fill="#c0392b" font-weight="700">14/08</text>
+      </g>
+    </svg>
+  </div>
+
+  <h2 class="sec">Funil real — a avaliação é a entrada, venha de consulta ou de pacote</h2>
+  <div class="card" style="overflow-x:auto">
+    <table>
+      <thead><tr><th>Período</th><th class="num">Avaliações criadas /sem</th><th class="num">Agendadas /sem</th><th class="num">Realizadas /sem</th><th class="num">Vendas alto ticket /sem</th><th class="num">Taxa de upsell</th><th class="num">Ticket alto médio</th><th class="num">Receita por avaliação realizada</th></tr></thead>
+      <tbody>
+        <tr><td>Junho (4 sem)</td><td class="num">35,8</td><td class="num">19,8</td><td class="num">10,5</td><td class="num">4,3</td><td class="num">40%</td><td class="num">R$ 4.445</td><td class="num">R$ 2.158</td></tr>
+        <tr><td>Julho (4 sem)</td><td class="num">31,5</td><td class="num">42,3</td><td class="num">19,3</td><td class="num">4,8</td><td class="num">25%</td><td class="num">R$ 3.790</td><td class="num">R$ 1.401</td></tr>
+        <tr style="background:#fdecea"><td><b>Agosto (3 sem)</b></td><td class="num"><b>15,0</b></td><td class="num"><b>21,3</b></td><td class="num"><b>7,0</b></td><td class="num"><b>2,3</b></td><td class="num">33%</td><td class="num">R$ 3.906</td><td class="num">R$ 2.434</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:var(--cinza);margin-top:10px"><b>A avaliação inclusa no pacote promocional é a mesma oportunidade de upsell que a consulta.</b> Por isso a entrada de funil conta as duas juntas: Consulta Inicial, Consulta Online, Avaliação Gratuita Presencial, Avaliação Capilar Gratuita e Avaliação Gratuita Online. <b>A taxa de upsell (25% a 40%) e o ticket alto (R$ 3.790 a R$ 4.445) não se deterioraram</b> — agosto está inclusive acima de julho na conversão. <b>Toda a queda de receita está no volume de avaliações realizadas: 19,3/semana em julho para 7,0 em agosto.</b> Cada avaliação realizada vale entre <b>R$ 1.400 e R$ 2.400</b> de receita total (promocional + alto ticket). As 12 avaliações/semana perdidas valem <b>R$ 17.000 a R$ 29.000 por semana</b>.</p>
+  </div>
+
+  <h2 class="sec">Avaliações criadas por semana (output das vendedoras)</h2>
+  <div class="card">
+    <svg viewBox="0 0 900 165" style="width:100%;height:auto">
+      <line x1="30" y1="130" x2="900" y2="130" stroke="#dfeae8"></line>
+      <g>
+        <rect x="38" y="64.9" width="44" height="65.1" fill="#1f9e8f" rx="3"></rect>
+        <rect x="120" y="76.1" width="44" height="53.9" fill="#1f9e8f" rx="3"></rect>
+        <rect x="202" y="20" width="44" height="110" fill="#1f9e8f" rx="3"></rect>
+        <rect x="284" y="38.0" width="44" height="92.0" fill="#1f9e8f" rx="3"></rect>
+        <rect x="366" y="35.7" width="44" height="94.3" fill="#1f9e8f" rx="3"></rect>
+        <rect x="448" y="69.4" width="44" height="60.6" fill="#1f9e8f" rx="3"></rect>
+        <rect x="530" y="55.9" width="44" height="74.1" fill="#1f9e8f" rx="3"></rect>
+        <rect x="612" y="76.1" width="44" height="53.9" fill="#1f9e8f" rx="3"></rect>
+        <rect x="694" y="80.6" width="44" height="49.4" fill="#1f9e8f" rx="3"></rect>
+        <rect x="776" y="100.8" width="44" height="29.2" fill="#c0392b" rx="3"></rect>
+        <rect x="858" y="107.6" width="44" height="22.4" fill="#c0392b" rx="3"></rect>
+      </g>
+      <g fill="#0e4d49" font-size="12" font-weight="700" text-anchor="middle">
+        <text x="60" y="59">29</text><text x="142" y="70">24</text><text x="224" y="15">49</text>
+        <text x="306" y="32">41</text><text x="388" y="30">42</text><text x="470" y="63">27</text>
+        <text x="552" y="50">33</text><text x="634" y="70">24</text><text x="716" y="75">22</text>
+        <text x="798" y="95" fill="#c0392b">13</text><text x="880" y="102" fill="#c0392b">10</text>
+      </g>
+      <g fill="#6b7d7b" font-size="10" text-anchor="middle">
+        <text x="60" y="147">05/06</text><text x="142" y="147">12/06</text><text x="224" y="147">19/06</text>
+        <text x="306" y="147">26/06</text><text x="388" y="147">03/07</text><text x="470" y="147">10/07</text>
+        <text x="552" y="147">17/07</text><text x="634" y="147">24/07</text><text x="716" y="147">31/07</text>
+        <text x="798" y="147" fill="#c0392b" font-weight="700">07/08</text><text x="880" y="147" fill="#c0392b" font-weight="700">14/08</text>
+      </g>
+    </svg>
+    <p style="font-size:12px;color:var(--cinza);margin-top:6px">Média das 9 primeiras semanas: <b>31,4/semana</b>. Últimas duas: <b>11,5</b> (&minus;63%). Ainda não bateu na receita promocional porque essas consultas já estavam agendadas — o efeito chega em 2 a 4 semanas.</p>
+  </div>
+
+  <h2 class="sec">Tabela semanal completa</h2>
+  <div class="card" style="overflow-x:auto">
+    <table>
+      <thead><tr><th>Semana</th><th class="num">Aval. criadas</th><th class="num">Agendadas</th><th class="num">Realizadas</th><th class="num">% Comp.</th><th class="num">% Canc.</th><th class="num">Alto tkt (n)</th><th class="num">Upsell</th><th class="num">Promo (vend.)</th><th class="num">Alto ticket</th><th class="num">Total</th></tr></thead>
+      <tbody>
+        <tr><td>05/06 &ndash; 11/06</td><td class="num">29</td><td class="num">16</td><td class="num">8</td><td class="num">50%</td><td class="num">44%</td><td class="num">3</td><td class="num">38%</td><td class="num">R$ 810</td><td class="num">R$ 11.810</td><td class="num">R$ 12.620</td></tr>
+        <tr><td>12/06 &ndash; 18/06</td><td class="num">24</td><td class="num">22</td><td class="num">13</td><td class="num">59%</td><td class="num">36%</td><td class="num">6</td><td class="num">46%</td><td class="num">R$ 4.280</td><td class="num">R$ 22.936</td><td class="num">R$ 27.216</td></tr>
+        <tr><td>19/06 &ndash; 25/06</td><td class="num">49</td><td class="num">20</td><td class="num">8</td><td class="num">40%</td><td class="num">35%</td><td class="num">5</td><td class="num">63%</td><td class="num">R$ 2.060</td><td class="num">R$ 26.393</td><td class="num">R$ 28.453</td></tr>
+        <tr><td>26/06 &ndash; 02/07</td><td class="num">41</td><td class="num">21</td><td class="num">13</td><td class="num">62%</td><td class="num">29%</td><td class="num">3</td><td class="num">23%</td><td class="num">R$ 7.915</td><td class="num">R$ 14.430</td><td class="num">R$ 22.345</td></tr>
+        <tr><td>03/07 &ndash; 09/07</td><td class="num">42</td><td class="num">47</td><td class="num">22</td><td class="num">47%</td><td class="num">30%</td><td class="num">1</td><td class="num">5%</td><td class="num">R$ 2.010</td><td class="num">R$ 6.764</td><td class="num">R$ 8.774</td></tr>
+        <tr><td>10/07 &ndash; 16/07</td><td class="num">27</td><td class="num">55</td><td class="num">26</td><td class="num">47%</td><td class="num">35%</td><td class="num">4</td><td class="num">15%</td><td class="num">R$ 10.130</td><td class="num">R$ 17.619</td><td class="num">R$ 27.749</td></tr>
+        <tr><td>17/07 &ndash; 23/07</td><td class="num">33</td><td class="num">33</td><td class="num">15</td><td class="num">45%</td><td class="num">39%</td><td class="num">6</td><td class="num">40%</td><td class="num">R$ 15.980</td><td class="num">R$ 17.000</td><td class="num">R$ 32.980</td></tr>
+        <tr><td>24/07 &ndash; 30/07</td><td class="num">24</td><td class="num">34</td><td class="num">14</td><td class="num">41%</td><td class="num">35%</td><td class="num">8</td><td class="num">57%</td><td class="num">R$ 7.770</td><td class="num">R$ 30.628</td><td class="num">R$ 38.398</td></tr>
+        <tr><td>31/07 &ndash; 06/08</td><td class="num">22</td><td class="num">27</td><td class="num">8</td><td class="num">30%</td><td class="num">33%</td><td class="num">4</td><td class="num">50%</td><td class="num">R$ 11.780</td><td class="num">R$ 17.093</td><td class="num">R$ 28.873</td></tr>
+        <tr style="background:#fdecea"><td><b>07/08 &ndash; 13/08</b></td><td class="num"><b>13</b></td><td class="num">23</td><td class="num"><b>7</b></td><td class="num">30%</td><td class="num">52%</td><td class="num">1</td><td class="num">14%</td><td class="num">R$ 5.910</td><td class="num"><b>R$ 5.848</b></td><td class="num">R$ 11.758</td></tr>
+        <tr style="background:#fdecea"><td><b>14/08 &ndash; 20/08</b></td><td class="num"><b>10</b></td><td class="num">14</td><td class="num"><b>6</b></td><td class="num">43%</td><td class="num">43%</td><td class="num">2</td><td class="num">33%</td><td class="num">R$ 6.070</td><td class="num"><b>R$ 4.404</b></td><td class="num">R$ 10.474</td></tr>
+        <tr class="tot"><td>Média jun&ndash;jul (9 sem)</td><td class="num">32,3</td><td class="num">30,6</td><td class="num">14,1</td><td class="num">46%</td><td class="num">35%</td><td class="num">4,4</td><td class="num">31%</td><td class="num">R$ 6.971</td><td class="num">R$ 18.297</td><td class="num">R$ 25.268</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:var(--cinza);margin-top:10px"><b>Alto ticket</b> = Terapia Combinada, Protocolo Premium Combinado e Monoterapia Injetável (fechados pelas biomédicas). <b>Promo</b> = Atendimento, Microagulhamento promocional, Lavieen promocional e venda personalizada (fechados pelas vendedoras). Classificação feita pela descrição da conta. <b>Cancelamento de 25% a 44% é o patamar normal desde junho</b> — os 43% desta semana não são novidade, é problema crônico.</p>
+  </div>
+
+  <h2 class="sec">Novos agendamentos por vendedora</h2>
+  <div class="card" style="overflow-x:auto">
+    <table>
+      <thead><tr><th>Semana</th><th class="num">Daiane</th><th class="num">Brenda</th><th class="num">Ana</th><th class="num">Ana Paula</th><th class="num">Outros</th><th class="num">S/ obs.</th><th class="num">Total</th></tr></thead>
+      <tbody>
+        <tr><td>05/06</td><td class="num">9</td><td class="num">10</td><td class="num">6</td><td class="num">0</td><td class="num">0</td><td class="num">4</td><td class="num">29</td></tr>
+        <tr><td>12/06</td><td class="num">7</td><td class="num">8</td><td class="num">5</td><td class="num">0</td><td class="num">0</td><td class="num">4</td><td class="num">24</td></tr>
+        <tr><td>19/06</td><td class="num">15</td><td class="num">8</td><td class="num">12</td><td class="num">12</td><td class="num">0</td><td class="num">2</td><td class="num">49</td></tr>
+        <tr><td>26/06</td><td class="num">10</td><td class="num">9</td><td class="num">15</td><td class="num">3</td><td class="num">0</td><td class="num">4</td><td class="num">41</td></tr>
+        <tr><td>03/07</td><td class="num">11</td><td class="num">9</td><td class="num">12</td><td class="num">7</td><td class="num">1</td><td class="num">2</td><td class="num">42</td></tr>
+        <tr><td>10/07</td><td class="num">4</td><td class="num">8</td><td class="num">8</td><td class="num">3</td><td class="num">2</td><td class="num">2</td><td class="num">27</td></tr>
+        <tr><td>17/07</td><td class="num">11</td><td class="num">8</td><td class="num">10</td><td class="num">2</td><td class="num">0</td><td class="num">2</td><td class="num">33</td></tr>
+        <tr><td>24/07</td><td class="num">8</td><td class="num">6</td><td class="num">6</td><td class="num">1</td><td class="num">0</td><td class="num">3</td><td class="num">24</td></tr>
+        <tr><td>31/07</td><td class="num">8</td><td class="num">5</td><td class="num">6</td><td class="num">1</td><td class="num">0</td><td class="num">2</td><td class="num">22</td></tr>
+        <tr style="background:#fdecea"><td><b>07/08</b></td><td class="num">6</td><td class="num"><b>1</b></td><td class="num"><b>1</b></td><td class="num">3</td><td class="num">0</td><td class="num">2</td><td class="num">13</td></tr>
+        <tr style="background:#fdecea"><td><b>14/08</b></td><td class="num">7</td><td class="num"><b>3</b></td><td class="num"><b>0</b></td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">10</td></tr>
+        <tr class="tot"><td>Média 9 primeiras</td><td class="num">9,2</td><td class="num">7,9</td><td class="num">8,9</td><td class="num">3,2</td><td class="num">0,3</td><td class="num">2,8</td><td class="num">32,3</td></tr>
+        <tr class="tot"><td>Média últimas 2</td><td class="num">6,5</td><td class="num">2,0</td><td class="num">0,5</td><td class="num">1,5</td><td class="num">0,0</td><td class="num">1,0</td><td class="num">11,5</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:var(--cinza);margin-top:10px"><b>Brenda manteve 5 a 10 por semana durante 9 semanas seguidas e caiu para 1 e 3 (&minus;75% contra o próprio histórico). Ana saiu de 8,9/semana para 0,5.</b> Juntas são <b>~14 avaliações/semana de capacidade perdida — 70% da queda total de 32,3 para 11,5</b>. Daiane é a única estável (9,2 &rarr; 6,5): ela não subiu, as outras caíram. Comparar Brenda com Daiane numa semana só é ruído; comparar Brenda com o próprio histórico de 9 semanas é sinal. <b>A pergunta de sexta é o que aconteceu com Ana e Brenda na semana de 07/08.</b> "Outros" = Janaína, Marília e Eduardo, nomes que aparecem esporadicamente na observação.</p>
+  </div>
+
+  <h2 class="sec">Receita promocional por vendedora</h2>
+  <div class="card" style="overflow-x:auto">
+    <table>
+      <thead><tr><th>Semana</th><th class="num">Daiane</th><th class="num">Brenda</th><th class="num">Ana</th><th class="num">Ana Paula</th><th class="num">Sem dono</th><th class="num">Total promo</th></tr></thead>
+      <tbody>
+        <tr><td>05/06</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">R$ 810</td><td class="num">R$ 810</td></tr>
+        <tr><td>12/06</td><td class="num">R$ 1.610</td><td class="num">&mdash;</td><td class="num">R$ 1.780</td><td class="num">&mdash;</td><td class="num">R$ 890</td><td class="num">R$ 4.280</td></tr>
+        <tr><td>19/06</td><td class="num">R$ 1.210</td><td class="num">&mdash;</td><td class="num">R$ 850</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">R$ 2.060</td></tr>
+        <tr><td>26/06</td><td class="num">R$ 6.670</td><td class="num">&mdash;</td><td class="num">R$ 1.200</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">R$ 7.915</td></tr>
+        <tr><td>03/07</td><td class="num">R$ 1.560</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">R$ 450</td><td class="num">&mdash;</td><td class="num">R$ 2.010</td></tr>
+        <tr><td>10/07</td><td class="num">R$ 2.510</td><td class="num">R$ 2.510</td><td class="num">R$ 2.670</td><td class="num">R$ 599</td><td class="num">R$ 1.841</td><td class="num">R$ 10.130</td></tr>
+        <tr><td>17/07</td><td class="num">R$ 6.880</td><td class="num">R$ 3.560</td><td class="num">R$ 5.340</td><td class="num">&mdash;</td><td class="num">R$ 200</td><td class="num">R$ 15.980</td></tr>
+        <tr><td>24/07</td><td class="num">R$ 3.480</td><td class="num">R$ 2.590</td><td class="num">R$ 1.700</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">R$ 7.770</td></tr>
+        <tr><td>31/07</td><td class="num">R$ 3.560</td><td class="num">R$ 3.480</td><td class="num">R$ 3.480</td><td class="num">R$ 810</td><td class="num">R$ 450</td><td class="num">R$ 11.780</td></tr>
+        <tr style="background:#fdecea"><td><b>07/08</b></td><td class="num">R$ 4.220</td><td class="num"><b>R$ 800</b></td><td class="num">R$ 890</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">R$ 5.910</td></tr>
+        <tr style="background:#fdecea"><td><b>14/08</b></td><td class="num">R$ 4.370</td><td class="num"><b>R$ 0</b></td><td class="num">R$ 810</td><td class="num">R$ 890</td><td class="num">&mdash;</td><td class="num">R$ 6.070</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:var(--cinza);margin-top:10px"><b>Esta tabela subestima a contribuição das vendedoras e não deve ser usada como placar delas.</b> A avaliação que elas geram — inclusa no pacote promocional ou vendida como consulta — é o que abre a porta para o upsell da biomédica. Boa parte do alto ticket da tabela anterior só existiu porque uma vendedora colocou aquele paciente na cadeira. <b>O indicador de performance delas é "avaliações criadas", não receita promocional.</b><br><br><b>Ressalva de método:</b> o Clínica Experts <b>não tem campo de vendedor na conta a receber</b>. A venda promocional foi atribuída casando o paciente com a vendedora que agendou a avaliação dele. Funcionou para <b>87 das 93 vendas promocionais</b> — 6 (R$ 4.191) ficaram sem dono. É inferência, não dado nativo. Para virar número confiável, a observação "Vendedora X" precisa ser padronizada também na conta, não só no agendamento. <b>Daiane está subindo em agosto (R$ 4.220 e R$ 4.370 contra ~R$ 3.500 em julho) — ela está segurando a operação sozinha.</b></p>
+  </div>
+
+  <footer>
+    Gerado automaticamente · Clínica Experts (SJ + JV) · Janela da semana 14/08/2026 00:00 a 20/08/2026 23:59 (America/Sao_Paulo) · Série histórica 05/06 a 20/08/2026 (11 semanas, sexta a quinta) · Meta semanal R$ 30.023 · Meta mensal R$ 130.000 · Reunião de fechamento: sexta 15h–17h
+  </footer>
+
+</div>
+</body>
+</html>
