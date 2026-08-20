@@ -23,7 +23,9 @@ import json
 import os
 import re
 import sys
+import time
 import datetime
+import traceback
 import unicodedata
 import urllib.request
 import urllib.parse
@@ -143,8 +145,46 @@ def ddmm(d):
 # API
 # --------------------------------------------------------------------------
 
+# Alguns servicos rejeitam o User-Agent padrao do urllib ("Python-urllib/3.x").
+# Pelo navegador a mesma chamada funciona, entao identificamos o cliente.
+CABECALHOS = {
+    "Accept": "application/json",
+    "User-Agent": ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                   "(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"),
+}
+
+
+def _abrir(url, token, tentativas=3):
+    """GET com retry e mensagem de erro que inclui o corpo da resposta da API."""
+    ultimo = None
+    for t in range(tentativas):
+        cab = dict(CABECALHOS)
+        cab["Authorization"] = "Bearer " + token
+        try:
+            req = urllib.request.Request(url, headers=cab)
+            with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
+                return json.loads(resp.read().decode("utf-8"))
+        except urllib.error.HTTPError as e:
+            corpo = ""
+            try:
+                corpo = e.read().decode("utf-8", "replace")[:400]
+            except Exception:
+                pass
+            ultimo = "HTTP %s (%s) — resposta da API: %s" % (e.code, e.reason, corpo)
+            transitorio = e.code in (408, 429, 500, 502, 503, 504)
+            if not transitorio:
+                raise RuntimeError(ultimo)
+        except Exception as e:
+            ultimo = "%s: %s" % (type(e).__name__, e)
+        if t < tentativas - 1:
+            espera = 3 * (t + 1)
+            print("   tentativa %d falhou (%s). Nova tentativa em %ds..." % (t + 1, ultimo, espera))
+            time.sleep(espera)
+    raise RuntimeError(ultimo or "falha desconhecida")
+
+
 def buscar(token, recurso, inicio, fim, max_paginas=60):
-    """GET paginado. Devolve lista de registros."""
+    """GET paginado num intervalo. Devolve lista de registros."""
     registros = []
     pagina = 1
     while pagina <= max_paginas:
@@ -153,12 +193,7 @@ def buscar(token, recurso, inicio, fim, max_paginas=60):
             "ends_at": fim + "T23:59:59-03:00",
             "page": pagina,
         })
-        req = urllib.request.Request(
-            "%s/%s?%s" % (API_BASE, recurso, qs),
-            headers={"Authorization": "Bearer " + token, "Accept": "application/json"},
-        )
-        with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
-            dados = json.loads(resp.read().decode("utf-8"))
+        dados = _abrir("%s/%s?%s" % (API_BASE, recurso, qs), token)
         lote = dados.get("data") or []
         if not lote:
             break
@@ -168,6 +203,35 @@ def buscar(token, recurso, inicio, fim, max_paginas=60):
             break
         pagina += 1
     return registros
+
+
+def buscar_em_blocos(token, recurso, inicio, fim, meses=4):
+    """
+    Quebra o intervalo em blocos menores. A API recusa periodos maiores que
+    1 ano; blocos curtos tambem reduzem timeout e paginacao longa.
+    Deduplica pelo uuid, porque os blocos podem se sobrepor na borda.
+    """
+    d_ini = datetime.date(*[int(x) for x in inicio.split("-")])
+    d_fim = datetime.date(*[int(x) for x in fim.split("-")])
+    vistos, saida = set(), []
+    atual = d_ini
+    while atual <= d_fim:
+        # avanca ~meses*30 dias
+        prox = min(atual + datetime.timedelta(days=meses * 30), d_fim)
+        lote = buscar(token, recurso, atual.strftime("%Y-%m-%d"), prox.strftime("%Y-%m-%d"))
+        novos = 0
+        for r in lote:
+            chave = r.get("uuid") or json.dumps(r, sort_keys=True)[:200]
+            if chave in vistos:
+                continue
+            vistos.add(chave)
+            saida.append(r)
+            novos += 1
+        print("   %s..%s -> %d registros (%d novos)" % (atual, prox, len(lote), novos))
+        if prox >= d_fim:
+            break
+        atual = prox + datetime.timedelta(days=1)
+    return saida
 
 
 def coletar(cfg, semanas):
@@ -185,8 +249,9 @@ def coletar(cfg, semanas):
         if not unidade or not unidade.get("token"):
             raise RuntimeError("Token ausente para a unidade '%s' em config/clinica-experts-tokens.json" % chave)
         token = unidade["token"]
+        print(" %s: buscando agendamentos de %s a %s..." % (rotulo, ano_ini, ano_fim))
 
-        for b in buscar(token, "bookings", ano_ini, ano_fim):
+        for b in buscar_em_blocos(token, "bookings", ano_ini, ano_fim):
             procs = [p.get("name") for p in (b.get("procedures") or [])]
             if not eh_avaliacao(procs):
                 continue
@@ -200,7 +265,8 @@ def coletar(cfg, semanas):
                 "paciente": paciente,
             })
 
-        for c in buscar(token, "bills", primeiro, ultimo):
+        print(" %s: buscando contas de %s a %s..." % (rotulo, primeiro, ultimo))
+        for c in buscar_em_blocos(token, "bills", primeiro, ultimo):
             if c.get("type") != "Venda":
                 continue
             centavos = c.get("final_amount") or 0
@@ -670,13 +736,15 @@ def main():
     semanas = montar_semanas(hoje, N_SEMANAS)
     print("Janela: %s a %s (%d semanas)" % (iso(semanas[0][0]), iso(semanas[-1][1]), len(semanas)))
 
+    unidades_cfg = list((cfg.get("clinics") or {}).keys())
+    print("Unidades na config: %s" % (unidades_cfg or "NENHUMA — config invalida"))
+
     try:
         avaliacoes, vendas = coletar(cfg, semanas)
-    except urllib.error.HTTPError as e:
-        print("ERRO HTTP %s ao consultar a API: %s" % (e.code, e.reason))
-        return 3
     except Exception as e:
         print("ERRO ao consultar a API: %s" % e)
+        print("--- rastreamento completo ---")
+        traceback.print_exc(file=sys.stdout)
         return 3
 
     print("Avaliacoes: %d | Vendas com valor: %d" % (len(avaliacoes), len(vendas)))
