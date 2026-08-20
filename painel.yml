@@ -1,0 +1,59 @@
+name: Painel Comercial
+
+on:
+  schedule:
+    - cron: '30 12 * * *'   # 09:30 no horario de Brasilia (12:30 UTC)
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  gerar:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    env:
+      TZ: America/Sao_Paulo
+    steps:
+      - name: Baixar os arquivos do repositorio
+        uses: actions/checkout@v4
+
+      - name: Escrever os tokens (a partir dos Secrets)
+        env:
+          CE_TOKENS: ${{ secrets.CLINICA_EXPERTS_TOKENS_JSON }}
+          PV_TOKEN: ${{ secrets.PAPERVINES_TOKEN }}
+        run: |
+          mkdir -p config
+          printf '%s' "$CE_TOKENS" > config/clinica-experts-tokens.json
+          printf '%s' "$PV_TOKEN" > config/papervines-token.txt
+
+      - name: Gerar o painel
+        shell: pwsh
+        run: ./Puxar-Funil-PaperVines.ps1 -nopause
+
+      - name: Gerar a analise historica (11 semanas)
+        continue-on-error: true
+        run: python3 gerar-analise-historica.py
+
+      - name: Preparar a pasta para publicacao
+        run: touch site/.nojekyll
+
+      - name: Configurar o GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Enviar os arquivos do painel
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - name: Publicar no GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4
