@@ -1,73 +1,700 @@
-{
-  "periodo": "07/08 a 14/08",
+ resolver-basic - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-basic - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-basic - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-templates - false - Weight: 3 - Progress: 0 - Resolver Progress: 0
+ resolver-basic - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-templates - false - Weight: 3 - Progress: null - Resolver Progress: null
+ resolver-basic - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-templates - false - Weight: 3 - Progress: 0 - Resolver Progress: 0
+ resolver-basic - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-templates - true - Weight: 3 - Progress: 0 - Resolver Progress: 1
+ resolver-basic - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-templates - true - Weight: 3 - Progress: 0 - Resolver Progress: 1
+ resolver-basic - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-templates - true - Weight: 3 - Progress: 0 - Resolver Progress: 1
+ resolver-basic - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-templates - true - Weight: 3 - Progress: 0 - Resolver Progress: 1
+ resolver-2 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-basic - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-templates - true - Weight: 3 - Progress: 0 - Resolver Progress: 1
+ resolver-2 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-3 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-basic - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-templates - true - Weight: 3 - Progress: 0 - Resolver Progress: 1
+ resolver-2 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-3 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-4 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-basic - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-templates - true - Weight: 3 - Progress: 0 - Resolver Progress: 1
+ resolver-2 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-3 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-4 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-5 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-basic - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-templates - true - Weight: 3 - Progress: 0 - Resolver Progress: 1
+ resolver-2 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-3 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-4 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-5 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-sessions - false - Weight: 4 - Progress: 0 - Resolver Progress: 0
+ resolver-basic - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-templates - true - Weight: 3 - Progress: 0 - Resolver Progress: 1
+ resolver-2 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-3 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-4 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-5 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-sessions - false - Weight: 4 - Progress: null - Resolver Progress: null
+ resolver-basic - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-templates - true - Weight: 3 - Progress: 0 - Resolver Progress: 1
+ resolver-2 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-3 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-4 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-5 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-sessions - true - Weight: 4 - Progress: null - Resolver Progress: 1
+ resolver-basic - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-templates - true - Weight: 3 - Progress: 0 - Resolver Progress: 1
+ resolver-2 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-3 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-4 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-5 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-sessions - true - Weight: 4 - Progress: null - Resolver Progress: 1
+ resolver-6 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-basic - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-templates - true - Weight: 3 - Progress: 0 - Resolver Progress: 1
+ resolver-2 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-3 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-4 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-5 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-sessions - true - Weight: 4 - Progress: null - Resolver Progress: 1
+ resolver-6 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-basic - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-templates - true - Weight: 3 - Progress: 0 - Resolver Progress: 1
+ resolver-2 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-3 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-4 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-5 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-sessions - true - Weight: 4 - Progress: null - Resolver Progress: 1
+ resolver-6 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-basic - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-templates - true - Weight: 3 - Progress: 0 - Resolver Progress: 1
+ resolver-2 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-3 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-4 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-5 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-sessions - true - Weight: 4 - Progress: null - Resolver Progress: 1
+ resolver-6 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-basic - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-templates - true - Weight: 3 - Progress: 0 - Resolver Progress: 1
+ resolver-2 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-3 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-4 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-5 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-sessions - true - Weight: 4 - Progress: null - Resolver Progress: 1
+ resolver-6 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ [ws] send state CONNECTED
+ resolver-basic - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-templates - true - Weight: 3 - Progress: 0 - Resolver Progress: 1
+ resolver-2 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-3 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-4 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-5 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-sessions - true - Weight: 4 - Progress: null - Resolver Progress: 1
+ resolver-6 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-basic - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-templates - true - Weight: 3 - Progress: 0 - Resolver Progress: 1
+ resolver-2 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-3 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-4 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-5 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-sessions - true - Weight: 4 - Progress: null - Resolver Progress: 1
+ resolver-6 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-27 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-basic - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-templates - true - Weight: 3 - Progress: 0 - Resolver Progress: 1
+ resolver-2 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-3 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-4 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-5 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-sessions - true - Weight: 4 - Progress: null - Resolver Progress: 1
+ resolver-6 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-27 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-28 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-basic - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-templates - true - Weight: 3 - Progress: 1 - Resolver Progress: 1
+ resolver-2 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-3 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-4 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-5 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-sessions - true - Weight: 4 - Progress: null - Resolver Progress: 1
+ resolver-6 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-27 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-28 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-basic - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-templates - true - Weight: 3 - Progress: 1 - Resolver Progress: 1
+ resolver-2 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-3 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-4 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-5 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-sessions - true - Weight: 4 - Progress: null - Resolver Progress: 1
+ resolver-6 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-27 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-28 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-basic - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-templates - true - Weight: 3 - Progress: 1 - Resolver Progress: 1
+ resolver-2 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-3 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-4 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-5 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-sessions - true - Weight: 4 - Progress: null - Resolver Progress: 1
+ resolver-6 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-27 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-28 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ no_cached: GET_https://api.chat.papervines.digital/chat/v1/session/ec871ae5-2131-4120-85a7-11ed5f007abd/previous
+ no_cached: GET_https://api.chat.papervines.digital/chat/v1/session/ec871ae5-2131-4120-85a7-11ed5f007abd/previous
+ no_cached: GET_https://api.chat.papervines.digital/core/v1/contact/7442a505-afc1-4a07-82ed-ad5912e30dfd?isToIncludeTags=false&isToIncludeCustomFields=true&isToIncludePortfolios=true
+ no_cached: GET_https://api.chat.papervines.digital/core/v1/contact/7442a505-afc1-4a07-82ed-ad5912e30dfd?isToIncludeTags=false&isToIncludeCustomFields=true&isToIncludePortfolios=true
+ caching: GET_https://api.chat.papervines.digital/core/v1/contact/7442a505-afc1-4a07-82ed-ad5912e30dfd?isToIncludeTags=false&isToIncludeCustomFields=true&isToIncludePortfolios=true
+ caching: GET_https://api.chat.papervines.digital/chat/v1/session/ec871ae5-2131-4120-85a7-11ed5f007abd/previous
+ caching: GET_https://api.chat.papervines.digital/core/v1/contact/7442a505-afc1-4a07-82ed-ad5912e30dfd?isToIncludeTags=false&isToIncludeCustomFields=true&isToIncludePortfolios=true
+ caching: GET_https://api.chat.papervines.digital/chat/v1/session/ec871ae5-2131-4120-85a7-11ed5f007abd/previous
+/chat2/sessions/ec871ae5-2131-4120-85a7-11ed5f007abd:1 [Intervention]
+    Images loaded lazily and replaced with placeholders. Load events are deferred. See https://go.microsoft.com/fwlink/?linkid=2048113
+ no_cached: GET_https://api.chat.papervines.digital/core/v1/contact?ids=7442a505-afc1-4a07-82ed-ad5912e30dfd&pageSize=100&page=1&includeRestrictedPortfolio=true
+ caching: GET_https://api.chat.papervines.digital/core/v1/contact?ids=7442a505-afc1-4a07-82ed-ad5912e30dfd&pageSize=100&page=1&includeRestrictedPortfolio=true
+ cached GET_https://api.chat.papervines.digital/core/v1/contact/7442a505-afc1-4a07-82ed-ad5912e30dfd?isToIncludeTags=false&isToIncludeCustomFields=true&isToIncludePortfolios=true, expireIn: Thu Aug 20 2026 12:38:35 GMT-0300 (Horário Padrão de Brasília)
+ no_cached: GET_https://api.chat.papervines.digital/chat/v2/template/variables
+ caching: GET_https://api.chat.papervines.digital/chat/v2/template/variables
+ stepChangeEvent department
+ onStartChatStepChange department
+ stepChangeEvent template
+ onStartChatStepChange template
+ cached GET_https://api.chat.papervines.digital/chat/v2/template/variables, expireIn: Thu Aug 20 2026 12:39:05 GMT-0300 (Horário Padrão de Brasília)
+ no_cached: GET_https://api.chat.papervines.digital/chat/v2/template/categories
+ no_cached: GET_https://api.chat.papervines.digital/chat/v2/template/categories
+ caching: GET_https://api.chat.papervines.digital/chat/v2/template/categories
+ caching: GET_https://api.chat.papervines.digital/chat/v2/template/categories
+ cached GET_https://api.chat.papervines.digital/chat/v2/template/variables, expireIn: Thu Aug 20 2026 12:39:05 GMT-0300 (Horário Padrão de Brasília)
+ cached GET_https://api.chat.papervines.digital/chat/v2/template/categories, expireIn: Thu Aug 20 2026 12:39:12 GMT-0300 (Horário Padrão de Brasília)
+ cached GET_https://api.chat.papervines.digital/chat/v2/template/categories, expireIn: Thu Aug 20 2026 12:39:12 GMT-0300 (Horário Padrão de Brasília)
+ stepChangeEvent compile
+ onStartChatStepChange compile
+ cached GET_https://api.chat.papervines.digital/chat/v2/template/variables, expireIn: Thu Aug 20 2026 12:39:05 GMT-0300 (Horário Padrão de Brasília)
+ cache expired GET_https://api.chat.papervines.digital/chat/v2/template/variables
+ caching: GET_https://api.chat.papervines.digital/chat/v2/template/variables
+ resolver-27 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-27 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-27 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-28 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-27 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-28 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ no_cached: GET_https://api.chat.papervines.digital/chat/v1/session/9c3d6df0-2585-4e0d-939d-16ffafe195eb/previous
+ caching: GET_https://api.chat.papervines.digital/chat/v1/session/9c3d6df0-2585-4e0d-939d-16ffafe195eb/previous
+ resolver-27 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-28 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-27 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-28 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-27 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-28 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-27 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-28 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ cached GET_https://api.chat.papervines.digital/chat/v1/session/9c3d6df0-2585-4e0d-939d-16ffafe195eb/previous, expireIn: Thu Aug 20 2026 12:39:41 GMT-0300 (Horário Padrão de Brasília)
+ cached GET_https://api.chat.papervines.digital/chat/v1/session/9c3d6df0-2585-4e0d-939d-16ffafe195eb/previous, expireIn: Thu Aug 20 2026 12:39:41 GMT-0300 (Horário Padrão de Brasília)
+ cached GET_https://api.chat.papervines.digital/core/v1/contact/7442a505-afc1-4a07-82ed-ad5912e30dfd?isToIncludeTags=false&isToIncludeCustomFields=true&isToIncludePortfolios=true, expireIn: Thu Aug 20 2026 12:38:35 GMT-0300 (Horário Padrão de Brasília)
+ cache expired GET_https://api.chat.papervines.digital/core/v1/contact/7442a505-afc1-4a07-82ed-ad5912e30dfd?isToIncludeTags=false&isToIncludeCustomFields=true&isToIncludePortfolios=true
+ cached GET_https://api.chat.papervines.digital/core/v1/contact/7442a505-afc1-4a07-82ed-ad5912e30dfd?isToIncludeTags=false&isToIncludeCustomFields=true&isToIncludePortfolios=true, expireIn: Thu Aug 20 2026 12:38:35 GMT-0300 (Horário Padrão de Brasília)
+ cache expired GET_https://api.chat.papervines.digital/core/v1/contact/7442a505-afc1-4a07-82ed-ad5912e30dfd?isToIncludeTags=false&isToIncludeCustomFields=true&isToIncludePortfolios=true
+ caching: GET_https://api.chat.papervines.digital/core/v1/contact/7442a505-afc1-4a07-82ed-ad5912e30dfd?isToIncludeTags=false&isToIncludeCustomFields=true&isToIncludePortfolios=true
+ caching: GET_https://api.chat.papervines.digital/core/v1/contact/7442a505-afc1-4a07-82ed-ad5912e30dfd?isToIncludeTags=false&isToIncludeCustomFields=true&isToIncludePortfolios=true
+ cached GET_https://api.chat.papervines.digital/chat/v1/session/ec871ae5-2131-4120-85a7-11ed5f007abd/previous, expireIn: Thu Aug 20 2026 12:38:35 GMT-0300 (Horário Padrão de Brasília)
+ cache expired GET_https://api.chat.papervines.digital/chat/v1/session/ec871ae5-2131-4120-85a7-11ed5f007abd/previous
+ cached GET_https://api.chat.papervines.digital/chat/v1/session/ec871ae5-2131-4120-85a7-11ed5f007abd/previous, expireIn: Thu Aug 20 2026 12:38:35 GMT-0300 (Horário Padrão de Brasília)
+ cache expired GET_https://api.chat.papervines.digital/chat/v1/session/ec871ae5-2131-4120-85a7-11ed5f007abd/previous
+ caching: GET_https://api.chat.papervines.digital/chat/v1/session/ec871ae5-2131-4120-85a7-11ed5f007abd/previous
+ caching: GET_https://api.chat.papervines.digital/chat/v1/session/ec871ae5-2131-4120-85a7-11ed5f007abd/previous
+ [ws] send state CONNECTING
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+ [ws] send state CONNECTED
+ [ws] send state CONNECTING
+ [ws] send state CONNECTED
+ resolver-27 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-28 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-27 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-28 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-27 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-28 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-27 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-28 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ no_cached: GET_https://api.chat.papervines.digital/chat/v1/session/1e21ce4f-e024-4dd6-a5fa-4e63c09d685e/previous
+ no_cached: GET_https://api.chat.papervines.digital/chat/v1/session/1e21ce4f-e024-4dd6-a5fa-4e63c09d685e/previous
+ no_cached: GET_https://api.chat.papervines.digital/core/v1/contact/ca675be3-6db2-4ea8-a949-7bcb2651ce52?isToIncludeTags=false&isToIncludeCustomFields=true&isToIncludePortfolios=true
+ no_cached: GET_https://api.chat.papervines.digital/core/v1/contact/ca675be3-6db2-4ea8-a949-7bcb2651ce52?isToIncludeTags=false&isToIncludeCustomFields=true&isToIncludePortfolios=true
+ caching: GET_https://api.chat.papervines.digital/chat/v1/session/1e21ce4f-e024-4dd6-a5fa-4e63c09d685e/previous
+ caching: GET_https://api.chat.papervines.digital/core/v1/contact/ca675be3-6db2-4ea8-a949-7bcb2651ce52?isToIncludeTags=false&isToIncludeCustomFields=true&isToIncludePortfolios=true
+ caching: GET_https://api.chat.papervines.digital/chat/v1/session/1e21ce4f-e024-4dd6-a5fa-4e63c09d685e/previous
+ resolver-27 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-28 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-27 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-28 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-27 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-28 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-27 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-28 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ no_cached: GET_https://api.chat.papervines.digital/chat/v1/session/306e5173-2a83-4640-9f18-ecd75d5c4020/previous
+ no_cached: GET_https://api.chat.papervines.digital/chat/v1/session/306e5173-2a83-4640-9f18-ecd75d5c4020/previous
+ no_cached: GET_https://api.chat.papervines.digital/core/v1/contact/0e84759d-8a1d-4d6f-944e-f26858c2b3ea?isToIncludeTags=false&isToIncludeCustomFields=true&isToIncludePortfolios=true
+ no_cached: GET_https://api.chat.papervines.digital/core/v1/contact/0e84759d-8a1d-4d6f-944e-f26858c2b3ea?isToIncludeTags=false&isToIncludeCustomFields=true&isToIncludePortfolios=true
+ caching: GET_https://api.chat.papervines.digital/core/v1/contact/ca675be3-6db2-4ea8-a949-7bcb2651ce52?isToIncludeTags=false&isToIncludeCustomFields=true&isToIncludePortfolios=true
+ caching: GET_https://api.chat.papervines.digital/core/v1/contact/0e84759d-8a1d-4d6f-944e-f26858c2b3ea?isToIncludeTags=false&isToIncludeCustomFields=true&isToIncludePortfolios=true
+ caching: GET_https://api.chat.papervines.digital/chat/v1/session/306e5173-2a83-4640-9f18-ecd75d5c4020/previous
+ resolver-27 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-28 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-27 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-28 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-27 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-28 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+ resolver-27 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ resolver-28 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+ no_cached: GET_https://api.chat.papervines.digital/chat/v1/session/56f64318-176a-43d5-a432-fb2936341fc7/previous
+ no_cached: GET_https://api.chat.papervines.digital/chat/v1/session/56f64318-176a-43d5-a432-fb2936341fc7/previous
+ no_cached: GET_https://api.chat.papervines.digital/core/v1/contact/34efba99-c625-4f21-b06f-14eb659fa122?isToIncludeTags=false&isToIncludeCustomFields=true&isToIncludePortfolios=true
+ no_cached: GET_https://api.chat.papervines.digital/core/v1/contact/34efba99-c625-4f21-b06f-14eb659fa122?isToIncludeTags=false&isToIncludeCustomFields=true&isToIncludePortfolios=true
+ caching: GET_https://api.chat.papervines.digital/core/v1/contact/0e84759d-8a1d-4d6f-944e-f26858c2b3ea?isToIncludeTags=false&isToIncludeCustomFields=true&isToIncludePortfolios=true
+ caching: GET_https://api.chat.papervines.digital/core/v1/contact/34efba99-c625-4f21-b06f-14eb659fa122?isToIncludeTags=false&isToIncludeCustomFields=true&isToIncludePortfolios=true
+ caching: GET_https://api.chat.papervines.digital/chat/v1/session/56f64318-176a-43d5-a432-fb2936341fc7/previous
+main.11167927f02cae35.js:1 caching: GET_https://api.chat.papervines.digital/core/v1/contact/34efba99-c625-4f21-b06f-14eb659fa122?isToIncludeTags=false&isToIncludeCustomFields=true&isToIncludePortfolios=true
+main.11167927f02cae35.js:1 caching: GET_https://api.chat.papervines.digital/chat/v1/session/56f64318-176a-43d5-a432-fb2936341fc7/previous
+main.11167927f02cae35.js:1 resolver-27 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+main.11167927f02cae35.js:1 resolver-28 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+main.11167927f02cae35.js:1 resolver-27 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+main.11167927f02cae35.js:1 resolver-28 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+main.11167927f02cae35.js:1 resolver-27 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+main.11167927f02cae35.js:1 resolver-28 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+main.11167927f02cae35.js:1 resolver-27 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+main.11167927f02cae35.js:1 resolver-28 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+main.11167927f02cae35.js:1 cached GET_https://api.chat.papervines.digital/core/v1/contact/ca675be3-6db2-4ea8-a949-7bcb2651ce52?isToIncludeTags=false&isToIncludeCustomFields=true&isToIncludePortfolios=true, expireIn: Thu Aug 20 2026 16:23:08 GMT-0300 (Horário Padrão de Brasília)
+main.11167927f02cae35.js:1 cache expired GET_https://api.chat.papervines.digital/core/v1/contact/ca675be3-6db2-4ea8-a949-7bcb2651ce52?isToIncludeTags=false&isToIncludeCustomFields=true&isToIncludePortfolios=true
+main.11167927f02cae35.js:1 cached GET_https://api.chat.papervines.digital/core/v1/contact/ca675be3-6db2-4ea8-a949-7bcb2651ce52?isToIncludeTags=false&isToIncludeCustomFields=true&isToIncludePortfolios=true, expireIn: Thu Aug 20 2026 16:23:08 GMT-0300 (Horário Padrão de Brasília)
+main.11167927f02cae35.js:1 cache expired GET_https://api.chat.papervines.digital/core/v1/contact/ca675be3-6db2-4ea8-a949-7bcb2651ce52?isToIncludeTags=false&isToIncludeCustomFields=true&isToIncludePortfolios=true
+main.11167927f02cae35.js:1 resolver-27 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+main.11167927f02cae35.js:1 resolver-28 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+main.11167927f02cae35.js:1 resolver-27 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+main.11167927f02cae35.js:1 resolver-28 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+main.11167927f02cae35.js:1 resolver-27 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+main.11167927f02cae35.js:1 resolver-28 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+main.11167927f02cae35.js:1 resolver-27 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+main.11167927f02cae35.js:1 resolver-28 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+main.11167927f02cae35.js:1 cached GET_https://api.chat.papervines.digital/core/v1/contact/0e84759d-8a1d-4d6f-944e-f26858c2b3ea?isToIncludeTags=false&isToIncludeCustomFields=true&isToIncludePortfolios=true, expireIn: Thu Aug 20 2026 16:23:09 GMT-0300 (Horário Padrão de Brasília)
+main.11167927f02cae35.js:1 cache expired GET_https://api.chat.papervines.digital/core/v1/contact/0e84759d-8a1d-4d6f-944e-f26858c2b3ea?isToIncludeTags=false&isToIncludeCustomFields=true&isToIncludePortfolios=true
+main.11167927f02cae35.js:1 cached GET_https://api.chat.papervines.digital/core/v1/contact/0e84759d-8a1d-4d6f-944e-f26858c2b3ea?isToIncludeTags=false&isToIncludeCustomFields=true&isToIncludePortfolios=true, expireIn: Thu Aug 20 2026 16:23:09 GMT-0300 (Horário Padrão de Brasília)
+main.11167927f02cae35.js:1 cache expired GET_https://api.chat.papervines.digital/core/v1/contact/0e84759d-8a1d-4d6f-944e-f26858c2b3ea?isToIncludeTags=false&isToIncludeCustomFields=true&isToIncludePortfolios=true
+main.11167927f02cae35.js:1 caching: GET_https://api.chat.papervines.digital/core/v1/contact/ca675be3-6db2-4ea8-a949-7bcb2651ce52?isToIncludeTags=false&isToIncludeCustomFields=true&isToIncludePortfolios=true
+main.11167927f02cae35.js:1 caching: GET_https://api.chat.papervines.digital/core/v1/contact/ca675be3-6db2-4ea8-a949-7bcb2651ce52?isToIncludeTags=false&isToIncludeCustomFields=true&isToIncludePortfolios=true
+main.11167927f02cae35.js:1 caching: GET_https://api.chat.papervines.digital/core/v1/contact/0e84759d-8a1d-4d6f-944e-f26858c2b3ea?isToIncludeTags=false&isToIncludeCustomFields=true&isToIncludePortfolios=true
+main.11167927f02cae35.js:1 caching: GET_https://api.chat.papervines.digital/core/v1/contact/0e84759d-8a1d-4d6f-944e-f26858c2b3ea?isToIncludeTags=false&isToIncludeCustomFields=true&isToIncludePortfolios=true
+main.11167927f02cae35.js:1 [ws] send state CONNECTING
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+main.11167927f02cae35.js:1 [ws] send state CONNECTED
+api.chat.papervines.digital/chat/v3/channel/my:1  Failed to load resource: net::ERR_NETWORK_CHANGED
+main.11167927f02cae35.js:1 ERROR Oe
+Au @ main.11167927f02cae35.js:1
+main.11167927f02cae35.js:1 [ws] send state CONNECTING
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NETWORK_ACCESS_DENIED
+main.11167927f02cae35.js:1 [ws] send state CONNECTED
+main.11167927f02cae35.js:1 [ws] send state CONNECTING
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+main.11167927f02cae35.js:1 [ws] send state CONNECTED
+main.11167927f02cae35.js:1 [ws] send state CONNECTING
+main.11167927f02cae35.js:1 [ws] send state CONNECTED
+main.11167927f02cae35.js:1 [ws] send state DISCONNECTED
+/chat2/sessions/306e5173-2a83-4640-9f18-ecd75d5c4020:1 Access to XMLHttpRequest at 'https://api.chat.papervines.digital/chat/v3/channel/my' from origin 'https://chat.papervines.digital' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+api.chat.papervines.digital/chat/v3/channel/my:1  Failed to load resource: net::ERR_FAILED
+main.11167927f02cae35.js:1 ERROR Oe
+Au @ main.11167927f02cae35.js:1
+/chat2/sessions/306e5173-2a83-4640-9f18-ecd75d5c4020:1 Access to XMLHttpRequest at 'https://api.chat.papervines.digital/chat/v3/session/306e5173-2a83-4640-9f18-ecd75d5c4020/message?page=1&pageSize=100&orderByDesc=createdat&includeTranstions=true' from origin 'https://chat.papervines.digital' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+api.chat.papervines.digital/chat/v3/session/306e5173-2a83-4640-9f18-ecd75d5c4020/message?page=1&pageSize=100&orderByDesc=createdat&includeTranstions=true:1  Failed to load resource: net::ERR_FAILED
+main.11167927f02cae35.js:1 ERROR Oe
+Au @ main.11167927f02cae35.js:1
+/chat2/sessions/306e5173-2a83-4640-9f18-ecd75d5c4020:1 Access to XMLHttpRequest at 'https://api.chat.papervines.digital/chat/v6/session?skipCount=true&page=1&pageSize=50&includeDetails=All&statuses=PENDING&sessionType=INDIVIDUAL&orderBy=createdat' from origin 'https://chat.papervines.digital' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+api.chat.papervines.digital/chat/v6/session?skipCount=true&page=1&pageSize=50&includeDetails=All&statuses=PENDING&sessionType=INDIVIDUAL&orderBy=createdat:1  Failed to load resource: net::ERR_FAILED
+/chat2/sessions/306e5173-2a83-4640-9f18-ecd75d5c4020:1 Access to XMLHttpRequest at 'https://api.chat.papervines.digital/chat/v1/session/badge' from origin 'https://chat.papervines.digital' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+api.chat.papervines.digital/chat/v1/session/badge:1  Failed to load resource: net::ERR_FAILED
+main.11167927f02cae35.js:1 ERROR Oe
+Au @ main.11167927f02cae35.js:1
+main.11167927f02cae35.js:1 [ws] send state CONNECTING
+main.11167927f02cae35.js:1 [ws] send state CONNECTED
+main.11167927f02cae35.js:1 [ws] send state CONNECTING
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NETWORK_CHANGED
+main.11167927f02cae35.js:1 [ws] send state CONNECTED
+main.11167927f02cae35.js:1 [ws] send state CONNECTING
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NETWORK_ACCESS_DENIED
+main.11167927f02cae35.js:1 [ws] send state CONNECTED
+main.11167927f02cae35.js:1 [ws] send state CONNECTING
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+rt-web.wts.chat/realtime/connect/negotiate?platform=WEB&deviceId=48214fd1-99d5-483b-93b8-897c9b79a5f1&negotiateVersion=1:1  Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+main.11167927f02cae35.js:1 [ws] send state CONNECTED
+main.11167927f02cae35.js:1 [ws] send state CONNECTING
+main.11167927f02cae35.js:1 [ws] send state CONNECTED
+main.11167927f02cae35.js:1 resolver-27 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+main.11167927f02cae35.js:1 resolver-28 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+main.11167927f02cae35.js:1 resolver-63 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+main.11167927f02cae35.js:1 resolver-27 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+main.11167927f02cae35.js:1 resolver-28 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+main.11167927f02cae35.js:1 resolver-63 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+main.11167927f02cae35.js:1 resolver-64 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+main.11167927f02cae35.js:1 resolver-27 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+main.11167927f02cae35.js:1 resolver-28 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+main.11167927f02cae35.js:1 resolver-63 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+main.11167927f02cae35.js:1 resolver-64 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+main.11167927f02cae35.js:1 resolver-65 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+main.11167927f02cae35.js:1 resolver-27 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+main.11167927f02cae35.js:1 resolver-28 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+main.11167927f02cae35.js:1 resolver-63 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+main.11167927f02cae35.js:1 resolver-64 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+main.11167927f02cae35.js:1 resolver-65 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+main.11167927f02cae35.js:1 resolver-66 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+main.11167927f02cae35.js:1 resolver-27 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+main.11167927f02cae35.js:1 resolver-28 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+main.11167927f02cae35.js:1 resolver-63 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+main.11167927f02cae35.js:1 resolver-64 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+main.11167927f02cae35.js:1 resolver-65 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+main.11167927f02cae35.js:1 resolver-66 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+main.11167927f02cae35.js:1 resolver-27 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+main.11167927f02cae35.js:1 resolver-28 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+main.11167927f02cae35.js:1 resolver-63 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+main.11167927f02cae35.js:1 resolver-64 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+main.11167927f02cae35.js:1 resolver-65 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+main.11167927f02cae35.js:1 resolver-66 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+main.11167927f02cae35.js:1 resolver-27 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+main.11167927f02cae35.js:1 resolver-28 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+main.11167927f02cae35.js:1 resolver-63 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+main.11167927f02cae35.js:1 resolver-64 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+main.11167927f02cae35.js:1 resolver-65 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+main.11167927f02cae35.js:1 resolver-66 - false - Weight: 1 - Progress: 0 - Resolver Progress: 0
+main.11167927f02cae35.js:1 resolver-27 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+main.11167927f02cae35.js:1 resolver-28 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+main.11167927f02cae35.js:1 resolver-63 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+main.11167927f02cae35.js:1 resolver-64 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+main.11167927f02cae35.js:1 resolver-65 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+main.11167927f02cae35.js:1 resolver-66 - true - Weight: 1 - Progress: 0 - Resolver Progress: 1
+const G=['Objetivo atingido','Objetivo perdido','Dúvida','Outro']; const bt=document.body.innerText; let seg=bt.slice(bt.indexOf('Classificação de atendimentos')); let e=seg.search(/atendimentos não classificados|Anúncios|Anuncios/i); if(e>0) seg=seg.slice(0,e); const L=seg.split('\n').map(s=>s.trim()).filter(s=>s.length); const out=[]; let cur=null; for(let k=0;k<L.length;k++){const ln=L[k]; if(G.includes(ln)){cur={nome:ln,cor:({'Objetivo atingido':'verde','Objetivo perdido':'vermelho','Dúvida':'azul','Outro':'cinza'})[ln],total:parseInt((L[k+1]||'').replace(/\D/g,''))||0,itens:[]}; out.push(cur); k++; continue;} if(!cur) continue; if(/%$/.test(ln)) continue; if(/^\d[\d\.]*$/.test(ln)) continue; let cnt=null,kk=k+1; while(kk<L.length){ if(/^\d[\d\.]*$/.test(L[kk])){cnt=parseInt(L[kk].replace(/\D/g,''));break;} if(G.includes(L[kk])) break; kk++;} if(cnt!==null){cur.itens.push({m:ln,n:cnt}); k=kk;} } const nc=(bt.match(/(\d[\d\.]*)\s*\n?\s*atendimentos não classificados/i)||[])[1]; const pi=document.querySelector('input[placeholder="Início"]'), pf=document.querySelector('input[placeholder="Fim"]'); const res={periodo:((pi?pi.value:'').slice(0,5))+' a '+((pf?pf.value:'').slice(0,5)), fonte:'Paper Vines > Relatorios > Resultados (Classificacao de atendimentos)', nao_classificados: nc?parseInt(nc.replace(/\D/g,'')):0, grupos:out}; window.__MOT=JSON.stringify(res,null,2); try{ copy(__MOT); console.log('%cCOPIADO ✓ — cole no motivos.json','color:green;font-weight:bold'); }catch(e){ console.log('%cPRONTO ✓ — agora digite no console:  copy(__MOT)   e dê Enter','color:#b45309;font-weight:bold'); } console.log(__MOT);
+VM119:1 COPIADO ✓ — cole no motivos.json
+VM119:1 {
+  "periodo": "14/08 a 20/08",
   "fonte": "Paper Vines > Relatorios > Resultados (Classificacao de atendimentos)",
-  "nao_classificados": 227,
+  "nao_classificados": 2334,
   "grupos": [
     {
       "nome": "Objetivo atingido",
       "cor": "verde",
-      "total": 139,
+      "total": 105,
       "itens": [
-        { "m": "Confirmação de agendamento", "n": 73 },
-        { "m": "Reagendado", "n": 26 },
-        { "m": "Tratamento agendado", "n": 14 },
-        { "m": "Retorno agendado", "n": 11 },
-        { "m": "Avaliação agendanda", "n": 6 },
-        { "m": "Pesquisa de satisfação", "n": 5 },
-        { "m": "Consulta agendada", "n": 4 }
+        {
+          "m": "Confirmação de agendamento",
+          "n": 57
+        },
+        {
+          "m": "Reagendado",
+          "n": 14
+        },
+        {
+          "m": "Tratamento agendado",
+          "n": 11
+        },
+        {
+          "m": "Pesquisa de satisfação",
+          "n": 9
+        },
+        {
+          "m": "Avaliação agendanda",
+          "n": 6
+        },
+        {
+          "m": "Consulta agendada",
+          "n": 5
+        },
+        {
+          "m": "Retorno agendado",
+          "n": 3
+        }
       ]
     },
     {
       "nome": "Objetivo perdido",
       "cor": "vermelho",
-      "total": 450,
+      "total": 294,
       "itens": [
-        { "m": "Encerrado por inatividade", "n": 217 },
-        { "m": "Não tem interesse", "n": 132 },
-        { "m": "Mora em outra cidade", "n": 28 },
-        { "m": "Nunca interagiu", "n": 28 },
-        { "m": "Negociação futura", "n": 12 },
-        { "m": "Não pode iniciar agora", "n": 10 },
-        { "m": "Procurava outra coisa", "n": 5 },
-        { "m": "Achou caro", "n": 4 },
-        { "m": "Precisa pensar", "n": 4 },
-        { "m": "Não compareceu", "n": 3 },
-        { "m": "Não quis a promoção", "n": 3 },
-        { "m": "Cancelamento de agendamento", "n": 3 },
-        { "m": "Pesquisando preço", "n": 1 }
+        {
+          "m": "Encerrado por inatividade",
+          "n": 188
+        },
+        {
+          "m": "Não tem interesse",
+          "n": 37
+        },
+        {
+          "m": "Não quis a promoção",
+          "n": 18
+        },
+        {
+          "m": "Mora em outra cidade",
+          "n": 15
+        },
+        {
+          "m": "Não pode iniciar agora",
+          "n": 11
+        },
+        {
+          "m": "Cancelamento de agendamento",
+          "n": 9
+        },
+        {
+          "m": "Negociação futura",
+          "n": 9
+        },
+        {
+          "m": "Nunca interagiu",
+          "n": 2
+        },
+        {
+          "m": "Achou caro",
+          "n": 2
+        },
+        {
+          "m": "Já iniciou tratamento em outra clinica.",
+          "n": 1
+        },
+        {
+          "m": "Pesquisando preço",
+          "n": 1
+        },
+        {
+          "m": "Procurava outra coisa",
+          "n": 1
+        }
       ]
     },
     {
       "nome": "Dúvida",
       "cor": "azul",
-      "total": 16,
+      "total": 8,
       "itens": [
-        { "m": "Exames", "n": 6 },
-        { "m": "Receitas", "n": 5 },
-        { "m": "Farmácias", "n": 2 },
-        { "m": "Horário", "n": 1 },
-        { "m": "Uso dos produtos", "n": 1 },
-        { "m": "Endereço", "n": 1 }
+        {
+          "m": "Receitas",
+          "n": 4
+        },
+        {
+          "m": "Horário",
+          "n": 1
+        },
+        {
+          "m": "Exames",
+          "n": 1
+        },
+        {
+          "m": "Farmácias",
+          "n": 1
+        },
+        {
+          "m": "Uso dos produtos",
+          "n": 1
+        }
       ]
     },
     {
       "nome": "Outro",
       "cor": "cinza",
-      "total": 35,
+      "total": 25,
       "itens": [
-        { "m": "Atendimento Clínico Realizado", "n": 9 },
-        { "m": "já é paciente.", "n": 6 },
-        { "m": "Prestador de serviço", "n": 4 },
-        { "m": "Inseguro (a)", "n": 3 },
-        { "m": "Teste", "n": 3 },
-        { "m": "Caso de transplante.", "n": 3 },
-        { "m": "Não qualificou", "n": 2 },
-        { "m": "Cliente está grávida", "n": 1 },
-        { "m": "Instagram", "n": 1 },
-        { "m": "Estava procurando tratamento para outra pessoa.", "n": 1 },
-        { "m": "Currículo", "n": 1 },
-        { "m": "SPAM", "n": 1 }
+        {
+          "m": "já é paciente.",
+          "n": 7
+        },
+        {
+          "m": "Atendimento Clínico Realizado",
+          "n": 6
+        },
+        {
+          "m": "Prestador de serviço",
+          "n": 6
+        },
+        {
+          "m": "Estava procurando tratamento para outra pessoa.",
+          "n": 2
+        },
+        {
+          "m": "Cliente está grávida",
+          "n": 1
+        },
+        {
+          "m": "Entro em contato para mentoria",
+          "n": 1
+        },
+        {
+          "m": "Outro funil",
+          "n": 1
+        },
+        {
+          "m": "Currículo",
+          "n": 1
+        }
       ]
     }
   ]
 }
+undefined
