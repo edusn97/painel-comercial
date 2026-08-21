@@ -1,13 +1,27 @@
 {
   "fonte": "Clinica Experts > Extrato (receipts_paid) + vendedor da comanda (order.seller)",
-  "periodo": "07/08 a 13/08",
-  "total": 9407.94,
-  "sj": 889.98,
-  "jv": 8517.96,
+  "periodo": "14/08 a 20/08",
+  "total": 8643.96,
+  "sj": 4240.98,
+  "jv": 4402.98,
   "por_vendedora": {
-    "Daiane": 1779.96,
-    "Ana": 890,
-    "Brenda": 889.98,
-    "Ana Paula": 0
+    "Daiane": 2589.98,
+    "Ana": 1701,
+    "Brenda": 0,
+    "Ana Paula": 839.98
+  },
+  "biomedicas": {
+    "Kamile": {
+      "pacotes": 0,
+      "faturamento": 0
+    },
+    "Janaina": {
+      "pacotes": 1,
+      "faturamento": 1701
+    },
+    "Bruna": {
+      "pacotes": 2,
+      "faturamento": 3513
+    }
   }
 }
