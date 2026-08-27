@@ -51,27 +51,15 @@ Write-Host ("Semana: {0} a {1}" -f $start.ToString('dd/MM/yyyy'), $end.ToString(
 Write-Host "Puxando contatos do Paper Vines..."
 
 $headers = @{ Authorization = "Bearer $token"; Accept = "application/json" }
-# CORRIGIDO 27/08/2026: a API ignora "PageNumber" (devolve sempre a pagina 1) e nao
-# existe campo "hasMorePages" na resposta. O parametro correto e "Page" e o total vem
-# em "countPages"/"totalItems". Antes disso o loop rodava UMA vez e o painel contava
-# no maximo 100 contatos por semana. Dedup por id porque as paginas se sobrepoem.
 $all = @()
-$seenC = @{}
 $page = 1
-$totPagC = 1
 do {
-  $url = "https://api.wts.chat/core/v1/contact?CreatedAt.After=$([uri]::EscapeDataString($afterUtc))&CreatedAt.Before=$([uri]::EscapeDataString($beforeUtc))&IncludeDetails=Tags&PageSize=100&Page=$page"
+  $url = "https://api.wts.chat/core/v1/contact?CreatedAt.After=$([uri]::EscapeDataString($afterUtc))&CreatedAt.Before=$([uri]::EscapeDataString($beforeUtc))&IncludeDetails=Tags&PageSize=100&PageNumber=$page"
   $resp = Invoke-RestMethod -Uri $url -Headers $headers -Method Get
-  $novos = 0
-  if ($resp.items) {
-    foreach ($it in $resp.items) {
-      if ($it.id -and -not $seenC.ContainsKey($it.id)) { $seenC[$it.id] = $true; $all += $it; $novos++ }
-    }
-  }
-  if ($resp.countPages) { $totPagC = [int]$resp.countPages }
+  if ($resp.items) { $all += $resp.items }
+  $more = [bool]$resp.hasMorePages
   $page++
-} while ($novos -gt 0 -and $page -le $totPagC -and $page -le 40)
-Write-Host ("  contatos unicos: {0} (paginas: {1})" -f $all.Count, $totPagC)
+} while ($more -and $page -le 40)
 
 # ---- Contagem ----
 $total = $all.Count
@@ -88,27 +76,15 @@ foreach ($c in $all) {
 
 # ---- POR VENDEDORA (via conversas/atendimentos) ----
 Write-Host "Puxando atendimentos por vendedora..."
-# CORRIGIDO 27/08/2026: mesmo bug de paginacao dos contatos (PageNumber -> Page).
-# IncludeDetails=All porque "DepartmentDetails" NAO e um flag valido isolado e
-# precisamos do departamento para separar AGENDAMENTO x SUPORTE, alem do
-# statusReasonDetails (motivo de encerramento).
 $sessAll = @()
-$seenS = @{}
 $page = 1
-$totPagS = 1
 do {
-  $surl = "https://api.wts.chat/chat/v2/session?CreatedAt.After=$([uri]::EscapeDataString($afterUtc))&CreatedAt.Before=$([uri]::EscapeDataString($beforeUtc))&IncludeDetails=All&PageSize=100&Page=$page"
+  $surl = "https://api.wts.chat/chat/v2/session?CreatedAt.After=$([uri]::EscapeDataString($afterUtc))&CreatedAt.Before=$([uri]::EscapeDataString($beforeUtc))&IncludeDetails=AgentDetails&IncludeDetails=ContactDetails&PageSize=100&PageNumber=$page"
   $sr = Invoke-RestMethod -Uri $surl -Headers $headers -Method Get
-  $novosS = 0
-  if ($sr.items) {
-    foreach ($it in $sr.items) {
-      if ($it.id -and -not $seenS.ContainsKey($it.id)) { $seenS[$it.id] = $true; $sessAll += $it; $novosS++ }
-    }
-  }
-  if ($sr.countPages) { $totPagS = [int]$sr.countPages }
+  if ($sr.items) { $sessAll += $sr.items }
+  $smore = [bool]$sr.hasMorePages
   $page++
-} while ($novosS -gt 0 -and $page -le $totPagS -and $page -le 40)
-Write-Host ("  atendimentos unicos: {0} (paginas: {1})" -f $sessAll.Count, $totPagS)
+} while ($smore -and $page -le 40)
 
 # Leads da semana + quais sao qualificados (CTT) / desqualificados (CDA)
 $weekContactIds = @{}
@@ -506,131 +482,30 @@ try {
   $semObs = ""
   if ($ceSemObs.Count -gt 0) { $semObs = ' A confirmar no CRM (agendamento sem vendedora na obs.): ' + (($ceSemObs | Select-Object -Unique) -join ', ') + '.' }
 
-  # ---------------------------------------------------------------------------
-  # Motivos de encerramento - AUTOMATICO desde 27/08/2026.
-  # Vem de $sessAll (API do Paper Vines), separado por equipe:
-  #   AGENDAMENTO / AGENDAMENTO NOTURNO = lead novo  (conversao comercial de verdade)
-  #   SUPORTE                            = paciente existente (operacao de agenda)
-  # NUNCA somar os dois: junto da a falsa impressao de conversao saudavel.
-  # Se a API falhar, cai no config/motivos.json manual (comportamento antigo).
-  # ---------------------------------------------------------------------------
+  # Motivos de encerramento (tabulacao) - lido de config/motivos.json (atualizado a partir do painel Paper Vines)
   $motHtml = ""
-  $motOk = $false
-  try {
-    $encAll = @($sessAll | Where-Object { $_.statusReasonId })
-    if ($encAll.Count -gt 0) {
-      $catCor = @{ LOST='var(--vermelho)'; WON='var(--verde)'; OTHER='#6b52d1'; INFO='#b8860b' }
-      $catNome = @{ LOST='Perdido'; WON='Ganho'; OTHER='Outros'; INFO='Informacao' }
-      $blocos = @(
-        @{ chave='AG'; titulo='Agendamento + Ag. noturno'; sub='lead novo' },
-        @{ chave='SU'; titulo='Suporte';                   sub='paciente existente' }
-      )
-      $resumo = @{}
-      $motHtml += '<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px">' + "`r`n"
-      foreach ($b in $blocos) {
-        $lista = @($encAll | Where-Object {
-          $dep = "$($_.departmentDetails.name)"
-          if ($b.chave -eq 'AG') { $dep -match 'AGENDAMENTO' } else { $dep -notmatch 'AGENDAMENTO' }
-        })
-        $tot = $lista.Count
-        if ($tot -eq 0) { continue }
-        $cat = [ordered]@{ LOST=0; WON=0; OTHER=0; INFO=0 }
-        $porMot = @{}
-        $inat = 0
-        foreach ($x in $lista) {
-          $c = "$($x.statusReasonDetails.category)"
-          if ([string]::IsNullOrWhiteSpace($c)) { $c = "$($x.statusReasonEnum)" }
-          if ($cat.Contains($c)) { $cat[$c] = [int]$cat[$c] + 1 }
-          $nm = "$($x.statusReasonDetails.categoryDescription)".Trim()
-          if ([string]::IsNullOrWhiteSpace($nm)) { $nm = 'Sem descricao' }
-          if ($porMot.ContainsKey($nm)) { $porMot[$nm]++ } else { $porMot[$nm] = 1 }
-          if ($nm -eq 'Encerrado por inatividade') { $inat++ }
-        }
-        $resumo[$b.chave] = @{ tot=$tot; lost=[int]$cat['LOST']; won=[int]$cat['WON']; inat=$inat }
-        $pctInat = 0; if ($tot -gt 0) { $pctInat = [math]::Round(100.0*$inat/$tot,1) }
-
+  $motPath = Join-Path $base "config/motivos.json"
+  if (Test-Path $motPath) {
+    try {
+      $mot = Get-Content $motPath -Raw -Encoding UTF8 | ConvertFrom-Json
+      $colorMap = @{ verde = 'var(--verde)'; vermelho = 'var(--vermelho)'; azul = '#2b6cb0'; cinza = 'var(--cinza)' }
+      $motHtml += '<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px">' + "`r`n"
+      foreach ($g in $mot.grupos) {
+        $col = 'var(--petroleo)'; if ($colorMap.ContainsKey("$($g.cor)")) { $col = $colorMap["$($g.cor)"] }
         $motHtml += '  <div style="border:1px solid var(--linha);border-radius:12px;padding:14px 16px">' + "`r`n"
-        $motHtml += '    <div style="border-bottom:1px solid var(--linha);padding-bottom:8px;margin-bottom:10px">' + "`r`n"
-        $motHtml += '      <div style="font-weight:700;color:var(--petroleo)">' + $b.titulo + '</div>' + "`r`n"
-        $motHtml += '      <div style="font-size:12px;color:var(--cinza)">' + $b.sub + ' &middot; <b>' + $tot + '</b> encerramentos com motivo</div>' + "`r`n"
-        $motHtml += '    </div>' + "`r`n"
-        foreach ($k in @('LOST','WON','OTHER','INFO')) {
-          $v = [int]$cat[$k]
-          $pc = 0; if ($tot -gt 0) { $pc = [math]::Round(100.0*$v/$tot,1) }
-          $w = [math]::Max($pc,1)
-          $motHtml += '    <div style="display:flex;align-items:center;gap:8px;margin:5px 0">' +
-                      '<span style="width:78px;font-size:12px;color:var(--cinza)">' + $catNome[$k] + '</span>' +
-                      '<span style="flex:1;background:var(--claro);border-radius:6px;height:16px;overflow:hidden">' +
-                      '<span style="display:block;height:100%;width:' + $w + '%;background:' + $catCor[$k] + '"></span></span>' +
-                      '<b style="font-size:12px;min-width:62px;text-align:right">' + $v + ' &middot; ' + $pc + '%</b></div>' + "`r`n"
+        $motHtml += '    <div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--linha);padding-bottom:8px;margin-bottom:8px"><span style="font-weight:700;color:' + $col + '">' + "$($g.nome)" + '</span><span style="font-size:22px;font-weight:800;color:' + $col + '">' + "$($g.total)" + '</span></div>' + "`r`n"
+        foreach ($it in $g.itens) {
+          $motHtml += '    <div style="display:flex;justify-content:space-between;font-size:13px;padding:3px 0"><span>' + "$($it.m)" + '</span><b>' + "$($it.n)" + '</b></div>' + "`r`n"
         }
-        $motHtml += '    <div style="border-top:1px solid var(--linha);margin-top:10px;padding-top:8px;font-size:12px;color:var(--cinza)">Top motivos</div>' + "`r`n"
-        $topo = $porMot.GetEnumerator() | Sort-Object -Property Value -Descending | Select-Object -First 8
-        foreach ($it in $topo) {
-          $motHtml += '    <div style="display:flex;justify-content:space-between;font-size:13px;padding:3px 0"><span>' + $it.Key + '</span><b>' + $it.Value + '</b></div>' + "`r`n"
-        }
-        if ($porMot.Count -gt 8) {
-          $motHtml += '    <div style="font-size:12px;color:var(--cinza);padding-top:4px">+ ' + ($porMot.Count - 8) + ' outros motivos</div>' + "`r`n"
-        }
-        $motHtml += '    <div style="margin-top:10px;padding:8px 10px;border-radius:8px;background:#fdecea;color:#7a2018;font-size:12px">Encerrado por inatividade: <b>' + $inat + '</b> (' + $pctInat + '%)</div>' + "`r`n"
         $motHtml += '  </div>' + "`r`n"
       }
       $motHtml += '</div>' + "`r`n"
-
-      $semMot = @($sessAll | Where-Object { $_.status -eq 'COMPLETED' -and -not $_.statusReasonId }).Count
-      $totCompl = @($sessAll | Where-Object { $_.status -eq 'COMPLETED' }).Count
-      $pctSem = 0; if ($totCompl -gt 0) { $pctSem = [math]::Round(100.0*$semMot/$totCompl,1) }
-
-      $lidoAG = 'sem dados'
-      if ($resumo.ContainsKey('AG')) {
-        $r = $resumo['AG']
-        $pl = 0; if ($r.tot -gt 0) { $pl = [math]::Round(100.0*$r.lost/$r.tot,1) }
-        $pw = 0; if ($r.tot -gt 0) { $pw = [math]::Round(100.0*$r.won/$r.tot,1) }
-        $lidoAG = 'no lead novo foram <b>' + $r.lost + ' perdidos (' + $pl + '%)</b> contra <b>' + $r.won + ' ganhos (' + $pw + '%)</b>, e <b>' + $r.inat + '</b> sairam por inatividade'
-      }
-
-      $motHtml += '<div style="background:#fdecea;border:1px solid #f3b8b0;border-left:5px solid var(--vermelho);border-radius:12px;padding:12px 16px;margin-top:14px;font-size:13px;color:#7a2018">' +
-                  '<b>Leia as duas colunas separadas, nunca somadas.</b> Suporte fecha atendimento de paciente que ja tem horario marcado ' +
-                  '(confirmacao, reagendamento, retorno) &mdash; isso NAO e conversao comercial e nao entra em meta de vendas. ' +
-                  'Nesta semana ' + $lidoAG + '. ' +
-                  '<b>&quot;Encerrado por inatividade&quot; e aplicado a mao pela vendedora</b> quando o lead para de responder: ' +
-                  'nao e objecao de preco nem proposta recusada, e conversa que morreu.</div>' + "`r`n"
-      $motHtml += '<p style="font-size:12px;color:var(--cinza);margin-top:10px">Fonte: API do Paper Vines (atendimentos criados no periodo), ' +
-                  'atualizado automaticamente a cada execucao &mdash; nao depende mais de preenchimento manual. ' +
-                  '<b>' + $semMot + ' de ' + $totCompl + ' atendimentos concluidos (' + $pctSem + '%) foram encerrados SEM motivo</b>, ' +
-                  'entao este quadro mede o que a equipe classificou, nao o total. Numeros deduplicados por id de atendimento.</p>' + "`r`n"
-      $motOk = $true
+      $motHtml += '<p style="font-size:12px;color:var(--cinza);margin-top:12px">' + "$($mot.nao_classificados)" + ' atendimentos ainda nao classificados no periodo. Fonte: ' + "$($mot.fonte)" + ' (periodo ' + "$($mot.periodo)" + '). Secao atualizada a partir do painel do Paper Vines.</p>' + "`r`n"
+    } catch {
+      $motHtml = '<p style="color:var(--cinza)">Nao foi possivel ler config/motivos.json.</p>'
     }
-  } catch {
-    $motOk = $false
-    Write-Host ("  AVISO: falha ao montar motivos pela API: {0}" -f $_.Exception.Message) -ForegroundColor Yellow
-  }
-
-  # Fallback: config/motivos.json (mecanismo manual antigo)
-  if (-not $motOk) {
-    $motPath = Join-Path $base "config/motivos.json"
-    if (Test-Path $motPath) {
-      try {
-        $mot = Get-Content $motPath -Raw -Encoding UTF8 | ConvertFrom-Json
-        $colorMap = @{ verde = 'var(--verde)'; vermelho = 'var(--vermelho)'; azul = '#2b6cb0'; cinza = 'var(--cinza)' }
-        $motHtml = '<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px">' + "`r`n"
-        foreach ($g in $mot.grupos) {
-          $col = 'var(--petroleo)'; if ($colorMap.ContainsKey("$($g.cor)")) { $col = $colorMap["$($g.cor)"] }
-          $motHtml += '  <div style="border:1px solid var(--linha);border-radius:12px;padding:14px 16px">' + "`r`n"
-          $motHtml += '    <div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--linha);padding-bottom:8px;margin-bottom:8px"><span style="font-weight:700;color:' + $col + '">' + "$($g.nome)" + '</span><span style="font-size:22px;font-weight:800;color:' + $col + '">' + "$($g.total)" + '</span></div>' + "`r`n"
-          foreach ($it in $g.itens) {
-            $motHtml += '    <div style="display:flex;justify-content:space-between;font-size:13px;padding:3px 0"><span>' + "$($it.m)" + '</span><b>' + "$($it.n)" + '</b></div>' + "`r`n"
-          }
-          $motHtml += '  </div>' + "`r`n"
-        }
-        $motHtml += '</div>' + "`r`n"
-        $motHtml += '<p style="font-size:12px;color:var(--cinza);margin-top:12px">' + "$($mot.nao_classificados)" + ' atendimentos ainda nao classificados no periodo. Fonte: ' + "$($mot.fonte)" + ' (periodo ' + "$($mot.periodo)" + '). <b>Modo manual (fallback)</b> &mdash; a leitura automatica pela API falhou nesta execucao.</p>' + "`r`n"
-      } catch {
-        $motHtml = '<p style="color:var(--cinza)">Nao foi possivel ler config/motivos.json.</p>'
-      }
-    } else {
-      $motHtml = '<p style="color:var(--cinza)">Aguardando dados de motivos.</p>'
-    }
+  } else {
+    $motHtml = '<p style="color:var(--cinza)">Aguardando dados de motivos (config/motivos.json).</p>'
   }
 
   $tpl = Get-Content (Join-Path $base "Dashboard-template.html") -Raw -Encoding UTF8
