@@ -115,11 +115,18 @@ def pct(parte, todo):
 
 def inicio_semana_corrente(hoje):
     """
-    Sexta-feira = weekday 4.
-    Se hoje e sexta, a semana comercial corrente ja e a que comeca hoje.
-    Caso contrario, volta ate a sexta mais recente.
+    Semana comercial = sexta -> quinta. Sexta-feira = weekday 4.
+
+    Na SEXTA a semana que interessa e a que acabou de fechar (sexta anterior
+    ate ontem, quinta), porque e o dia da reuniao de fechamento. Tratar a
+    sexta como inicio de semana nova faria a serie terminar num periodo de
+    um dia so, justamente na hora de apresentar.
+
+    De sabado a quinta, usa a sexta mais recente (semana corrente parcial).
     """
     delta = (hoje.weekday() - 4) % 7
+    if delta == 0:  # e sexta: volta para a semana fechada
+        delta = 7
     return hoje - datetime.timedelta(days=delta)
 
 
@@ -701,13 +708,24 @@ def selftest():
 
     # semanas sexta->quinta
     sexta = datetime.date(2026, 8, 14)
-    checar("sexta ancora", inicio_semana_corrente(sexta), sexta)
-    checar("quinta seguinte", inicio_semana_corrente(datetime.date(2026, 8, 20)), sexta)
+    # numa quinta, a semana corrente e a que comecou na sexta anterior
+    checar("quinta", inicio_semana_corrente(datetime.date(2026, 8, 20)), sexta)
     checar("sabado", inicio_semana_corrente(datetime.date(2026, 8, 15)), sexta)
+    checar("segunda", inicio_semana_corrente(datetime.date(2026, 8, 17)), sexta)
+    # na SEXTA (dia da reuniao) a serie tem que terminar na semana ja fechada,
+    # e nao abrir uma semana nova de um dia so
+    checar("sexta usa semana fechada", inicio_semana_corrente(datetime.date(2026, 8, 21)), sexta)
+
     sems = montar_semanas(datetime.date(2026, 8, 20), 11)
     checar("qtd semanas", len(sems), 11)
     checar("primeira semana", sems[0][0], datetime.date(2026, 6, 5))
     checar("ultima semana", sems[-1], (datetime.date(2026, 8, 14), datetime.date(2026, 8, 20)))
+
+    # rodando na sexta 21/08, a ultima semana continua sendo 14/08-20/08
+    sems_sexta = montar_semanas(datetime.date(2026, 8, 21), 11)
+    checar("sexta: ultima semana", sems_sexta[-1],
+           (datetime.date(2026, 8, 14), datetime.date(2026, 8, 20)))
+    checar("sexta: mesma janela da quinta", sems_sexta, sems)
 
     # agregacao ponta a ponta
     avals = [

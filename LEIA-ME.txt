@@ -1,5 +1,40 @@
 COMO SUBIR (3 passos, ~2 minutos)
 =================================
+Atualizado em 27/08/2026.
+
+O QUE MUDOU NESTA VERSAO
+========================
+
+1) MOTIVOS DE ENCERRAMENTO AGORA SAO AUTOMATICOS.
+   Antes voce preenchia config/motivos.json a mao toda semana.
+   Agora o script puxa direto da API do Paper Vines e monta o quadro
+   sozinho, SEPARADO POR EQUIPE:
+     - Agendamento + Ag. noturno = lead novo (conversao comercial de verdade)
+     - Suporte                   = paciente existente (confirmacao de horario)
+   Somar os dois inflava a conversao: a maior parte dos "ganhos" do Suporte
+   e confirmacao de agendamento de quem ja tinha horario, nao venda nova.
+   O config/motivos.json continua na pasta como PLANO B: se a API falhar,
+   o painel volta a usar ele e avisa "Modo manual (fallback)".
+
+2) BUG DE PAGINACAO CORRIGIDO  <-- IMPORTANTE
+   O script usava "PageNumber" para paginar, mas a API ignora esse
+   parametro e devolve sempre a primeira pagina. Ele tambem testava um
+   campo "hasMorePages" que NAO EXISTE na resposta. Resultado: o laco
+   rodava UMA vez so e o painel contava no maximo 100 registros por semana.
+   O parametro correto e "Page", e o total vem em "countPages".
+   Na semana de 21 a 26/08 isso significava:
+     - atendimentos: o painel via 100 de 354  (faltavam 72%)
+     - contatos/leads: o painel via 100 de 115 (faltavam 13%)
+   Ou seja: "Leads que entraram", qualificados (CTT), desqualificados (CDA)
+   e a tabela por vendedora estavam TODOS truncados em 100.
+   Depois desta atualizacao esses numeros vao SUBIR. Nao e erro novo:
+   e o numero certo aparecendo pela primeira vez.
+   ATENCAO: nao compare a semana nova com as semanas antigas do historico
+   sem lembrar disso. As semanas anteriores estao subestimadas.
+
+
+COMO SUBIR
+==========
 
 1) Abra o repositorio:
    https://github.com/edusn97/painel-comercial
@@ -18,25 +53,55 @@ COMO SUBIR (3 passos, ~2 minutos)
 3) Aba  Actions  ->  Painel Comercial  ->  Run workflow  ->  Run workflow
 
 
-CONFERIR DEPOIS (1 minuto)
-==========================
+CONFERIR AGORA (nao deixe para sexta)
+=====================================
+O script foi alterado mas NAO PODE SER TESTADO fora do GitHub
+(precisa de PowerShell + os tokens dos Secrets). Entao rode o workflow
+manualmente HOJE e confira, para nao descobrir problema na sexta.
 
-Painel da semana:
-   https://edusn97.github.io/painel-comercial/
+a) A execucao ficou VERDE na aba Actions?
+   Se ficou VERMELHA -> va em "SE DER ERRO" abaixo.
 
-Analise de 11 semanas:
+b) Abra  https://edusn97.github.io/painel-comercial/
+   Na secao "Motivos de encerramento dos atendimentos" tem que aparecer
+   DOIS quadros lado a lado: "Agendamento + Ag. noturno" e "Suporte",
+   cada um com as barras Perdido / Ganho / Outros / Informacao.
+   - Se aparecer o quadro antigo com a frase "Modo manual (fallback)",
+     o script rodou mas a leitura pela API falhou. Me avise.
+   - Referencia da semana 21 a 26/08 (conferido na API em 27/08 as 9h):
+       Agendamento: ~117 encerramentos, ~92 perdidos, 14 ganhos, ~60 por inatividade
+       Suporte:      ~81 encerramentos,   4 perdidos, 61 ganhos,   4 por inatividade
+     Os numeros do Agendamento SOBEM ao longo do dia conforme as vendedoras
+     vao classificando as conversas. Variacao de alguns pontos e normal.
+     O que precisa bater e o PADRAO: Agendamento com a barra vermelha
+     dominando (~78% perdido) e Suporte com a barra verde dominando (~75% ganho).
+     Se os dois quadros ficarem parecidos, tem algo errado na separacao.
+
+c) Confira se "Leads que entraram" subiu em relacao ao painel anterior.
+   Se continuar exatamente 100, a correcao de paginacao nao pegou.
+
+d) Analise de 11 semanas (nao foi alterada nesta versao):
    https://edusn97.github.io/painel-comercial/analise-historica.html
-   Tem que mostrar "Analise Comercial - 11 semanas".
-   Avaliacoes criadas caindo de ~32 para ~11,5 por semana.
 
-Se a analise der 404, abra o log e me mande o que aparecer:
-   https://edusn97.github.io/painel-comercial/_analise-log.txt
+
+SE DER ERRO (voltar em 2 minutos)
+=================================
+Os arquivos originais estao salvos em:
+   C:\Painel Comercial - Cabelo e Saude\_RESTAURAR-SE-DER-ERRO\
+
+Suba os dois arquivos dessa pasta por cima (mesmo caminho, Add file ->
+Upload files -> Commit) e rode o workflow de novo. O painel volta a ser
+o de antes, com os motivos manuais pelo config/motivos.json.
+
+Depois me mande o log do erro: na aba Actions, clique na execucao
+vermelha e copie a mensagem do passo que falhou.
 
 
 SEGURANCA
 =========
-Esta pasta NAO tem token nenhum (verificado). Os tokens ficam nos
-Secrets do GitHub. Nunca suba a pasta config da raiz do projeto:
+Esta pasta NAO tem token nenhum (verificado em 27/08/2026 por varredura
+automatica: pn_, nfp_ e as chaves do Clinica Experts). Os tokens ficam
+nos Secrets do GitHub. Nunca suba a pasta config da raiz do projeto:
 aquela tem as chaves de verdade.
 
 O painel expoe nomes completos de pacientes. Abra o link numa janela
