@@ -1,85 +1,170 @@
 {
-  "periodo": "14/08 a 20/08",
-  "fonte": "Paper Vines - API interna via Chrome logado (separado por equipe)",
-  "nao_classificados": 1516,
+  "periodo": "21/08 a 27/08",
+  "fonte": "Paper Vines > Relatorios > Resultados (Classificacao de atendimentos)",
+  "nao_classificados": 1737,
   "grupos": [
     {
-      "nome": "AGENDAMENTO - lead novo - PERDIDO (289 de 340 = 85%)",
-      "cor": "vermelho",
-      "total": 289,
-      "itens": [
-        { "m": "Encerrado por inatividade", "n": 175 },
-        { "m": "Nao tem interesse", "n": 38 },
-        { "m": "Nao quis a promocao", "n": 18 },
-        { "m": "Mora em outra cidade", "n": 17 },
-        { "m": "Nao pode iniciar agora", "n": 14 },
-        { "m": "Cancelamento de agendamento", "n": 9 },
-        { "m": "Negociacao futura", "n": 6 },
-        { "m": "Procurava outra coisa", "n": 3 },
-        { "m": "Nunca interagiu", "n": 2 },
-        { "m": "Ja iniciou tratamento em outra clinica", "n": 2 },
-        { "m": "Achou caro", "n": 1 },
-        { "m": "Pesquisando preco", "n": 1 },
-        { "m": "Nao quer consulta online", "n": 1 },
-        { "m": "Precisa pensar", "n": 1 },
-        { "m": "Plano de Saude", "n": 1 }
-      ]
-    },
-    {
-      "nome": "AGENDAMENTO - lead novo - GANHO (33 de 340 = 9,7%)",
+      "nome": "Objetivo atingido",
       "cor": "verde",
-      "total": 33,
+      "total": 116,
       "itens": [
-        { "m": "Avaliacao agendada", "n": 8 },
-        { "m": "Pesquisa de satisfacao", "n": 8 },
-        { "m": "Confirmacao de agendamento", "n": 8 },
-        { "m": "Consulta agendada", "n": 5 },
-        { "m": "Tratamento agendado", "n": 2 },
-        { "m": "Reagendado", "n": 2 }
+        {
+          "m": "Confirmação de agendamento",
+          "n": 59
+        },
+        {
+          "m": "Reagendado",
+          "n": 17
+        },
+        {
+          "m": "Tratamento agendado",
+          "n": 14
+        },
+        {
+          "m": "Consulta agendada",
+          "n": 10
+        },
+        {
+          "m": "Retorno agendado",
+          "n": 6
+        },
+        {
+          "m": "Avaliação agendanda",
+          "n": 6
+        },
+        {
+          "m": "Pesquisa de satisfação",
+          "n": 4
+        }
       ]
     },
     {
-      "nome": "AGENDAMENTO - outros / informacao (18 de 340)",
-      "cor": "cinza",
+      "nome": "Objetivo perdido",
+      "cor": "vermelho",
+      "total": 240,
+      "itens": [
+        {
+          "m": "Encerrado por inatividade",
+          "n": 163
+        },
+        {
+          "m": "Não tem interesse",
+          "n": 21
+        },
+        {
+          "m": "Mora em outra cidade",
+          "n": 16
+        },
+        {
+          "m": "Não pode iniciar agora",
+          "n": 12
+        },
+        {
+          "m": "Negociação futura",
+          "n": 8
+        },
+        {
+          "m": "Procurava outra coisa",
+          "n": 6
+        },
+        {
+          "m": "Não quis a promoção",
+          "n": 4
+        },
+        {
+          "m": "Cancelamento de agendamento",
+          "n": 3
+        },
+        {
+          "m": "Precisa pensar",
+          "n": 2
+        },
+        {
+          "m": "Nunca interagiu",
+          "n": 2
+        },
+        {
+          "m": "Já iniciou tratamento em outra clinica.",
+          "n": 1
+        },
+        {
+          "m": "Não quer consulta online",
+          "n": 1
+        },
+        {
+          "m": "Plano de Saúde",
+          "n": 1
+        }
+      ]
+    },
+    {
+      "nome": "Dúvida",
+      "cor": "azul",
       "total": 18,
       "itens": [
-        { "m": "Atendimento Clinico Realizado", "n": 6 },
-        { "m": "Prestador de servico", "n": 4 },
-        { "m": "Ja e paciente", "n": 2 },
-        { "m": "Estava procurando tratamento para outra pessoa", "n": 2 },
-        { "m": "Exames", "n": 2 },
-        { "m": "Receitas", "n": 1 },
-        { "m": "Outro funil", "n": 1 }
+        {
+          "m": "Exames",
+          "n": 10
+        },
+        {
+          "m": "Horário",
+          "n": 4
+        },
+        {
+          "m": "Endereço",
+          "n": 2
+        },
+        {
+          "m": "Receitas",
+          "n": 1
+        },
+        {
+          "m": "Farmácias",
+          "n": 1
+        }
       ]
     },
     {
-      "nome": "SUPORTE - paciente existente - GANHO (57 de 89 = 64%)",
-      "cor": "verde",
-      "total": 57,
+      "nome": "Outro",
+      "cor": "cinza",
+      "total": 39,
       "itens": [
-        { "m": "Confirmacao de agendamento", "n": 40 },
-        { "m": "Tratamento agendado", "n": 12 },
-        { "m": "Reagendado", "n": 3 },
-        { "m": "Pesquisa de satisfacao", "n": 1 },
-        { "m": "Retorno agendado", "n": 1 }
-      ]
-    },
-    {
-      "nome": "SUPORTE - perdido / outros / informacao (32 de 89)",
-      "cor": "azul",
-      "total": 32,
-      "itens": [
-        { "m": "Encerrado por inatividade", "n": 9 },
-        { "m": "Atendimento Clinico Realizado", "n": 7 },
-        { "m": "Prestador de servico", "n": 4 },
-        { "m": "Receitas", "n": 3 },
-        { "m": "Ja e paciente", "n": 2 },
-        { "m": "Horario", "n": 2 },
-        { "m": "Exames", "n": 2 },
-        { "m": "Cancelamento de agendamento", "n": 1 },
-        { "m": "Farmacias", "n": 1 },
-        { "m": "Curriculo", "n": 1 }
+        {
+          "m": "Atendimento Clínico Realizado",
+          "n": 20
+        },
+        {
+          "m": "Prestador de serviço",
+          "n": 7
+        },
+        {
+          "m": "já é paciente.",
+          "n": 4
+        },
+        {
+          "m": "Teste",
+          "n": 2
+        },
+        {
+          "m": "Se organizar primeiro, não pode iniciar agora.",
+          "n": 2
+        },
+        {
+          "m": "Caso de transplante.",
+          "n": 1
+        },
+        {
+          "m": "Cliente vai viajar",
+          "n": 1
+        },
+        {
+          "m": "SPAM",
+          "n": 1
+        },
+        {
+          "m": "Bloqueado",
+          "n": 1
+        }
       ]
     }
   ]
-}
