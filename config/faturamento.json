@@ -1,13 +1,24 @@
-{
-  "fonte": "Clinica Experts > Extrato (receipts_paid) + vendedor da comanda (order.seller)",
-  "periodo": "07/08 a 13/08",
-  "total": 9407.94,
-  "sj": 889.98,
-  "jv": 8517.96,
-  "por_vendedora": {
-    "Daiane": 1779.96,
-    "Ana": 890,
-    "Brenda": 889.98,
-    "Ana Paula": 0
-  }
-}
+const jwt=localStorage.getItem('app_jwt'); const H={Authorization:'Bearer '+jwt,Accept:'application/json'};
+function vend(n){ if(!n) return null; const a=n.toLowerCase(); if(a.includes('daiane'))return'Daiane'; if(a.includes('brenda'))return'Brenda'; if(a.includes('euz')||a.includes('ana paula'))return'Ana Paula'; if(a.includes('ana'))return'Ana'; return null; }
+const now=new Date(); const dow=now.getDay(); let d=((dow-4)+7)%7; if(d===0)d=7;
+const end=new Date(now.getFullYear(),now.getMonth(),now.getDate()-d);
+const start=new Date(end.getFullYear(),end.getMonth(),end.getDate()-6);
+const fmt=x=>x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0');
+const base='https://api.clinicaexperts.com.br/api/financial/parcels/list';
+const q='per_page=200&sort_column=due_date&sort_direction=asc&search[interval][]='+fmt(start)+'&search[interval][]='+fmt(end)+'&search[type]=statement&search[status]=received';
+let parcels=[],page=1,receipts_paid=null;
+while(page<=50){ const r=await fetch(base+'?'+q+'&page='+page,{headers:H}); const j=await r.json(); if(receipts_paid==null&&j.total)receipts_paid=j.total.receipts_paid/100; const dd=j.data||[]; if(dd.length===0)break; for(const it of dd){ const v=(it.final_amount||0)/100; if(v<=0)continue; parcels.push({oid:it.title&&it.title.order_id,val:v}); } page++; }
+const cache={},porVendJV={},bioAccJV={}; let semVendJV=0;
+const bioName=(n)=>{ if(!n)return null; const a=n.toLowerCase(); if(a.includes('camily'))return'Kamile'; if(a.includes('janaina'))return'Janaina'; if(a.includes('bruna'))return'Bruna'; return null; };
+for(const p of parcels){ let s=null; if(p.oid){ if(!(p.oid in cache)){ try{ const ro=await fetch('https://api.clinicaexperts.com.br/api/orders/'+p.oid,{headers:H}); const jo=await ro.json(); const o=jo.data||jo; cache[p.oid]=(o.seller&&o.seller.name)||null; }catch(e){cache[p.oid]=null;} } s=cache[p.oid]; } const vn=vend(s); if(vn)porVendJV[vn]=(porVendJV[vn]||0)+p.val; else semVendJV+=p.val; const bn=bioName(s); if(bn){ if(!bioAccJV[bn])bioAccJV[bn]={oids:{},fat:0}; if(p.oid)bioAccJV[bn].oids[p.oid]=1; bioAccJV[bn].fat+=p.val; } }
+const sj=JSON.parse(localStorage.getItem('cap_sj')||'{"receipts_paid":0,"porVend":{},"bio":{}}');
+const r2=x=>Math.round(x*100)/100;
+const pv={}; for(const nm of ['Daiane','Ana','Brenda','Ana Paula']){ pv[nm]=r2((sj.porVend[nm]||0)+(porVendJV[nm]||0)); }
+const bioJV={}; for(const k of ['Kamile','Janaina','Bruna']){ if(bioAccJV[k])bioJV[k]={pacotes:Object.keys(bioAccJV[k].oids).length,faturamento:r2(bioAccJV[k].fat)}; }
+const sjBio=(sj.bio)||{};
+const bios={}; for(const k of ['Kamile','Janaina','Bruna']){ const A=sjBio[k]||{pacotes:0,faturamento:0}; const B=bioJV[k]||{pacotes:0,faturamento:0}; bios[k]={pacotes:(A.pacotes||0)+(B.pacotes||0),faturamento:r2((A.faturamento||0)+(B.faturamento||0))}; }
+const out={ fonte:'Clinica Experts > Extrato (receipts_paid) + vendedor da comanda (order.seller)', periodo:fmt(start).slice(8)+'/'+fmt(start).slice(5,7)+' a '+fmt(end).slice(8)+'/'+fmt(end).slice(5,7), total:r2((sj.receipts_paid||0)+receipts_paid), sj:r2(sj.receipts_paid||0), jv:r2(receipts_paid), por_vendedora:pv, biomedicas:bios };
+window.__FAT=JSON.stringify(out,null,2);
+try{ copy(__FAT); console.log('%cCOPIADO ✓  — cole no faturamento.json','color:green;font-weight:bold'); }
+catch(e){ console.log('%cPRONTO ✓ — agora digite no console:  copy(__FAT)   e dê Enter','color:#b45309;font-weight:bold'); }
+console.log(__FAT);
