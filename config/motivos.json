@@ -1,55 +1,20 @@
 {
   "periodo": "21/08 a 27/08",
-  "fonte": "Paper Vines > Relatorios > Resultados (Classificacao de atendimentos)",
+  "fonte": "Paper Vines > Relatorios > Indicadores > Resultados, filtrado por equipe (Agendamento + Ag. Noturno x Suporte)",
   "nao_classificados": 1737,
   "grupos": [
     {
-      "nome": "Objetivo atingido",
-      "cor": "verde",
-      "total": 116,
-      "itens": [
-        {
-          "m": "Confirmação de agendamento",
-          "n": 59
-        },
-        {
-          "m": "Reagendado",
-          "n": 17
-        },
-        {
-          "m": "Tratamento agendado",
-          "n": 14
-        },
-        {
-          "m": "Consulta agendada",
-          "n": 10
-        },
-        {
-          "m": "Retorno agendado",
-          "n": 6
-        },
-        {
-          "m": "Avaliação agendanda",
-          "n": 6
-        },
-        {
-          "m": "Pesquisa de satisfação",
-          "n": 4
-        }
-      ]
-    },
-    {
-      "nome": "Objetivo perdido",
+      "nome": "AGENDAMENTO - lead novo - PERDIDO (229 de 288 = 79,5%)",
       "cor": "vermelho",
-      "total": 240,
+      "total": 229,
       "itens": [
         {
           "m": "Encerrado por inatividade",
-          "n": 163
+          "n": 153
         },
         {
           "m": "Não tem interesse",
-          "n": 21
+          "n": 20
         },
         {
           "m": "Mora em outra cidade",
@@ -76,11 +41,11 @@
           "n": 3
         },
         {
-          "m": "Precisa pensar",
+          "m": "Nunca interagiu",
           "n": 2
         },
         {
-          "m": "Nunca interagiu",
+          "m": "Precisa pensar",
           "n": 2
         },
         {
@@ -98,56 +63,68 @@
       ]
     },
     {
-      "nome": "Dúvida",
-      "cor": "azul",
-      "total": 18,
+      "nome": "AGENDAMENTO - lead novo - GANHO (35 de 288 = 12,2%)",
+      "cor": "verde",
+      "total": 35,
       "itens": [
         {
-          "m": "Exames",
+          "m": "Confirmação de agendamento",
           "n": 10
         },
         {
-          "m": "Horário",
-          "n": 4
+          "m": "Consulta agendada",
+          "n": 9
         },
         {
-          "m": "Endereço",
-          "n": 2
+          "m": "Avaliação agendanda",
+          "n": 6
         },
         {
-          "m": "Receitas",
+          "m": "Reagendado",
+          "n": 5
+        },
+        {
+          "m": "Tratamento agendado",
+          "n": 3
+        },
+        {
+          "m": "Pesquisa de satisfação",
           "n": 1
         },
         {
-          "m": "Farmácias",
+          "m": "Retorno agendado",
           "n": 1
         }
       ]
     },
     {
-      "nome": "Outro",
+      "nome": "AGENDAMENTO - outros / informacao (24 de 288)",
       "cor": "cinza",
-      "total": 39,
+      "total": 24,
       "itens": [
         {
           "m": "Atendimento Clínico Realizado",
-          "n": 20
+          "n": 9
         },
         {
           "m": "Prestador de serviço",
-          "n": 7
+          "n": 5
         },
         {
-          "m": "já é paciente.",
-          "n": 4
+          "m": "Exames",
+          "n": 2
+        },
+        {
+          "m": "Se organizar primeiro, não pode iniciar agora.",
+          "n": 2
         },
         {
           "m": "Teste",
           "n": 2
         },
         {
-          "m": "Se organizar primeiro, não pode iniciar agora.",
-          "n": 2
+          "m": "Bloqueado",
+          "n": 1
         },
         {
           "m": "Caso de transplante.",
@@ -158,13 +135,92 @@
           "n": 1
         },
         {
-          "m": "SPAM",
+          "m": "já é paciente.",
+          "n": 1
+        }
+      ]
+    },
+    {
+      "nome": "SUPORTE - paciente existente - GANHO (81 de 125 = 64,8%)",
+      "cor": "verde",
+      "total": 81,
+      "itens": [
+        {
+          "m": "Confirmação de agendamento",
+          "n": 49
+        },
+        {
+          "m": "Reagendado",
+          "n": 12
+        },
+        {
+          "m": "Tratamento agendado",
+          "n": 11
+        },
+        {
+          "m": "Retorno agendado",
+          "n": 5
+        },
+        {
+          "m": "Pesquisa de satisfação",
+          "n": 3
+        },
+        {
+          "m": "Consulta agendada",
+          "n": 1
+        }
+      ]
+    },
+    {
+      "nome": "SUPORTE - perdido / outros / informacao (44 de 125)",
+      "cor": "azul",
+      "total": 44,
+      "itens": [
+        {
+          "m": "Atendimento Clínico Realizado",
+          "n": 11
+        },
+        {
+          "m": "Encerrado por inatividade",
+          "n": 10
+        },
+        {
+          "m": "Exames",
+          "n": 8
+        },
+        {
+          "m": "Horário",
+          "n": 4
+        },
+        {
+          "m": "já é paciente.",
+          "n": 3
+        },
+        {
+          "m": "Endereço",
+          "n": 2
+        },
+        {
+          "m": "Prestador de serviço",
+          "n": 2
+        },
+        {
+          "m": "Farmácias",
           "n": 1
         },
         {
-          "m": "Bloqueado",
+          "m": "Não tem interesse",
+          "n": 1
+        },
+        {
+          "m": "Receitas",
+          "n": 1
+        },
+        {
+          "m": "SPAM",
           "n": 1
         }
       ]
     }
   ]
+}
