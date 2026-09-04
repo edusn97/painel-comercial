@@ -168,7 +168,8 @@ function VendOfCE([string]$a) {
   if ($a -match 'daiane') { return 'Daiane' }
   if ($a -match 'brenda') { return 'Brenda' }
   if (($a -match 'euz') -or ($a -match 'ana paula')) { return 'Ana Paula' }
-  if ($a -match 'ana') { return 'Ana' }
+  if ($a -match 'naiverth') { return 'Ana' }
+  if (($a -match '\bana\b') -and ($a -notmatch 'luiza')) { return 'Ana' }
   return $null
 }
 # Biomedicas (profissional que atende consulta/avaliacao e fecha tratamento)
@@ -208,7 +209,15 @@ try {
   $dbgNovos = [ordered]@{}
   foreach ($u in @('sao_jose','joinville')) {
     $tok = $ceCfg.clinics.$u.token
-    $h = @{ Authorization = "Bearer $tok"; Accept = "application/json" }
+    # Clinic-Reference: OBRIGATORIO desde a migracao multiclinicas (28/08/2026).
+    # Sem ele Sao Jose responde 403 (CORN1Z1). Como Sao Jose e a primeira unidade
+    # do laco e o bloco inteiro esta dentro de um try/catch, o 403 abortava as
+    # DUAS unidades e o painel era publicado com o funil zerado, sem alarme.
+    $ref = "$($ceCfg.clinics.$u.clinic_reference)".Trim()
+    if (-not $ref -or $ref.ToUpper() -eq 'PENDENTE') {
+      throw "clinic_reference ausente ou PENDENTE para a unidade '$u' em config/clinica-experts-tokens.json. A API exige o cabecalho Clinic-Reference desde 28/08/2026."
+    }
+    $h = @{ Authorization = "Bearer $tok"; Accept = "application/json"; "Clinic-Reference" = $ref }
     # Agendamentos
     $p = 1
     do {
@@ -326,7 +335,13 @@ try {
   $ceVend.GetEnumerator() | ForEach-Object { Write-Host ("   {0}: {1}/{2}/{3}" -f $_.Key,$_.Value.agendaram,$_.Value.compareceram,$_.Value.noshow) }
   Write-Host ("Cancelados (repescagem): {0}" -f $cancelados.Count)
 } catch {
+  # NAO engolir esta falha. Antes, o catch so imprimia em vermelho e o script
+  # seguia publicando o painel com o funil ZERADO — e zero por falha de leitura
+  # e indistinguivel de zero real para quem le o painel. Regra da especificacao:
+  # se a leitura da API falhar, NAO publicar painel parcial; avisar e parar.
   Write-Host ("ERRO ao puxar Clinica Experts: {0}" -f $_.Exception.Message) -ForegroundColor Red
+  Write-Host "O painel NAO sera gerado com dados parciais. Corrija a causa acima e rode de novo." -ForegroundColor Red
+  throw
 }
 
 # ===== Faturamento OFICIAL (recebido/extrato) - vem de config/faturamento.json (puxado da sessao do painel) =====

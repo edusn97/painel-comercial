@@ -161,12 +161,21 @@ CABECALHOS = {
 }
 
 
-def _abrir(url, token, tentativas=3):
-    """GET com retry e mensagem de erro que inclui o corpo da resposta da API."""
+def _abrir(url, token, ref=None, tentativas=3):
+    """GET com retry e mensagem de erro que inclui o corpo da resposta da API.
+
+    'ref' e o Clinic-Reference da unidade. Desde a migracao multiclinicas do
+    Clinica Experts (28/08/2026) a API EXIGE esse cabecalho: sem ele Sao Jose
+    responde 403 (codigo CORN1Z1). Joinville hoje responde 200 com ou sem, mas
+    o cabecalho e enviado sempre nas duas, porque o comportamento de JV pode
+    mudar do mesmo jeito que o de SJ mudou.
+    """
     ultimo = None
     for t in range(tentativas):
         cab = dict(CABECALHOS)
         cab["Authorization"] = "Bearer " + token
+        if ref:
+            cab["Clinic-Reference"] = ref
         try:
             req = urllib.request.Request(url, headers=cab)
             with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
@@ -190,7 +199,7 @@ def _abrir(url, token, tentativas=3):
     raise RuntimeError(ultimo or "falha desconhecida")
 
 
-def buscar(token, recurso, inicio, fim, max_paginas=60):
+def buscar(token, recurso, inicio, fim, ref=None, max_paginas=60):
     """GET paginado num intervalo. Devolve lista de registros."""
     registros = []
     pagina = 1
@@ -200,7 +209,7 @@ def buscar(token, recurso, inicio, fim, max_paginas=60):
             "ends_at": fim + "T23:59:59-03:00",
             "page": pagina,
         })
-        dados = _abrir("%s/%s?%s" % (API_BASE, recurso, qs), token)
+        dados = _abrir("%s/%s?%s" % (API_BASE, recurso, qs), token, ref)
         lote = dados.get("data") or []
         if not lote:
             break
@@ -212,7 +221,7 @@ def buscar(token, recurso, inicio, fim, max_paginas=60):
     return registros
 
 
-def buscar_em_blocos(token, recurso, inicio, fim, meses=4):
+def buscar_em_blocos(token, recurso, inicio, fim, ref=None, meses=4):
     """
     Quebra o intervalo em blocos menores. A API recusa periodos maiores que
     1 ano; blocos curtos tambem reduzem timeout e paginacao longa.
@@ -225,7 +234,7 @@ def buscar_em_blocos(token, recurso, inicio, fim, meses=4):
     while atual <= d_fim:
         # avanca ~meses*30 dias
         prox = min(atual + datetime.timedelta(days=meses * 30), d_fim)
-        lote = buscar(token, recurso, atual.strftime("%Y-%m-%d"), prox.strftime("%Y-%m-%d"))
+        lote = buscar(token, recurso, atual.strftime("%Y-%m-%d"), prox.strftime("%Y-%m-%d"), ref)
         novos = 0
         for r in lote:
             chave = r.get("uuid") or json.dumps(r, sort_keys=True)[:200]
@@ -256,9 +265,20 @@ def coletar(cfg, semanas):
         if not unidade or not unidade.get("token"):
             raise RuntimeError("Token ausente para a unidade '%s' em config/clinica-experts-tokens.json" % chave)
         token = unidade["token"]
-        print(" %s: buscando agendamentos de %s a %s..." % (rotulo, ano_ini, ano_fim))
+        # Clinic-Reference: obrigatorio desde a migracao multiclinicas (28/08/2026).
+        # Sem ele Sao Jose responde 403 (CORN1Z1) e o script inteiro morre com codigo 3.
+        ref = (unidade.get("clinic_reference") or "").strip()
+        if not ref or ref.upper() == "PENDENTE":
+            raise RuntimeError(
+                "clinic_reference ausente ou PENDENTE para a unidade '%s' em "
+                "config/clinica-experts-tokens.json. A API exige o cabecalho "
+                "Clinic-Reference desde 28/08/2026; sem ele Sao Jose responde 403 "
+                "(CORN1Z1)." % chave
+            )
+        print(" %s: buscando agendamentos de %s a %s... (Clinic-Reference: %s)"
+              % (rotulo, ano_ini, ano_fim, ref))
 
-        for b in buscar_em_blocos(token, "bookings", ano_ini, ano_fim):
+        for b in buscar_em_blocos(token, "bookings", ano_ini, ano_fim, ref):
             procs = [p.get("name") for p in (b.get("procedures") or [])]
             if not eh_avaliacao(procs):
                 continue
@@ -273,7 +293,7 @@ def coletar(cfg, semanas):
             })
 
         print(" %s: buscando contas de %s a %s..." % (rotulo, primeiro, ultimo))
-        for c in buscar_em_blocos(token, "bills", primeiro, ultimo):
+        for c in buscar_em_blocos(token, "bills", primeiro, ultimo, ref):
             if c.get("type") != "Venda":
                 continue
             centavos = c.get("final_amount") or 0

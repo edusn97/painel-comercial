@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guia da Captura Semanal — Painel Comercial</title>
+<style>
+  :root{--petroleo:#0e4d49;--verde:#1f9e8f;--claro:#e8f3f1;--texto:#173b39;--cinza:#6b7d7b;--linha:#dfeae8;--amarelo:#e6b800;--bg:#f4f8f7;--card:#fff}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif;background:var(--bg);color:var(--texto);line-height:1.5}
+  .wrap{max-width:900px;margin:0 auto;padding:24px}
+  header.top{background:linear-gradient(120deg,var(--petroleo),var(--verde));color:#fff;border-radius:16px;padding:22px 26px;box-shadow:0 6px 24px rgba(14,77,73,.18)}
+  header.top h1{font-size:22px}
+  header.top p{opacity:.92;font-size:14px;margin-top:6px}
+  h2{font-size:16px;text-transform:uppercase;letter-spacing:1px;color:var(--petroleo);margin:28px 0 6px;display:flex;align-items:center;gap:8px}
+  h2::before{content:"";width:6px;height:18px;background:var(--verde);border-radius:3px;display:inline-block}
+  h3{font-size:16px;color:var(--petroleo);margin:18px 0 8px}
+  p,li{font-size:15px}
+  ol{margin:6px 0 6px 22px}
+  ol li{margin:3px 0}
+  .card{background:var(--card);border:1px solid var(--linha);border-radius:14px;padding:16px 18px;margin-top:10px;box-shadow:0 2px 10px rgba(14,77,73,.05)}
+  .cmd{position:relative;margin-top:10px}
+  .cmd .bar{display:flex;justify-content:space-between;align-items:center;background:var(--petroleo);color:#fff;border-radius:10px 10px 0 0;padding:8px 12px;font-size:12px;font-weight:700}
+  .cmd pre{background:#0f2f2d;color:#d6f0ec;border-radius:0 0 10px 10px;padding:14px;overflow:auto;font-size:12px;line-height:1.45;max-height:230px;white-space:pre-wrap;word-break:break-word}
+  .copybtn{background:var(--verde);color:#fff;border:none;border-radius:8px;padding:7px 14px;font-size:13px;font-weight:700;cursor:pointer}
+  .copybtn:hover{background:#178b7d}
+  .copybtn.ok{background:#0e7a34}
+  .warn{background:#fff8e1;border:1px solid var(--amarelo);border-radius:10px;padding:12px 14px;font-size:14px;margin-top:10px}
+  .step{font-weight:700;color:var(--verde)}
+  code{background:var(--claro);padding:1px 6px;border-radius:6px;font-size:13px}
+  .foot{margin-top:26px;color:var(--cinza);font-size:13px;text-align:center}
+  .resumo{background:var(--claro);border-radius:12px;padding:14px 16px;font-size:14px;margin-top:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1>Guia da Captura Semanal</h1>
+    <p>Faça toda <b>sexta de manhã</b> (~8 min). Só 2 coisas dependem de você logada: <b>faturamento</b> (Clínica Experts) e <b>motivos</b> (Paper Vines). O resto do painel atualiza sozinho todo dia às 9h30.</p>
+  </header>
+
+  <div class="resumo">Os comandos <b>já calculam a semana fechada sozinhos</b> (sexta anterior → quinta). É só clicar em <b>Copiar</b>, colar no Console (F12) e apertar Enter.</div>
+
+  <h2>Parte 1 — Faturamento (Clínica Experts)</h2>
+  <p>O total vem do <b>Extrato</b> (o que foi recebido na semana) e o valor por vendedora vem do <b>vendedor da comanda</b>. Como são 2 logins, você roda um comando em cada clínica.</p>
+
+  <div class="card">
+    <h3>Passo 1 — São José</h3>
+    <ol>
+      <li>Abra o Clínica Experts <b>logada em São José</b>.</li>
+      <li>Aperte <b>F12</b> → aba <b>Console</b>.</li>
+      <li>Copie o comando, cole no Console e <b>Enter</b>. Espere aparecer <span class="step">"São José capturado ✓"</span>.</li>
+    </ol>
+    <div class="cmd">
+      <div class="bar"><span>Comando — São José</span><button class="copybtn" data-src="s1">Copiar comando</button></div>
+      <pre data-view="s1"></pre>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Passo 2 — Joinville</h3>
+    <ol>
+      <li><b>Saia</b> de São José e <b>entre em Joinville</b> (mesmo navegador).</li>
+      <li><b>F12</b> → <b>Console</b> de novo.</li>
+      <li>Copie, cole e <b>Enter</b>. Ele junta as duas clínicas e <b>copia o arquivo pronto</b> pra você.</li>
+    </ol>
+    <div class="cmd">
+      <div class="bar"><span>Comando — Joinville</span><button class="copybtn" data-src="s2">Copiar comando</button></div>
+      <pre data-view="s2"></pre>
+    </div>
+    <div class="warn">📋 <b>Se aparecer o erro vermelho <code>copy is not defined</code>:</b> não perdeu nada — os números já foram calculados. Digite no console <code>copy(__FAT)</code> e dê <b>Enter</b>. Aí é só ir pro Passo 3 normalmente.</div>
+    <div class="warn">⚠️ <b>Confira no resultado:</b> os campos <code>sj</code> e <code>jv</code> devem estar os dois preenchidos (diferentes de 0). Se <code>sj</code> vier 0 sem motivo, o login limpou a memória — rode o Passo 1 e o Passo 2 de novo, em sequência, sem fechar o navegador.</div>
+  </div>
+
+  <div class="card">
+    <h3>Passo 3 — Colar no arquivo</h3>
+    <ol>
+      <li>No GitHub, abra <code>config/faturamento.json</code> → lápis (editar).</li>
+      <li>Apague tudo, <b>Ctrl+V</b> → <b>Commit changes</b>.</li>
+    </ol>
+  </div>
+
+  <h2>Parte 2 — Motivos (Paper Vines)</h2>
+  <p>Agora é <b>sem gambiarra</b>: a própria tela do Paper Vines separa por equipe. Você roda o mesmo comando <b>4 vezes</b>, trocando só o filtro <b>Equipes</b>. Na 4ª ele copia o arquivo pronto.</p>
+
+  <div class="card">
+    <h3>Passo 4 — Abrir a tela certa</h3>
+    <ol>
+      <li>Abra o Paper Vines: <a href="https://chat.papervines.digital/" target="_blank">chat.papervines.digital</a></li>
+      <li>Menu <b>Relatórios</b> → <b>Indicadores</b> → aba <b>Resultados</b>.</li>
+      <li>No campo <b>Período</b>, marque a <b>semana fechada</b> (sexta anterior → quinta).</li>
+      <li>Aperte <b>F12</b> → aba <b>Console</b> e deixe aberto.</li>
+    </ol>
+    <div class="warn">📅 A semana vai de <b>sexta a quinta</b> — a mesma do faturamento. Não deixe o dia de hoje entrar no período.</div>
+  </div>
+
+  <div class="card">
+    <h3>Passo 5 — Rodar 4 vezes (uma por equipe)</h3>
+    <ol>
+      <li>Filtro <b>Equipes: Todos</b> → cole o comando no Console → <b>Enter</b>.</li>
+      <li>Troque para <b>AGENDAMENTO</b> → espere os números mudarem → cole de novo → <b>Enter</b>.</li>
+      <li>Troque para <b>AGENDAMENTO NOTURNO</b> → cole → <b>Enter</b>.</li>
+      <li>Troque para <b>Suporte</b> → cole → <b>Enter</b>. Aqui ele fecha e <span class="step">copia o motivos.json pronto</span>.</li>
+    </ol>
+    <div class="cmd">
+      <div class="bar"><span>Comando — Motivos (rode 1x por equipe)</span><button class="copybtn" data-src="s3">Copiar comando</button></div>
+      <pre data-view="s3"></pre>
+    </div>
+    <div class="warn">📋 Se der <code>copy is not defined</code>, digite <code>copy(__MOT)</code> e <b>Enter</b>.</div>
+    <div class="warn">⚠️ O comando <b>confere sozinho</b>: a soma das 3 equipes tem que bater com o "Todos". Se não bater, ele avisa em vermelho — aí é só refazer (provavelmente uma das telas ainda não tinha carregado).</div>
+    <div class="warn">🔁 Para recomeçar do zero, digite <code>localStorage.removeItem('cap_mot')</code> e <b>Enter</b>.</div>
+  </div>
+
+  <div class="card">
+    <h3>Passo 6 — Colar no arquivo</h3>
+    <ol>
+      <li>No GitHub, abra <code>config/motivos.json</code> → lápis → apague tudo → <b>Ctrl+V</b> → <b>Commit changes</b>.</li>
+    </ol>
+  </div>
+
+  <h2>Parte 3 — Publicar</h2>
+  <div class="card">
+    <h3>Passo 7 — Rodar</h3>
+    <ol>
+      <li>Aba <b>Actions</b> → <b>Painel Comercial</b> → <b>Run workflow</b>.</li>
+      <li>Em ~2 min o painel (<a href="https://edusn97.github.io/painel-comercial/" target="_blank">edusn97.github.io/painel-comercial</a>) mostra os números da semana — pronto antes da reunião das 15h.</li>
+    </ol>
+  </div>
+
+  <div class="resumo"><b>Resumindo a sexta:</b> São José (1) → Joinville (2) → cola no faturamento.json (3) → motivos: abrir a tela (4), rodar 4x (5), colar (6) → Run workflow (7). Pronto.</div>
+
+  <div class="foot">Painel Comercial · Clínica Cabelo &amp; Saúde · guia de uso interno</div>
+</div>
+
+<script type="text/plain" id="s1">const jwt=localStorage.getItem('app_jwt'); const H={Authorization:'Bearer '+jwt,Accept:'application/json'};
+function vend(n){ if(!n) return null; const a=n.toLowerCase(); if(a.includes('daiane'))return'Daiane'; if(a.includes('brenda'))return'Brenda'; if(a.includes('euz')||a.includes('ana paula'))return'Ana Paula'; if(/\bana\b/.test(a)&&!a.includes('luiza'))return'Ana'; return null; }
+const now=new Date(); const dow=now.getDay(); let d=((dow-4)+7)%7; if(d===0)d=7;
+const end=new Date(now.getFullYear(),now.getMonth(),now.getDate()-d);
+const start=new Date(end.getFullYear(),end.getMonth(),end.getDate()-6);
+const fmt=x=>x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0');
+const base='https://api.clinicaexperts.com.br/api/financial/parcels/list';
+const q='per_page=200&sort_column=due_date&sort_direction=asc&search[interval][]='+fmt(start)+'&search[interval][]='+fmt(end)+'&search[type]=statement&search[status]=received';
+let parcels=[],page=1,receipts_paid=null;
+while(page<=50){ const r=await fetch(base+'?'+q+'&page='+page,{headers:H}); const j=await r.json(); if(receipts_paid==null&&j.total)receipts_paid=j.total.receipts_paid/100; const dd=j.data||[]; if(dd.length===0)break; for(const it of dd){ const v=(it.final_amount||0)/100; if(v<=0)continue; parcels.push({oid:it.title&&it.title.order_id,val:v}); } page++; }
+const cache={},porVend={},bioAcc={}; let semVend=0;
+const bioName=(n)=>{ if(!n)return null; const a=n.toLowerCase(); if(a.includes('camily'))return'Kamile'; if(a.includes('janaina'))return'Janaina'; if(a.includes('bruna'))return'Bruna'; return null; };
+for(const p of parcels){ let s=null; if(p.oid){ if(!(p.oid in cache)){ try{ const ro=await fetch('https://api.clinicaexperts.com.br/api/orders/'+p.oid,{headers:H}); const jo=await ro.json(); const o=jo.data||jo; cache[p.oid]=(o.seller&&o.seller.name)||null; }catch(e){cache[p.oid]=null;} } s=cache[p.oid]; } const vn=vend(s); if(vn)porVend[vn]=(porVend[vn]||0)+p.val; else semVend+=p.val; const bn=bioName(s); if(bn){ if(!bioAcc[bn])bioAcc[bn]={oids:{},fat:0}; if(p.oid)bioAcc[bn].oids[p.oid]=1; bioAcc[bn].fat+=p.val; } }
+const bioSJ={}; for(const k of ['Kamile','Janaina','Bruna']){ if(bioAcc[k])bioSJ[k]={pacotes:Object.keys(bioAcc[k].oids).length,faturamento:Math.round(bioAcc[k].fat*100)/100}; }
+const res={receipts_paid,porVend,semVend,bio:bioSJ,periodo:fmt(start)+' a '+fmt(end)};
+localStorage.setItem('cap_sj',JSON.stringify(res));
+console.log('%cSão José capturado ✓  —  Recebido: R$ '+receipts_paid.toFixed(2),'color:green;font-weight:bold'); console.log(res);</script>
+
+<script type="text/plain" id="s2">const jwt=localStorage.getItem('app_jwt'); const H={Authorization:'Bearer '+jwt,Accept:'application/json'};
+function vend(n){ if(!n) return null; const a=n.toLowerCase(); if(a.includes('daiane'))return'Daiane'; if(a.includes('brenda'))return'Brenda'; if(a.includes('euz')||a.includes('ana paula'))return'Ana Paula'; if(/\bana\b/.test(a)&&!a.includes('luiza'))return'Ana'; return null; }
+const now=new Date(); const dow=now.getDay(); let d=((dow-4)+7)%7; if(d===0)d=7;
+const end=new Date(now.getFullYear(),now.getMonth(),now.getDate()-d);
+const start=new Date(end.getFullYear(),end.getMonth(),end.getDate()-6);
+const fmt=x=>x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0');
+const base='https://api.clinicaexperts.com.br/api/financial/parcels/list';
+const q='per_page=200&sort_column=due_date&sort_direction=asc&search[interval][]='+fmt(start)+'&search[interval][]='+fmt(end)+'&search[type]=statement&search[status]=received';
+let parcels=[],page=1,receipts_paid=null;
+while(page<=50){ const r=await fetch(base+'?'+q+'&page='+page,{headers:H}); const j=await r.json(); if(receipts_paid==null&&j.total)receipts_paid=j.total.receipts_paid/100; const dd=j.data||[]; if(dd.length===0)break; for(const it of dd){ const v=(it.final_amount||0)/100; if(v<=0)continue; parcels.push({oid:it.title&&it.title.order_id,val:v}); } page++; }
+const cache={},porVendJV={},bioAccJV={}; let semVendJV=0;
+const bioName=(n)=>{ if(!n)return null; const a=n.toLowerCase(); if(a.includes('camily'))return'Kamile'; if(a.includes('janaina'))return'Janaina'; if(a.includes('bruna'))return'Bruna'; return null; };
+for(const p of parcels){ let s=null; if(p.oid){ if(!(p.oid in cache)){ try{ const ro=await fetch('https://api.clinicaexperts.com.br/api/orders/'+p.oid,{headers:H}); const jo=await ro.json(); const o=jo.data||jo; cache[p.oid]=(o.seller&&o.seller.name)||null; }catch(e){cache[p.oid]=null;} } s=cache[p.oid]; } const vn=vend(s); if(vn)porVendJV[vn]=(porVendJV[vn]||0)+p.val; else semVendJV+=p.val; const bn=bioName(s); if(bn){ if(!bioAccJV[bn])bioAccJV[bn]={oids:{},fat:0}; if(p.oid)bioAccJV[bn].oids[p.oid]=1; bioAccJV[bn].fat+=p.val; } }
+const sj=JSON.parse(localStorage.getItem('cap_sj')||'{"receipts_paid":0,"porVend":{},"bio":{}}');
+const r2=x=>Math.round(x*100)/100;
+const pv={}; for(const nm of ['Daiane','Ana','Brenda','Ana Paula']){ pv[nm]=r2((sj.porVend[nm]||0)+(porVendJV[nm]||0)); }
+const bioJV={}; for(const k of ['Kamile','Janaina','Bruna']){ if(bioAccJV[k])bioJV[k]={pacotes:Object.keys(bioAccJV[k].oids).length,faturamento:r2(bioAccJV[k].fat)}; }
+const sjBio=(sj.bio)||{};
+const bios={}; for(const k of ['Kamile','Janaina','Bruna']){ const A=sjBio[k]||{pacotes:0,faturamento:0}; const B=bioJV[k]||{pacotes:0,faturamento:0}; bios[k]={pacotes:(A.pacotes||0)+(B.pacotes||0),faturamento:r2((A.faturamento||0)+(B.faturamento||0))}; }
+const out={ fonte:'Clinica Experts > Extrato (receipts_paid) + vendedor da comanda (order.seller)', periodo:fmt(start).slice(8)+'/'+fmt(start).slice(5,7)+' a '+fmt(end).slice(8)+'/'+fmt(end).slice(5,7), total:r2((sj.receipts_paid||0)+receipts_paid), sj:r2(sj.receipts_paid||0), jv:r2(receipts_paid), por_vendedora:pv, biomedicas:bios };
+window.__FAT=JSON.stringify(out,null,2);
+try{ copy(__FAT); console.log('%cCOPIADO ✓  — cole no faturamento.json','color:green;font-weight:bold'); }
+catch(e){ console.log('%cPRONTO ✓ — agora digite no console:  copy(__FAT)   e dê Enter','color:#b45309;font-weight:bold'); }
+console.log(__FAT);</script>
+
+<script type="text/plain" id="s3">const G=['Objetivo atingido','Objetivo perdido','Dúvida','Outro'];
+const EQ=['Todos','AGENDAMENTO','AGENDAMENTO NOTURNO','Suporte'];
+const now=new Date(); let dd=((now.getDay()-4)+7)%7; if(dd===0)dd=7;
+const fim=new Date(now.getFullYear(),now.getMonth(),now.getDate()-dd);
+const ini=new Date(fim.getFullYear(),fim.getMonth(),fim.getDate()-6);
+const f2=x=>String(x.getDate()).padStart(2,'0')+'/'+String(x.getMonth()+1).padStart(2,'0');
+const periodo=f2(ini)+' a '+f2(fim);
+function raspa(){
+  const L=document.body.innerText.split('\n').map(x=>x.trim()).filter(x=>x.length);
+  const ix=G.map(t=>({t:t,i:L.indexOf(t)})).filter(x=>x.i>=0).sort((a,b)=>a.i-b.i);
+  const r={}; G.forEach(g=>r[g]=[]);
+  for(let k=0;k<ix.length;k++){
+    const a=ix[k].i, b=(k+1<ix.length)?ix[k+1].i:L.length, seg=L.slice(a,b), it=[];
+    for(let j=2;j<seg.length;j++){ if(/^\d+%$/.test(seg[j])&&seg[j+1]&&/^\d+$/.test(seg[j+2]||'')){ it.push({m:seg[j+1],n:parseInt(seg[j+2],10)}); j+=2; } }
+    r[ix[k].t]=it;
+  }
+  const nc=(document.body.innerText.match(/([\d.]+)\s*\natendimentos não classificados/)||[])[1];
+  return {cards:r, nc: nc?parseInt(String(nc).replace(/\./g,''),10):0};
+}
+const lbl=(((document.body.innerText.match(/Equipes:\s*\n?([^\n]+)/)||[])[1])||'').trim();
+if(EQ.indexOf(lbl)<0){ console.log('%c⚠️ Selecione no filtro Equipes: Todos, AGENDAMENTO, AGENDAMENTO NOTURNO ou Suporte.   (atual: '+lbl+')','color:#b45309;font-weight:bold'); }
+else{
+  let st={}; try{ st=JSON.parse(localStorage.getItem('cap_mot')||'{}'); }catch(e){}
+  if(st.periodo!==periodo) st={periodo:periodo, eq:{}};
+  st.eq[lbl]=raspa();
+  localStorage.setItem('cap_mot',JSON.stringify(st));
+  const faltam=EQ.filter(e=>!st.eq[e]);
+  console.log('%c'+lbl+' capturado ✓   (semana '+periodo+')','color:green;font-weight:bold');
+  if(faltam.length){ console.log('Falta ainda: '+faltam.join('  |  ')); }
+  else{
+    const soma=function(){ const c={}; for(const L of arguments){ (L||[]).forEach(i=>{ c[i.m]=(c[i.m]||0)+i.n; }); } return Object.keys(c).map(m=>({m:m,n:c[m]})).sort((a,b)=>b.n-a.n||a.m.localeCompare(b.m)); };
+    const A=st.eq['AGENDAMENTO'].cards, N=st.eq['AGENDAMENTO NOTURNO'].cards, S=st.eq['Suporte'].cards, T=st.eq['Todos'].cards;
+    const g=soma(A['Objetivo atingido'],N['Objetivo atingido']);
+    const p=soma(A['Objetivo perdido'],N['Objetivo perdido']);
+    const o=soma(A['Dúvida'],N['Dúvida'],A['Outro'],N['Outro']);
+    const sg=soma(S['Objetivo atingido']);
+    const sr=soma(S['Objetivo perdido'],S['Dúvida'],S['Outro']);
+    const t=a=>a.reduce((x,i)=>x+i.n,0);
+    const lead=t(g)+t(p)+t(o), sup=t(sg)+t(sr);
+    const pc=(a,b)=>b?String(Math.round(1000*a/b)/10).replace('.',','):'0';
+    const totT=G.reduce((x,k)=>x+t(T[k]||[]),0);
+    if(totT!==lead+sup){ console.log('%c⚠️ CONFERENCIA FALHOU: "Todos" tem '+totT+' classificados, mas as 3 equipes somam '+(lead+sup)+'. Rode localStorage.removeItem("cap_mot") e refaça.','color:#c00;font-weight:bold'); }
+    else { console.log('%cConferência OK: '+totT+' classificados nas duas contas.','color:green'); }
+    const out={ periodo:periodo,
+      fonte:'Paper Vines > Relatorios > Indicadores > Resultados, filtrado por equipe (Agendamento + Ag. Noturno x Suporte)',
+      nao_classificados: st.eq['Todos'].nc,
+      grupos:[
+        {nome:'AGENDAMENTO - lead novo - PERDIDO ('+t(p)+' de '+lead+' = '+pc(t(p),lead)+'%)', cor:'vermelho', total:t(p), itens:p},
+        {nome:'AGENDAMENTO - lead novo - GANHO ('+t(g)+' de '+lead+' = '+pc(t(g),lead)+'%)', cor:'verde', total:t(g), itens:g},
+        {nome:'AGENDAMENTO - outros / informacao ('+t(o)+' de '+lead+')', cor:'cinza', total:t(o), itens:o},
+        {nome:'SUPORTE - paciente existente - GANHO ('+t(sg)+' de '+sup+' = '+pc(t(sg),sup)+'%)', cor:'verde', total:t(sg), itens:sg},
+        {nome:'SUPORTE - perdido / outros / informacao ('+t(sr)+' de '+sup+')', cor:'azul', total:t(sr), itens:sr}
+      ]};
+    window.__MOT=JSON.stringify(out,null,2);
+    try{ copy(__MOT); console.log('%cCOPIADO ✓  — cole no config/motivos.json','color:green;font-weight:bold'); }
+    catch(e){ console.log('%cPRONTO ✓ — digite no console:  copy(__MOT)   e dê Enter','color:#b45309;font-weight:bold'); }
+    console.log('Lead novo: '+t(g)+' ganho x '+t(p)+' perdido (de '+lead+')   |   Suporte: '+t(sg)+' ganho (de '+sup+')');
+    console.log(__MOT);
+  }
+}</script>
+
+<script>
+  document.querySelectorAll('pre[data-view]').forEach(pre=>{
+    const src=document.getElementById(pre.getAttribute('data-view'));
+    if(src) pre.textContent=src.textContent.trim();
+  });
+  document.querySelectorAll('.copybtn').forEach(btn=>{
+    btn.addEventListener('click',async()=>{
+      const src=document.getElementById(btn.getAttribute('data-src'));
+      const txt=src?src.textContent.trim():'';
+      try{ await navigator.clipboard.writeText(txt); }
+      catch(e){ const ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); }
+      const old=btn.textContent; btn.textContent='Copiado ✓'; btn.classList.add('ok');
+      setTimeout(()=>{ btn.textContent=old; btn.classList.remove('ok'); },1600);
+    });
+  });
+</script>
+</body>
+</html>

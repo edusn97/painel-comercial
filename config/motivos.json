@@ -1,165 +1,161 @@
 {
-  "periodo": "28/08 a 03/09",
+  "periodo": "21/08 a 27/08",
   "fonte": "Paper Vines > Relatorios > Indicadores > Resultados, filtrado por equipe (Agendamento + Ag. Noturno x Suporte)",
-  "nao_classificados": 1686,
+  "nao_classificados": 1737,
   "grupos": [
     {
-      "nome": "AGENDAMENTO - lead novo - PERDIDO (201 de 250 = 80,4%)",
+      "nome": "AGENDAMENTO - lead novo - PERDIDO (229 de 288 = 79,5%)",
       "cor": "vermelho",
-      "total": 201,
+      "total": 229,
       "itens": [
         {
           "m": "Encerrado por inatividade",
-          "n": 146
+          "n": 153
         },
         {
           "m": "Não tem interesse",
-          "n": 11
+          "n": 20
         },
         {
           "m": "Mora em outra cidade",
-          "n": 9
-        },
-        {
-          "m": "Negociação futura",
-          "n": 9
+          "n": 16
         },
         {
           "m": "Não pode iniciar agora",
+          "n": 12
+        },
+        {
+          "m": "Negociação futura",
           "n": 8
         },
         {
-          "m": "Cancelamento de agendamento",
-          "n": 5
-        },
-        {
           "m": "Procurava outra coisa",
-          "n": 5
-        },
-        {
-          "m": "Conversando pelo whats pessoal",
-          "n": 2
+          "n": 6
         },
         {
           "m": "Não quis a promoção",
+          "n": 4
+        },
+        {
+          "m": "Cancelamento de agendamento",
+          "n": 3
+        },
+        {
+          "m": "Nunca interagiu",
           "n": 2
         },
         {
-          "m": "Plano de Saúde",
+          "m": "Precisa pensar",
           "n": 2
         },
         {
-          "m": "Achou caro",
+          "m": "Já iniciou tratamento em outra clinica.",
           "n": 1
         },
         {
-          "m": "Pesquisando preço",
+          "m": "Não quer consulta online",
+          "n": 1
+        },
+        {
+          "m": "Plano de Saúde",
           "n": 1
         }
       ]
     },
     {
-      "nome": "AGENDAMENTO - lead novo - GANHO (27 de 250 = 10,8%)",
+      "nome": "AGENDAMENTO - lead novo - GANHO (35 de 288 = 12,2%)",
       "cor": "verde",
-      "total": 27,
+      "total": 35,
       "itens": [
         {
-          "m": "Avaliação agendanda",
+          "m": "Confirmação de agendamento",
           "n": 10
         },
         {
           "m": "Consulta agendada",
+          "n": 9
+        },
+        {
+          "m": "Avaliação agendanda",
           "n": 6
         },
         {
-          "m": "Tratamento agendado",
-          "n": 4
-        },
-        {
-          "m": "Confirmação de agendamento",
-          "n": 3
-        },
-        {
           "m": "Reagendado",
+          "n": 5
+        },
+        {
+          "m": "Tratamento agendado",
           "n": 3
         },
         {
           "m": "Pesquisa de satisfação",
           "n": 1
+        },
+        {
+          "m": "Retorno agendado",
+          "n": 1
         }
       ]
     },
     {
-      "nome": "AGENDAMENTO - outros / informacao (22 de 250)",
+      "nome": "AGENDAMENTO - outros / informacao (24 de 288)",
       "cor": "cinza",
-      "total": 22,
+      "total": 24,
       "itens": [
         {
-          "m": "Prestador de serviço",
-          "n": 4
-        },
-        {
           "m": "Atendimento Clínico Realizado",
-          "n": 3
+          "n": 9
         },
         {
-          "m": "Caso de transplante.",
-          "n": 3
+          "m": "Prestador de serviço",
+          "n": 5
         },
         {
-          "m": "Estava procurando tratamento para outra pessoa.",
-          "n": 3
+          "m": "Exames",
+          "n": 2
+        },
+        {
+          "m": "Se organizar primeiro, não pode iniciar agora.",
+          "n": 2
         },
         {
           "m": "Teste",
           "n": 2
         },
         {
+          "m": "Bloqueado",
+          "n": 1
+        },
+        {
+          "m": "Caso de transplante.",
+          "n": 1
+        },
+        {
           "m": "Cliente vai viajar",
           "n": 1
         },
         {
-          "m": "Exames",
-          "n": 1
-        },
-        {
-          "m": "Horário",
-          "n": 1
-        },
-        {
-          "m": "Nota Fiscal",
-          "n": 1
-        },
-        {
-          "m": "Outro Whats",
-          "n": 1
-        },
-        {
-          "m": "Pediu para encerrar o atendimento.",
-          "n": 1
-        },
-        {
-          "m": "Se organizar primeiro, não pode iniciar agora.",
+          "m": "já é paciente.",
           "n": 1
         }
       ]
     },
     {
-      "nome": "SUPORTE - paciente existente - GANHO (42 de 74 = 56,8%)",
+      "nome": "SUPORTE - paciente existente - GANHO (81 de 125 = 64,8%)",
       "cor": "verde",
-      "total": 42,
+      "total": 81,
       "itens": [
         {
-          "m": "Tratamento agendado",
-          "n": 15
-        },
-        {
           "m": "Confirmação de agendamento",
-          "n": 13
+          "n": 49
         },
         {
           "m": "Reagendado",
-          "n": 7
+          "n": 12
+        },
+        {
+          "m": "Tratamento agendado",
+          "n": 11
         },
         {
           "m": "Retorno agendado",
@@ -167,21 +163,33 @@
         },
         {
           "m": "Pesquisa de satisfação",
-          "n": 2
+          "n": 3
+        },
+        {
+          "m": "Consulta agendada",
+          "n": 1
         }
       ]
     },
     {
-      "nome": "SUPORTE - perdido / outros / informacao (32 de 74)",
+      "nome": "SUPORTE - perdido / outros / informacao (44 de 125)",
       "cor": "azul",
-      "total": 32,
+      "total": 44,
       "itens": [
         {
-          "m": "Encerrado por inatividade",
-          "n": 17
+          "m": "Atendimento Clínico Realizado",
+          "n": 11
         },
         {
-          "m": "Atendimento Clínico Realizado",
+          "m": "Encerrado por inatividade",
+          "n": 10
+        },
+        {
+          "m": "Exames",
+          "n": 8
+        },
+        {
+          "m": "Horário",
           "n": 4
         },
         {
@@ -189,27 +197,27 @@
           "n": 3
         },
         {
-          "m": "Prestador de serviço",
-          "n": 3
+          "m": "Endereço",
+          "n": 2
         },
         {
-          "m": "Cancelamento de agendamento",
-          "n": 1
+          "m": "Prestador de serviço",
+          "n": 2
         },
         {
           "m": "Farmácias",
           "n": 1
         },
         {
-          "m": "Horário",
-          "n": 1
-        },
-        {
-          "m": "Não compareceu",
-          "n": 1
-        },
-        {
           "m": "Não tem interesse",
+          "n": 1
+        },
+        {
+          "m": "Receitas",
+          "n": 1
+        },
+        {
+          "m": "SPAM",
           "n": 1
         }
       ]
