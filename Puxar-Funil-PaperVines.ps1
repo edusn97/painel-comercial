@@ -344,11 +344,40 @@ try {
   throw
 }
 
-# ===== Faturamento OFICIAL (recebido/extrato) - vem de config/faturamento.json (puxado da sessao do painel) =====
+# ===== Faturamento =====
+# O faturamento JA FOI CALCULADO acima, pela API, somando as parcelas com
+# status 'received' das contas do tipo Venda. Nao precisa de captura manual.
+#
+# O bloco abaixo existe so como OVERRIDE opcional: se houver um
+# config/faturamento.json DA SEMANA CORRENTE, ele substitui o valor da API.
+#
+# ---- POR QUE A TRAVA DE PERIODO (04/09/2026) ----
+# Este arquivo era preenchido na captura manual de sexta e sobrescrevia o valor
+# da API SEM CONFERIR A DATA. Quando a captura nao era feita, o arquivo ficava
+# com o periodo ANTERIOR e o painel publicava faturamento velho embaixo do
+# cabecalho da semana atual, sem nenhum aviso. Aconteceu de verdade: em 04/09 o
+# painel mostrou R$ 9.407,94 (periodo 07/08 a 13/08) como se fosse a semana
+# 28/08-03/09 — um numero de 4 semanas antes.
+# Agora: se o periodo nao bater, o arquivo e IGNORADO e vale o numero da API.
 $fatFile = Join-Path $base "config/faturamento.json"
+$usarArquivo = $false
 if (Test-Path $fatFile) {
   try {
     $fj = Get-Content $fatFile -Raw -Encoding UTF8 | ConvertFrom-Json
+    $periodoEsperado = "{0} a {1}" -f $start.ToString("dd/MM"), $end.ToString("dd/MM")
+    $periodoArquivo  = "$($fj.periodo)".Trim()
+    if ($periodoArquivo -and ($periodoArquivo -ne $periodoEsperado)) {
+      Write-Host ("AVISO: config/faturamento.json e de OUTRA SEMANA ('{0}', esperado '{1}'). ARQUIVO IGNORADO — vale o faturamento calculado pela API." -f $periodoArquivo, $periodoEsperado) -ForegroundColor Yellow
+    } else {
+      $usarArquivo = $true
+      Write-Host ("Faturamento: usando captura manual de {0} (override do valor da API)." -f $periodoArquivo) -ForegroundColor Cyan
+    }
+  } catch {
+    Write-Host ("AVISO: falha lendo faturamento.json ({0}). ARQUIVO IGNORADO — vale o faturamento da API." -f $_.Exception.Message) -ForegroundColor Yellow
+  }
+}
+if ($usarArquivo) {
+  try {
     if ($null -ne $fj.total) { $ce.faturamento = [double]$fj.total }
     if ($null -ne $fj.sj)    { $ce.sj_fat = [double]$fj.sj }
     if ($null -ne $fj.jv)    { $ce.jv_fat = [double]$fj.jv }
@@ -367,8 +396,13 @@ if (Test-Path $fatFile) {
         }
       }
     }
-    Write-Host ("Faturamento OFICIAL (extrato): R$ {0:N2}  (SJ {1:N2} + JV {2:N2})" -f $ce.faturamento,$ce.sj_fat,$ce.jv_fat) -ForegroundColor Green
-  } catch { Write-Host ("Falha lendo faturamento.json: {0}" -f $_.Exception.Message) -ForegroundColor Red }
+    Write-Host ("Faturamento (captura manual): R$ {0:N2}  (SJ {1:N2} + JV {2:N2})" -f $ce.faturamento,$ce.sj_fat,$ce.jv_fat) -ForegroundColor Green
+  } catch {
+    Write-Host ("AVISO: falha aplicando faturamento.json ({0}). Mantido o valor da API." -f $_.Exception.Message) -ForegroundColor Yellow
+  }
+} else {
+  Write-Host ("Faturamento (API, parcelas recebidas): R$ {0:N2}  (SJ {1:N2} + JV {2:N2})" -f $ce.faturamento,$ce.sj_fat,$ce.jv_fat) -ForegroundColor Green
+  Write-Host "Sem captura manual desta semana — o numero acima veio direto da API. Nao e necessario abrir o Extrato." -ForegroundColor DarkGray
 }
 
 Write-Host ""
