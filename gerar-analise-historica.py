@@ -38,14 +38,15 @@ N_SEMANAS = 11
 TIMEOUT = 60
 
 # Procedimentos que representam uma AVALIACAO (entrada de funil).
-# Vale para as duas unidades: o nome varia entre SJ e JV.
-PROC_AVALIACAO = {
-    "Consulta Inicial",
-    "Consulta Online",
-    "Avaliação Gratuita Presencial",
-    "Avaliação Capilar Gratuita",
-    "Avaliação Gratuita Online",
-}
+#
+# REGRA POR PADRAO, NAO POR LISTA DE NOMES (corrigido em 04/09/2026).
+# A lista fixa anterior subcontava a serie inteira: nao tinha
+# "avaliação capilar (promocional)" — que hoje e o procedimento da maior parte
+# das entradas — e tinha "Avaliação Capilar Gratuita", que nao existe mais no
+# cadastro. Efeito medido: a semana de 28/08 aparecia com 9 avaliacoes criadas
+# em vez de 20. Nomes de procedimento mudam; a regra por padrao sobrevive a isso.
+RE_AVALIACAO = re.compile(r"avalia|consulta", re.IGNORECASE)
+RE_NAO_AVALIACAO = re.compile(r"acompanhamento", re.IGNORECASE)
 
 # Vendas de alto ticket (fechadas pelas biomedicas).
 RE_ALTO = re.compile(r"terapia combinada|protocolo premium|monoterapia", re.IGNORECASE)
@@ -90,7 +91,13 @@ def vendedora_de(anotacao):
 
 
 def eh_avaliacao(procedimentos):
-    return any(p in PROC_AVALIACAO for p in procedimentos)
+    """Entrada de funil = qualquer procedimento com 'avalia' ou 'consulta' no
+    nome, exceto 'Consulta de acompanhamento' (retorno, nao entrada)."""
+    for p in procedimentos:
+        nome = p or ""
+        if RE_AVALIACAO.search(nome) and not RE_NAO_AVALIACAO.search(nome):
+            return True
+    return False
 
 
 def eh_alto_ticket(descricao):
@@ -597,12 +604,8 @@ def montar_html(linhas, res, gerado_em, somente_secoes=False):
 
     partes.append('<div class="alerta">%s</div>' % alerta)
 
-    partes.append("""<h2 class="sec">Receita por classe de produto</h2><div class="card">
-<div style="display:flex;gap:22px;align-items:center;margin-bottom:6px;font-size:12px;font-weight:700">
-<span><span style="display:inline-block;width:22px;height:3px;background:#0e4d49;vertical-align:middle;margin-right:6px"></span>Alto ticket (biomédicas)</span>
-<span><span style="display:inline-block;width:22px;height:3px;background:#1f9e8f;vertical-align:middle;margin-right:6px"></span>Promocional (vendedoras)</span>
-<span style="color:var(--cinza);font-weight:600">Faixa vermelha = 2 semanas mais recentes</span></div>
-%s</div>""" % grafico_linhas(linhas))
+    # Grafico "Receita por classe de produto" REMOVIDO a pedido da CEO (04/09/2026).
+    # A funcao grafico_linhas() foi mantida no arquivo caso o grafico volte.
 
     partes.append("""<h2 class="sec">Avaliações criadas por semana (output das vendedoras)</h2><div class="card">%s
 <p class="nota">Média das %d primeiras semanas: <b>%s/semana</b>. Últimas 2: <b>%s</b> (%+d%%). Avaliação criada hoje
@@ -620,8 +623,9 @@ vira consulta realizada em 2 a 4 semanas — por isso a queda aqui antecipa a qu
 <td class="num"><b>%s</b></td><td class="num">%d%%</td><td class="num">%s</td></tr>
 </tbody></table>
 <p class="nota"><b>A avaliação inclusa no pacote promocional é a mesma oportunidade de upsell que a consulta.</b>
-A entrada de funil conta as duas: Consulta Inicial, Consulta Online, Avaliação Gratuita Presencial,
-Avaliação Capilar Gratuita e Avaliação Gratuita Online. Cada avaliação realizada vale em média
+A entrada de funil conta todas: Consulta Inicial, Consulta Online, Avaliação Gratuita Presencial,
+Avaliação Gratuita Online e avaliação capilar (promocional) — tudo que tem "avaliação" ou "consulta"
+no nome, menos a Consulta de acompanhamento, que é retorno. Cada avaliação realizada vale em média
 <b>%s</b> de receita total (promocional + alto ticket). As <b>%s avaliações/semana</b> a menos valem
 <b>%s por semana</b>.</p></div>""" % (
         res["n_base"], num(cri_a), num(rea_a),

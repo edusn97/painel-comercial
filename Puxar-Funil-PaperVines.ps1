@@ -328,11 +328,11 @@ try {
   }
   Write-Host ""
   Write-Host "==== CLINICA EXPERTS (semana) ====" -ForegroundColor Green
-  Write-Host ("Agendados p/ a semana {0} | Compareceram {1} | Cancelaram {2} | Remarcaram {3} | No-show {4}" -f $ce.agendaram,$ce.compareceram,$ce.cancelaram,$ce.remarcaram,$ce.noshow)
+  Write-Host ("Agendados p/ a semana {0} | Compareceram {1} | Nao compareceram {2} (cancelou {3} + no-show {4}) | Remarcaram {5}" -f $ce.agendaram,$ce.compareceram,($ce.cancelaram + $ce.noshow),$ce.cancelaram,$ce.noshow,$ce.remarcaram)
   Write-Host ("Novos agendamentos (criados na semana): {0}  (SJ {1} + JV {2})" -f $ceNovos.total,$ceNovos.sao_jose,$ceNovos.joinville)
   Write-Host ("Faturamento: R$ {0:N2}  (SJ {1:N2} + JV {2:N2})" -f $ce.faturamento,$ce.sj_fat,$ce.jv_fat)
-  Write-Host "Por vendedora (agendaram/compareceram/no-show):"
-  $ceVend.GetEnumerator() | ForEach-Object { Write-Host ("   {0}: {1}/{2}/{3}" -f $_.Key,$_.Value.agendaram,$_.Value.compareceram,$_.Value.noshow) }
+  Write-Host "Por vendedora (agendaram/compareceram/nao compareceram):"
+  $ceVend.GetEnumerator() | ForEach-Object { Write-Host ("   {0}: {1}/{2}/{3}" -f $_.Key,$_.Value.agendaram,$_.Value.compareceram,($_.Value.cancelaram + $_.Value.noshow)) }
   Write-Host ("Cancelados (repescagem): {0}" -f $cancelados.Count)
 } catch {
   # NAO engolir esta falha. Antes, o catch so imprimia em vermelho e o script
@@ -410,9 +410,12 @@ try {
   $ic = [System.Globalization.CultureInfo]::InvariantCulture
   $pctMeta   = ([math]::Round(($ce.faturamento / 30023.0) * 100, 1)).ToString($ic)
   $pctComp   = if ($ce.agendaram -gt 0) { ([math]::Round($ce.compareceram / $ce.agendaram * 100,1)).ToString($ic) } else { "0" }
-  $pctCanc   = if ($ce.agendaram -gt 0) { ([math]::Round($ce.cancelaram   / $ce.agendaram * 100,1)).ToString($ic) } else { "0" }
+  # Decisao da CEO (28/08/2026): cancelamento e no-show sao UM indicador so,
+  # "Nao compareceram". Nao existe mais KPI, coluna nem etapa de funil separada
+  # para no-show. O total abaixo alimenta @@CANC@@ e @@PCTCANC@@.
+  $naoComp   = $ce.cancelaram + $ce.noshow
+  $pctCanc   = if ($ce.agendaram -gt 0) { ([math]::Round($naoComp / $ce.agendaram * 100,1)).ToString($ic) } else { "0" }
   $pctRemarc = if ($ce.agendaram -gt 0) { ([math]::Round($ce.remarcaram   / $ce.agendaram * 100,1)).ToString($ic) } else { "0" }
-  $pctNs     = if ($ce.agendaram -gt 0) { ([math]::Round($ce.noshow       / $ce.agendaram * 100,1)).ToString($ic) } else { "0" }
   $fatFmt    = "{0:N0}" -f $ce.faturamento
   $sjFatFmt  = "{0:N0}" -f $ce.sj_fat
   $jvFatFmt  = "{0:N0}" -f $ce.jv_fat
@@ -435,9 +438,12 @@ try {
   $parcRows += '        <tr class="tot"><td>TOTAL PARCERIAS</td><td class="num">' + $parcTot + '</td></tr>'
 
   $sj = $ceUnit['sao_jose']; $jv = $ceUnit['joinville']
-  $uniRows  = '        <tr><td><span class="pill sj">S&atilde;o Jos&eacute;</span></td><td class="num">' + $sj.agendaram + '</td><td class="num">' + $ceNovos.sao_jose + '</td><td class="num">' + $sj.compareceram + '</td><td class="num">' + $sj.cancelaram + '</td><td class="num">' + $sj.remarcaram + '</td><td class="num">' + $sj.noshow + '</td><td class="num">R$ ' + $sjFatFmt + '</td></tr>' + "`r`n"
-  $uniRows += '        <tr><td><span class="pill jv">Joinville</span></td><td class="num">' + $jv.agendaram + '</td><td class="num">' + $ceNovos.joinville + '</td><td class="num">' + $jv.compareceram + '</td><td class="num">' + $jv.cancelaram + '</td><td class="num">' + $jv.remarcaram + '</td><td class="num">' + $jv.noshow + '</td><td class="num">R$ ' + $jvFatFmt + '</td></tr>' + "`r`n"
-  $uniRows += '        <tr class="tot"><td>TOTAL</td><td class="num">' + $ce.agendaram + '</td><td class="num">' + $ceNovos.total + '</td><td class="num">' + $ce.compareceram + '</td><td class="num">' + $ce.cancelaram + '</td><td class="num">' + $ce.remarcaram + '</td><td class="num">' + $ce.noshow + '</td><td class="num">R$ ' + $fatFmt + '</td></tr>'
+  # Coluna unica "Nao compareceram" = cancelaram + noshow (decisao da CEO, 28/08/2026)
+  $sjNao = $sj.cancelaram + $sj.noshow
+  $jvNao = $jv.cancelaram + $jv.noshow
+  $uniRows  = '        <tr><td><span class="pill sj">S&atilde;o Jos&eacute;</span></td><td class="num">' + $sj.agendaram + '</td><td class="num">' + $ceNovos.sao_jose + '</td><td class="num">' + $sj.compareceram + '</td><td class="num">' + $sjNao + '</td><td class="num">' + $sj.remarcaram + '</td><td class="num">R$ ' + $sjFatFmt + '</td></tr>' + "`r`n"
+  $uniRows += '        <tr><td><span class="pill jv">Joinville</span></td><td class="num">' + $jv.agendaram + '</td><td class="num">' + $ceNovos.joinville + '</td><td class="num">' + $jv.compareceram + '</td><td class="num">' + $jvNao + '</td><td class="num">' + $jv.remarcaram + '</td><td class="num">R$ ' + $jvFatFmt + '</td></tr>' + "`r`n"
+  $uniRows += '        <tr class="tot"><td>TOTAL</td><td class="num">' + $ce.agendaram + '</td><td class="num">' + $ceNovos.total + '</td><td class="num">' + $ce.compareceram + '</td><td class="num">' + $naoComp + '</td><td class="num">' + $ce.remarcaram + '</td><td class="num">R$ ' + $fatFmt + '</td></tr>'
 
   $vendRows = ""; $tAt=0;$tQ=0;$tD=0;$tAg=0;$tCo=0;$tCa=0;$tRe=0;$tNs=0;$tFa=0.0; $anyFa=$false
   foreach ($v in @('Daiane','Ana','Brenda','Ana Paula')) {
@@ -446,12 +452,13 @@ try {
     $faNum = 0; if ($null -ne $fa) { $faNum = [double]$fa }
     if (($at + $q + $d + $ag + $co + $ca + $re + $ns + $faNum) -le 0) { continue }  # oculta vendedora sem atividade na semana
     $tAt+=$at;$tQ+=$q;$tD+=$d;$tAg+=$ag;$tCo+=$co;$tCa+=$ca;$tRe+=$re;$tNs+=$ns
+    $vNao = $ca + $ns   # coluna unica "Nao compareceram" (decisao da CEO, 28/08/2026)
     $faDisp = '&mdash;'
     if ($null -ne $fa) { $faDisp = 'R$ ' + ("{0:N0}" -f [double]$fa); $tFa += [double]$fa; $anyFa = $true }
-    $vendRows += '        <tr><td>' + $v + '</td><td class="num">' + $at + '</td><td class="num">' + $q + '</td><td class="num">' + $d + '</td><td class="num">' + $ag + '</td><td class="num">' + $co + '</td><td class="num">' + $ca + '</td><td class="num">' + $re + '</td><td class="num">' + $ns + '</td><td class="num">' + $faDisp + '</td></tr>' + "`r`n"
+    $vendRows += '        <tr><td>' + $v + '</td><td class="num">' + $at + '</td><td class="num">' + $q + '</td><td class="num">' + $d + '</td><td class="num">' + $ag + '</td><td class="num">' + $co + '</td><td class="num">' + $vNao + '</td><td class="num">' + $re + '</td><td class="num">' + $faDisp + '</td></tr>' + "`r`n"
   }
   $tFaDisp = '&mdash;'; if ($anyFa) { $tFaDisp = 'R$ ' + ("{0:N0}" -f $tFa) }
-  $vendRows += '        <tr class="tot"><td>Equipe</td><td class="num">' + $tAt + '</td><td class="num">' + $tQ + '</td><td class="num">' + $tD + '</td><td class="num">' + $tAg + '</td><td class="num">' + $tCo + '</td><td class="num">' + $tCa + '</td><td class="num">' + $tRe + '</td><td class="num">' + $tNs + '</td><td class="num">' + $tFaDisp + '</td></tr>'
+  $vendRows += '        <tr class="tot"><td>Equipe</td><td class="num">' + $tAt + '</td><td class="num">' + $tQ + '</td><td class="num">' + $tD + '</td><td class="num">' + $tAg + '</td><td class="num">' + $tCo + '</td><td class="num">' + ($tCa + $tNs) + '</td><td class="num">' + $tRe + '</td><td class="num">' + $tFaDisp + '</td></tr>'
 
   # ---- Biomedicas: atendidas (auto) + pacotes fechados + faturamento (captura semanal) + conversao ----
   $bioRows = ""; $bAt=0; $bFeSum=0; $bFaSum=0.0; $bAnyFe=$false; $bAnyFa=$false
@@ -532,12 +539,12 @@ try {
   $tpl = $tpl.Replace('@@AGEND_CRIADOS@@', "$($ceNovos.total)")
   $tpl = $tpl.Replace('@@COMP@@', "$($ce.compareceram)")
   $tpl = $tpl.Replace('@@PCTCOMP@@', $pctComp)
-  $tpl = $tpl.Replace('@@CANC@@', "$($ce.cancelaram)")
+  # @@CANC@@ agora carrega o indicador UNICO "Nao compareceram" (cancelamento + no-show).
+  # Os marcadores @@NOSHOW@@ e @@PCTNS@@ nao existem mais no template.
+  $tpl = $tpl.Replace('@@CANC@@', "$naoComp")
   $tpl = $tpl.Replace('@@PCTCANC@@', $pctCanc)
   $tpl = $tpl.Replace('@@REMARC@@', "$($ce.remarcaram)")
   $tpl = $tpl.Replace('@@PCTREMARC@@', $pctRemarc)
-  $tpl = $tpl.Replace('@@NOSHOW@@', "$($ce.noshow)")
-  $tpl = $tpl.Replace('@@PCTNS@@', $pctNs)
   $tpl = $tpl.Replace('@@UNIDADE_ROWS@@', $uniRows)
   $tpl = $tpl.Replace('@@VEND_ROWS@@', $vendRows)
   $tpl = $tpl.Replace('@@BIO_ROWS@@', $bioRows)
